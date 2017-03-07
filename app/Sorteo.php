@@ -8,7 +8,7 @@ class Sorteo extends Model
 {
     public $timestamps=false;
     protected $table="sorteos";
-    protected $fillable=['id','descripcion','loteria_id'];
+    protected $fillable=['id','descripcion','loteria_id','horaI','horaC','estado'];
 
     public function jugadas()
     {
