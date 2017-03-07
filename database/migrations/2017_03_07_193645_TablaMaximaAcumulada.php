@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaSorteo extends Migration
+class TablaMaximaAcumulada extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class TablaSorteo extends Migration
      */
     public function up()
     {
-        Schema::create('sorteos', function (Blueprint $table) 
-        {
-            $table->increments('id');
-            $table->string('descripcion');
-            $table->integer('loteria_id')->unsigned();
-            $table->foreign('loteria_id')->references('id')->on('loterias');
-        
+        Schema::create('maxa_apuesta', function (Blueprint $table) {
+
+            $table->float('permitido_q');
+            $table->float('permitido_p');
+            $table->float('permitido_t');
+
         });
     }
 
@@ -30,6 +29,6 @@ class TablaSorteo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sorteos');
+        Schema::dropIfExists('maxa_apuesta');
     }
 }

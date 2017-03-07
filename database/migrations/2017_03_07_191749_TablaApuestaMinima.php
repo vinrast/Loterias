@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaSorteo extends Migration
+class TablaApuestaMinima extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class TablaSorteo extends Migration
      */
     public function up()
     {
-        Schema::create('sorteos', function (Blueprint $table) 
-        {
+        Schema::create('min_apuesta', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion');
-            $table->integer('loteria_id')->unsigned();
-            $table->foreign('loteria_id')->references('id')->on('loterias');
-        
+            $table->float('quiniela');
+            $table->float('pale');
+            $table->float('tripleta');
         });
     }
 
@@ -30,6 +28,6 @@ class TablaSorteo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sorteos');
+        Schema::dropIfExists('min_apuesta');
     }
 }
