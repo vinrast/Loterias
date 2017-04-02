@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 Route::get('/cargar','Cargar@index');
+Route::get('/login','Cargar@login');
+Route::get('/home','Cargar@apuesta');

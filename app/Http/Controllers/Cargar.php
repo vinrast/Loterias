@@ -9,11 +9,12 @@ use DB;
 class Cargar extends Controller
 
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function login(){
+        return view('login');
+    }
+    public function apuesta(){
+        return view('apuesta');
+    }
     public function index()
     {
         /// Producir los pares
