@@ -1,4 +1,5 @@
 body { 
+    font-family: 'Ropa Sans', sans-serif;
 	position: absolute;
 	background-image: url("../img/login.jpg");
 	background-repeat: no-repeat;

@@ -1,0 +1,129 @@
+body{
+    font-family: 'Ropa Sans', sans-serif;
+}
+.consola{
+    margin-top: 30px;
+}
+/*////////////////////////////////////////// SIDEBAR ///////////////////////////////////////////////////////////*/
+
+.sidebar{
+    margin: 0;
+    padding: 0 !important;
+    height: 570px;
+    text-align: center;
+    border-style: ridge; 
+    border-width: 1px;
+    background-color: #fff;
+}
+.menu ul{
+    margin: 0 !important;
+}
+.menu a{
+    color:  #00897b;
+}
+.menu ul li{
+    height: 40px;
+    margin-top: 5px;
+}
+.menu ul li:hover{
+    background-color: #eee;
+    font-weight: bolder;
+}
+/*////////////////////////////////////////// MODULO DE APUESTAS/////////////////////////////////////////////////*/
+
+
+/*///////////////////////////////////////  AREA LOTERIAS DISPONIBLES ////////////////////////////////////////// */
+
+.zonaloteria{
+    padding: 0;
+    height: 530px;
+    box-shadow: 2px 2px 5px #999;
+}
+.tituloloteria{
+    margin-top: 15px;
+    padding: 20px;
+    background-color: #b2dfdb;
+    font-size: 20px;
+    border-style: ridge; 
+    border-width: 1px;
+}
+.loterias{
+
+    height: 430px;
+    border-style: solid 1px;
+    border-style: ridge; 
+    border-width: 1px;
+    overflow:scroll;
+}
+.loterias ul{
+    margin: 0;
+    padding: 0;
+}
+.loteriai{
+    padding: 10px;
+    border-style: ridge; 
+    border-width: 1px;
+    border-top: 0;
+}
+.loteriai:hover,.resultadoi:hover{
+    background-color: #e0e0e0;
+}
+
+/*////////////////////////////////////////// AREA DE JUGADAS ///////////////////////////////////////////////////*/
+
+.zonaapuesta, .zonaresultado{
+    border-style: ridge; 
+    border-width: 1px;
+    box-shadow: 2px 2px 5px #999;
+}
+.jugadat{
+    text-align: center;
+    background-color: #b2dfdb;
+    padding:15px !important;
+    font-size: 20px;
+    border-style: ridge; 
+    border-width: 1px;
+}
+
+/*///////////////////////////////////////////AREA DE RESULTADOS ////////////////////////////////////////////////*/
+
+.zonaresultado{
+    height: 430px;
+    margin-top: 15px;
+}
+.resultadot{
+    margin-top: 15px;
+    background-color: #b2dfdb;
+    font-size: 18px;
+    border-style: ridge; 
+    border-width: 1px;
+}
+.resultadoc{
+    height: 200px;
+    margin: 0;
+    padding: 0;
+    border-style: solid 1px;
+    border-style: ridge; 
+    border-width: 1px;
+    overflow:scroll;
+}
+.resultadoi{   
+    padding: 5px; 
+    border-style: ridge; 
+    border-width: 1px;
+    border-top: 0;
+}
+/*//////////////////////////////////////// TOTALIZADOR /////////////////////////////////////////////////////////*/
+
+.totalizador{
+    height: 60px;
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #b2dfdb;
+    font-size: 20px;
+    border-style: ridge; 
+    border-width: 1px;
+}
+.botonera{
+    margin-top: 12px;
+}

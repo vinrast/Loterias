@@ -23,7 +23,7 @@
 		            	</div>
 		            	<div class="row">
 		            		<button class="btn  waves-effect red lighten-1" type="" name="action">Borrar</button>
-	            			<button class="btn  waves-effect green accent-2" type="submit" name="action">Entrar</button>
+	            			<button class="btn  waves-effect waves-light" type="submit" name="action">Entrar</button>
 		            	</div>
 	            	</form>
 	            </div>
