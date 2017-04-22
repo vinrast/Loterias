@@ -7,7 +7,7 @@
 			<li ><a class="" href="#">Administracion</a></li>
 		</ul>
 	</div>
-	<div class="reloj">
+	<div class="calendario">
 		
 	</div>
 	

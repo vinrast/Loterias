@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
 </head>
-<body>
+<body onload="inicio()">
     @yield('contenido')
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/materialize.min.js')}}"></script>
+    <script src="{{asset('js/reloj.js')}}"></script>
 </body>
 </html>

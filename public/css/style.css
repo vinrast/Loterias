@@ -29,6 +29,22 @@ body{
     background-color: #eee;
     font-weight: bolder;
 }
+.calendario{
+    font-family: 'PT Sans Narrow', sans-serif; 
+    font-size: 15px;
+    color: white;
+    border-style: ridge; 
+    border-width: 1px;
+    position: absolute;
+    left: 25px;
+    bottom: 35px;
+    padding: 10px;
+    background: rgba(33, 33, 33, 0.7);
+
+}
+.hora{
+    font-size: 45px;
+}
 /*////////////////////////////////////////// MODULO DE APUESTAS/////////////////////////////////////////////////*/
 
 
