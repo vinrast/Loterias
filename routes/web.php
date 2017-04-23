@@ -18,4 +18,5 @@ Route::get('/', function () {
 Route::get('/cargar','Cargar@index');
 Route::get('/login','Cargar@login');
 Route::get('/home','Cargar@apuesta');
-Route::get('/administracion/usuarios','Administracion@usuarios');
+Route::get('/administracion/usuarios','Administracion@listar_usuarios');
+Route::get('/administracion/loterias','Administracion@listar_loterias');

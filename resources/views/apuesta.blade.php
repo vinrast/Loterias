@@ -49,7 +49,7 @@
         			</div>
 				</div>
 				<div class="col s12 m2 l2 input-field agregar ">
-        			<a class="btn-floating btn-large waves-effect teal lighten-2"><i class="material-icons">add</i></a>
+        			<a class="btn-floating btn-large waves-effect  indigo lighten-1"><i class="material-icons">add</i></a>
 				</div>
 			</div>
 

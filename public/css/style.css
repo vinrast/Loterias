@@ -34,12 +34,13 @@ body{
     font-size: 15px;
     color: white;
     border-style: ridge; 
-    border-width: 1px;
+    border-width: 2px;
     position: absolute;
     left: 25px;
     bottom: 35px;
     padding: 10px;
     background: rgba(33, 33, 33, 0.7);
+    border-color: #009688 ;
 
 }
 .hora{
@@ -70,6 +71,7 @@ body{
     border-style: ridge; 
     border-width: 1px;
     overflow:scroll;
+    overflow-x: hidden;
 }
 .loterias ul{
     margin: 0;
@@ -80,14 +82,21 @@ body{
     border-style: ridge; 
     border-width: 1px;
     border-top: 0;
+    
 }
-.loteriai:hover,.resultadoi:hover{
-    background-color: #e0e0e0;
+.loteriai label{
+    color: #000;
 }
-
+.resultadoi:hover, .loteriai:hover{
+    background-color:rgba(33, 33, 33, 0.7);
+    color:#fff;
+}
+.loteriai:hover label{
+    color:#fff;
+}
 /*////////////////////////////////////////// AREA DE JUGADAS ///////////////////////////////////////////////////*/
 
-.zonaapuesta, .zonaresultado{
+.zonaapuesta, .zonaresultado,.contusuario,.contloteria{
     border-style: ridge; 
     border-width: 1px;
     box-shadow: 2px 2px 5px #999;
@@ -107,7 +116,7 @@ body{
     height: 430px;
     margin-top: 15px;
 }
-.resultadot{
+.resultadot,.contusuariot,.contloteriat{
     margin-top: 15px;
     background-color: #b2dfdb;
     font-size: 18px;
@@ -122,6 +131,7 @@ body{
     border-style: ridge; 
     border-width: 1px;
     overflow:scroll;
+    overflow-x: hidden;
 }
 .resultadoi{   
     padding: 5px; 
@@ -142,4 +152,74 @@ body{
 }
 .botonera{
     margin-top: 12px;
+}
+
+/*///////////////////////////////////////// MODULO DE ADMINISTRACION ///////////////////////////////////////////*/
+
+.contusuario,.contloteria{
+    height: 430px;
+    margin-top: 30px;
+}
+.contusuariot,.contloteriat{
+    padding: 10px;
+    text-align: center;
+    font-size: 25px;
+}
+.contaddusuario,.contaddloteria{
+    padding: 10px !important;
+}
+.contusuarioc,.contloteriac{
+    height: 270px;
+    margin: 0;
+    padding: 0 !important;
+    border-style: solid 1px;
+    border-style: ridge; 
+    border-width: 1px;
+    overflow:scroll;
+    overflow-x: hidden;
+}
+.usuarios,.registroloterias{
+    padding: 0;
+    margin: 0
+}
+.usuarionombre,.loterianombre{
+    display: inline;
+    padding-left: 15px
+}
+.acciones{
+    display: inline;
+    padding-left: 430px;
+}
+.acciones a{
+    color: rgba(33, 33, 33, 0.7);
+}
+.borrar:hover{
+    color: #d50000;
+}
+.editar:hover{
+    color: #ff9800;
+}
+.usuarios:hover,.registroloterias:hover{
+     background-color: rgba(33, 33, 33, 0.7);
+     color: white;
+}
+
+/*///////////////////////////////////// VENTANAS MODALES////////////////////////////////////////////////////////*/
+
+.addusuario,.editusuario{
+    width: 400px;
+    height: 600px;
+}
+.botonera-modal{
+    position: absolute; 
+    left: 85px;
+    bottom: 20px;
+}
+.addloteria,.editloteria{
+    width: 400px;
+    height: 350px;
+}
+.sethorario{
+    width: 400px;
+    height: 400px;
 }
