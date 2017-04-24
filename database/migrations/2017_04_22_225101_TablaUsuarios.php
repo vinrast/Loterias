@@ -15,10 +15,12 @@ class TablaUsuarios extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',50);
-            $table->string('apellido',50);
-            $table->integer('rol');
-            $table->integer('status');
+            $table->string('username',100);
+            $table->string('password',100);
+            $table->integer('Apuestas')->default(0);
+            $table->integer('Tickets')->default(0);
+            $table->integer('Reportes')->default(0);
+            $table->integer('Administracion')->default(0);
         });
     }
 

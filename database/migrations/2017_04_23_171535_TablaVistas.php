@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaTicketsDiarios extends Migration
+class TablaVistas extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class TablaTicketsDiarios extends Migration
      */
     public function up()
     {
-        Schema::create('ticketsd', function (Blueprint $table) {
+        Schema::create('vistas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('fecha');
-            $table->float('cantidad');
+            $table->string('descripcion',100);
+            $table->string('ruta',100);
         });
     }
 
@@ -27,6 +27,6 @@ class TablaTicketsDiarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticketsd');
+        Schema::dropIfExists('vistas');
     }
 }

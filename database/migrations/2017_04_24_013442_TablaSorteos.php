@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaMapuesta extends Migration
+class TablaSorteos extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CrearTablaMapuesta extends Migration
      */
     public function up()
     {
-        Schema::create('m_apuesta', function (Blueprint $table) {
+        Schema::create('sorteos', function (Blueprint $table) 
+        {
             $table->increments('id');
-            $table->float('quiniela');
-            $table->float('pale');
-            $table->float('tripleta');
+            $table->string('descripcion',100);
+            $table->time('horaSorteo');
+            $table->integer('tiempoCierre')->default(15);
+
+            
         });
     }
 
@@ -28,6 +31,6 @@ class CrearTablaMapuesta extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_apuesta');
+        Schema::dropIfExists('sorteos');
     }
 }

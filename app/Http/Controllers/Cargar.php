@@ -2,39 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Pare;
+//use Illuminate\Http\Request;
+use Request;
+use App\Usuario;
+use App\vista;
+use Session;
 use DB;
 
 class Cargar extends Controller
 
-{
-    public function login(){
+{public function login()
+    {
+        Session::forget('sidebar');
         return view('login');
     }
-    public function apuesta(){
-        return view('apuesta');
-    }
-    public function index()
-    {
-        /// Producir los pares
 
-        $aux='0';
-        for ($i=0; $i <100 ; $i++)
-         { 
-            if ($i<10) 
-            {
-                 $insercion=DB::table('pares')->insert
-                (['valor'=>$aux.(string)$i]);
-            }
-            else
-            {
-                 $insercion=DB::table('pares')->insert
-                (['valor'=>(string)$i]);
-            }
+    public function loginVerificar()
+    {
+
+        $respuesta=[0];
+       
+
+        $user=Request::get('usuario');
+        $pwd=Request::get('clave');
+        $columnas=array("Apuestas","Tickets","Reportes","Administracion");
+        $sidebar=array();
+
+        $usuario=Usuario::where(['username'=>$user,'password'=>$pwd])->first();
+        $vistas=DB::table('vistas')->get();
+
+        if (count($usuario)!=0) 
+        {
+           for ($i=0; $i <4 ; $i++)
+           {
+              if ($usuario->$columnas[$i]==1)
+              {
+                array_push($sidebar,Vista::where(['descripcion'=>$columnas[$i]])->first());
+              }
+           }
            
-         }
+          Session::push('sidebar',$sidebar);//datos del menu segun el usuario logueado
+          $respuesta=[$usuario->username];
+        }
+       return ($respuesta);
+
     }
+
+
+   
+    public function apuesta()
+    {
+        
+        $sidebar=Session::get('sidebar');
+        $sidebar=$sidebar[0];
+        $sorteos=DB::table('sorteos')->get();
+
+        return view('apuesta',['sidebar'=>$sidebar,'sorteos'=>$sorteos]);
+    }
+   
 
     /**
      * Show the form for creating a new resource.

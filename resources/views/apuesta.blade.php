@@ -15,8 +15,10 @@
 					<span>Loterias Disponibles</span>
 				</div>
 				<div class="loterias">
-					<ul>
-						<li class="loteriai"> <input type="checkbox" id="loteria" /><label for="loteria">loteria 1</label> </li>
+					<ul id="sorteosDisponibles">
+						@foreach($sorteos as $sorteo)
+							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}"/><label for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label> </li>
+						@endforeach
 					</ul>
 				</div>
 			</div>
@@ -28,15 +30,15 @@
 					<div class="col s6 m3 l3 input-field jugadat">
 						Jugada
 					</div>
-					<div class="col s6 m9 l9 jugadaa" >
+					<div class="col s6 m9 l9 jugadaa" id="tripleta">
 						<div class="input-field  col s6 m4 l4">
-        					<input placeholder="1ro" id="" type="number" min="0" max="99" class="validate">
+        					<input placeholder="1ro" id="primerPremio" type="number" min="0" max="99" class="validate">
         				</div>
         				<div class="input-field col s6 m4 l4">
-        					<input placeholder="2do" id="" type="number" min="0" max="99" class="validate">
+        					<input placeholder="2do" id="segundoPremio" type="number" min="0" max="99" class="validate">
         				</div>
         				<div class="input-field col s6 m4 l4">
-        					<input placeholder="3ro" id="" type="number" min="0" max="99" class="validate">
+        					<input placeholder="3ro" id="tercerPremio" type="number" min="0" max="99" class="validate">
         				</div>
 					</div>
 				</div>
@@ -45,11 +47,11 @@
 						Monto
 					</div>
 					<div class="input-field col s6 m6 l6">
-        				<input placeholder="Euros" id="" type="number" min="1" class="validate">
+        				<input placeholder="Euros" id="Apuesta" type="number" min="1" class="validate">
         			</div>
 				</div>
 				<div class="col s12 m2 l2 input-field agregar ">
-        			<a class="btn-floating btn-large waves-effect  indigo lighten-1"><i class="material-icons">add</i></a>
+        			<a class="btn-floating btn-large waves-effect  indigo lighten-1" id="ADD"><i class="material-icons">add</i></a>
 				</div>
 			</div>
 

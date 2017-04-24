@@ -15,5 +15,6 @@
     <script src="{{asset('js/materialize.min.js')}}"></script>
     <script src="{{asset('js/reloj.js')}}"></script>
     <script src="{{asset('js/setmodales.js')}}"></script>
+    <script src="{{asset('js/frontEnd.js')}}"></script>
 </body>
 </html>

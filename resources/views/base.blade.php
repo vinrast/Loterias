@@ -11,5 +11,6 @@
     @yield('contenido')
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/materialize.min.js')}}"></script>
+    <script src="{{asset('js/frontEnd.js')}}"></script>
 </body>
 </html>
