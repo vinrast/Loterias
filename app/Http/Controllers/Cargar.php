@@ -44,7 +44,7 @@ class Cargar extends Controller
           Session::push('sidebar',$sidebar);//datos del menu segun el usuario logueado
           $respuesta=[$usuario->username];
         }
-       return ($respuesta);
+       return ($vistas);
 
     }
 

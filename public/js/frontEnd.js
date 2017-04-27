@@ -1,7 +1,7 @@
 
 ///Validar las credeciales usadas en el login ///////
 
-function VerificarCredencialesLogin()
+/*function VerificarCredencialesLogin()
 {
 	$('#Ingresar__').click(function()
 	{
@@ -12,6 +12,7 @@ function VerificarCredencialesLogin()
 		var data=form.serialize();
 		var posting=$.post( url,data,function(resultado)
 			{
+				alert(resultado);
 				if (resultado[0]!=0) //si existe el usuario
 					{
 
@@ -31,11 +32,11 @@ function VerificarCredencialesLogin()
 			posting.fail(function() {
 				
 				alert('Error de conexion,Comuniquese con el administrador');
-			})
+			});
 		
 
 	});
-}
+}*/
 
 function AgregarJugada()
 {
