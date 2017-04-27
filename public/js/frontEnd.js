@@ -15,13 +15,26 @@ function VerificarCredencialesLogin()
 				if (resultado[0]!=0) //si existe el usuario
 					{
 
-						alert('Bienvenido al Sistema, esta logueado con el perfil: '+resultado[0]);
+						swal({
+									title:'Bienvenido',//Contenido del modal
+									text: '<p style="font-size: 2em;">'+'Usuario: '+' '+resultado[0]+'</p>',
+									timer:2000,//Tiempo de retardo en ejecucion del modal
+									type: "success",
+									showConfirmButton:false,//Eliminar boton de confirmacion
+									html: true
+								});
+
 						setTimeout(function(){location.href = "/home";},1000);
 
 					}
 				else if (resultado[0]==0)//no existe el usuario
 					{
-						alert('Credenciales invalidas');
+						swal({
+								title:'Credenciales invalidos.',//Contenido del modal
+								timer:1500,//Tiempo de retardo en ejecucion del modal
+								type: "error",
+								showConfirmButton:false//Eliminar boton de confirmacion
+							});
 
 					}
 				
@@ -30,7 +43,14 @@ function VerificarCredencialesLogin()
 		
 			posting.fail(function() {
 				
-				alert('Error de conexion,Comuniquese con el administrador');
+				swal({
+						title:'Error inesperado!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
 			})
 		
 
@@ -60,18 +80,35 @@ function AgregarJugada()
 				}
 				
 			});
-			alert(c);
+			//alert(c);
 			if (c==0)
 			{
-				alert('debe seleccionar un sorteo');
+				swal({
+						title:'Debe seleccionar un sorteo!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+''+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "warning",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+				
 			}
 			else if(c>1)
 			{
-				alert('debe seleccionar solo un sorteo');
+				
+				swal({
+						title:'Debe seleccionar solo un sorteo!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+''+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "warning",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+				
 			}
 			else if(c==1)//si se selecciono un sorteo
 			{
-				alert('El sorteo seleccionado es:  '+ sorteo);
+				//alert('El sorteo seleccionado es:  '+ sorteo);
 				var sorteos=document.getElementById('tripleta');
 				var dupletas=sorteos.getElementsByTagName("input");
 				var tripleta=[];
@@ -91,7 +128,15 @@ function AgregarJugada()
 
 				if (c==0) 
 					{
-						alert('debe ingresar al menos una dupleta');
+						swal({
+								title:'Debe ingresar al menos una dupleta!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+''+'</p>',
+								timer:2000,//Tiempo de retardo en ejecucion del modal
+								type: "warning",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html: true
+						});
+						
 					}
 				else
 					{
@@ -108,10 +153,19 @@ function AgregarJugada()
 							}
 
 						}
-						alert(tripleta_);
+						
 						if ($('#Apuesta').val()=='') 
 						{
-							alert('Debe indicar la apuesta para la jugada');
+								swal({
+										title:'Debe indicar la apuesta para la jugada!!',//Contenido del modal
+										text: '<p style="font-size: 1.5em;">'+''+'</p>',
+										timer:2000,//Tiempo de retardo en ejecucion del modal
+										type: "warning",
+										showConfirmButton:false,//Eliminar boton de confirmacion
+										html: true
+									});
+						
+							
 						}
 						else
 						{

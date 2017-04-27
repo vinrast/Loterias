@@ -17,10 +17,10 @@ class TablaUsuarios extends Migration
             $table->increments('id');
             $table->string('username',100);
             $table->string('password',100);
-            $table->integer('Apuestas')->default(0);
-            $table->integer('Tickets')->default(0);
-            $table->integer('Reportes')->default(0);
-            $table->integer('Administracion')->default(0);
+    
+
+        
+            
         });
     }
 

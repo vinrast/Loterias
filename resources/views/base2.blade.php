@@ -8,6 +8,7 @@
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
+     <link rel="stylesheet" href="{{asset('plugins/sweetalert/sweetalert.css')}}">
 </head>
 <body onload="inicio()">
     @yield('contenido')
@@ -16,5 +17,6 @@
     <script src="{{asset('js/reloj.js')}}"></script>
     <script src="{{asset('js/setmodales.js')}}"></script>
     <script src="{{asset('js/frontEnd.js')}}"></script>
+    <script src="{{asset('plugins/sweetalert/sweetalert.min.js')}}"></script>
 </body>
 </html>

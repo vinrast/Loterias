@@ -14,6 +14,8 @@ class Cargar extends Controller
 {public function login()
     {
         Session::forget('sidebar');
+        Session::forget('modulos');
+        Session::forget('submodulos');
         return view('login');
     }
 
@@ -23,28 +25,41 @@ class Cargar extends Controller
         $respuesta=[0];
        
 
-        $user=Request::get('usuario');
-        $pwd=Request::get('clave');
-        $columnas=array("Apuestas","Tickets","Reportes","Administracion");
-        $sidebar=array();
-
+             
+        $user=strtoupper((string)Request::get('usuario'));
+        $pwd=strtoupper((string)Request::get('clave'));
         $usuario=Usuario::where(['username'=>$user,'password'=>$pwd])->first();
-        $vistas=DB::table('vistas')->get();
+        $modulos=array();
+        $submodulos=array();
+
+       
 
         if (count($usuario)!=0) 
         {
-           for ($i=0; $i <4 ; $i++)
+           $vistas=$usuario->vistas;
+           foreach ($vistas as $vista ) 
            {
-              if ($usuario->$columnas[$i]==1)
-              {
-                array_push($sidebar,Vista::where(['descripcion'=>$columnas[$i]])->first());
-              }
+               
+                   if ($vista->dependencia==$vista->id) 
+                   {
+                       array_push($modulos,$vista);
+                   }
+                   else
+                   {
+                      array_push($submodulos,$vista);
+                   }
+              
            }
-           
-          Session::push('sidebar',$sidebar);//datos del menu segun el usuario logueado
+
+        
+          
+          Session::push('modulos',$modulos);//datos del menu segun el usuario logueado
+          Session::push('submodulos',$submodulos);
+        
+
           $respuesta=[$usuario->username];
         }
-       return ($respuesta);
+      return ($respuesta);
 
     }
 
@@ -53,11 +68,15 @@ class Cargar extends Controller
     public function apuesta()
     {
         
-        $sidebar=Session::get('sidebar');
-        $sidebar=$sidebar[0];
+        $modulos=Session::get('modulos');
+        $submodulos=Session::get('submodulos');
+
+        $modulos=$modulos[0];
+        $submodulos=$submodulos[0];
+
         $sorteos=DB::table('sorteos')->get();
 
-        return view('apuesta',['sidebar'=>$sidebar,'sorteos'=>$sorteos]);
+        return view('apuesta',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos]);
     }
    
 
