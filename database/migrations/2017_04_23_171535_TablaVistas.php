@@ -13,10 +13,15 @@ class TablaVistas extends Migration
      */
     public function up()
     {
-        Schema::create('vistas', function (Blueprint $table) {
+        Schema::create('vistas', function (Blueprint $table) 
+        {
             $table->increments('id');
             $table->string('descripcion',100);
             $table->string('ruta',100);
+            $table->integer('padre')->default(1);
+            $table->integer('dependencia')->unsigned();
+            $table->foreign('dependencia')->references('id')->on('vistas');
+
         });
     }
 
