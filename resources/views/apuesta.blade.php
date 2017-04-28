@@ -62,21 +62,21 @@
 					<div class="resultadot">
 						<table>
 							<tr>
-								<th><input type="checkbox" id="todos" /><label for="todos"></label></th>
-								<th>Loterias</th>
+								<th><input type="checkbox" id="chekJugadas" /><label for="chekJugadas"></label></th>
+								<th>Sorteos</th>
 								<th>Jugadas</th>
 								<th>Apuestas</th>
 							</tr>
 						</table>
 					</div>
-					<div class="resultadoc">
-						<table>
-							<tr class="resultadoi">
+					<div class="resultadoc" id="jugadasTickets">
+						<table id="tablaJugadas">
+							<!-- <tr class="resultadoi" id="filaJugada">
 								<th><input type="checkbox" id="#" /><label for="#"></label></th>
 								<th>Loteria 1</th>
 								<th>25-03-18</th>
 								<th>2.00</th>
-							</tr>
+							</tr> -->
 						</table>
 					</div>
 				</div>
@@ -93,7 +93,7 @@
 						</div>
 					</div>
 					<div class="col l12 botonera center">
-						<a class="waves-effect waves-light btn red">Anular</a>
+						<a class="waves-effect waves-light btn red" id="anularJugada">Anular</a>
 						<a class="waves-effect waves-light btn">Imprimir</a>
 					</div>
 				</div>

@@ -1,6 +1,8 @@
 
 ///Validar las credeciales usadas en el login ///////
 
+var jugadaId=1;
+
 function VerificarCredencialesLogin()
 {
 	$('#Ingresar__').click(function()
@@ -60,6 +62,97 @@ function VerificarCredencialesLogin()
 	});
 }
 
+
+
+function anularJugada()
+{
+	$("#anularJugada").click(function()
+		{
+
+			var tabla=document.getElementById('tablaJugadas');
+			var checks=tabla.getElementsByTagName("input");
+			var longitud=checks.length;
+			var ids=[];
+			//alert(longitud); la longitud es correcta
+			var c=0;
+
+			$.each(checks,function()
+				{
+					if($(this).prop('checked')==true)
+					{
+						c=c+1;
+						ids.push($(this).attr('data-idj'));
+
+					}
+				
+				});
+			if (c==0 && longitud>0) 
+			{
+				// swal({
+				// 		title:'Debe seleccionar las jugadas que desea anular!!',//Contenido del modal
+				// 		text: '<p style="font-size: 1.5em;">'+''+'</p>',
+				// 		timer:2000,//Tiempo de retardo en ejecucion del modal
+				// 		type: "warning",
+				// 		showConfirmButton:false,//Eliminar boton de confirmacion
+				// 		html: true
+				// 	});
+			}
+			else
+			{
+
+					for (var i = 0; i < ids.length; i++)
+					 {
+						$('#filaJugada'+ids[i]).remove();
+						
+					}
+
+					$("#chekJugadas").prop('checked',false);
+					
+
+			}
+
+
+		});
+
+
+}
+
+
+function seleccionarJugada()//cambia el status de los cheks de las jugadas
+{
+
+	$("#chekJugadas").change(function()
+		{
+			var tabla=document.getElementById('tablaJugadas');
+			var checks=tabla.getElementsByTagName("input");
+			var estado=$(this).prop('checked');
+			//alert(checks.length);
+
+			if (checks.length>0) 
+			{
+
+				$.each(checks,function(i)
+				{
+
+					if ($(this).prop('checked')!=estado) 
+					{
+
+						$(this).prop('checked',estado);
+					}
+				});
+
+			}
+			else
+			{
+				$("#chekJugadas").prop('checked',false);
+			}
+
+			
+		});
+}
+
+
+
 function AgregarJugada()
 {
 
@@ -67,7 +160,12 @@ function AgregarJugada()
 		{
 			var sorteos=document.getElementById('sorteosDisponibles');
 			var checks=sorteos.getElementsByTagName("input");
-			
+			var jugada=new Object();
+			var sorteos_=[];
+			var jugadas=[];
+			var apuestas=[];
+
+
 			var c=0;
 			var sorteo=null;
 			$.each(checks, function(i)
@@ -76,15 +174,13 @@ function AgregarJugada()
 				if ($(this).prop("checked")==true )
 				{
 					c=c+1;
-					if (c==1) 
-					{
-						sorteo=$(this).attr('data-descripcion');
-					}
+					alert($(this).attr('data-descripcion'));
+					sorteos_.push($(this).attr('data-descripcion'));
 				}
 				
 			});
-			//alert(c);
-			if (c==0)
+			
+			if (c==0)//si no se seleccionan sorteos
 			{
 				swal({
 						title:'Debe seleccionar un sorteo!!',//Contenido del modal
@@ -96,38 +192,35 @@ function AgregarJugada()
 					});
 				
 			}
-			else if(c>1)
+			else if(c>=1)//si se seleccionan sorteos
 			{
 				
-				swal({
-						title:'Debe seleccionar solo un sorteo!!',//Contenido del modal
-						text: '<p style="font-size: 1.5em;">'+''+'</p>',
-						timer:2000,//Tiempo de retardo en ejecucion del modal
-						type: "warning",
-						showConfirmButton:false,//Eliminar boton de confirmacion
-						html: true
-					});
-				
-			}
-			else if(c==1)//si se selecciono un sorteo
-			{
-				//alert('El sorteo seleccionado es:  '+ sorteo);
 				var sorteos=document.getElementById('tripleta');
 				var dupletas=sorteos.getElementsByTagName("input");
-				var tripleta=[];
+				var tripleta=" ";
 				c=0;
-				
+
 				$.each(dupletas, function(i)
 				{
 					
 					if ($(this).val()!='')
 					{
 						c=c+1;
-						tripleta.push($(this).val());
+						if (c==1) 
+						{
+							tripleta=tripleta+$(this).val();
+						}
+						else
+						{
+							tripleta=tripleta+'-'+$(this).val();
+						}
+						
 					}
 					
 					
 				});
+
+
 
 				if (c==0) 
 					{
@@ -143,19 +236,20 @@ function AgregarJugada()
 					}
 				else
 					{
-						var tripleta_='';
-						for (var i = 0; i < tripleta.length; i++) 
-						{
-							if(i>0)
-							{
-								tripleta_=tripleta_+'-'+tripleta[i];
-							}
-							else
-							{
-								tripleta_=tripleta_+tripleta[i];
-							}
+						// var tripleta_='';
+						// for (var i = 0; i < tripleta.length; i++) 
+						// {
+						// 	if(i>0)
+						// 	{
+						// 		tripleta_=tripleta_+'-'+tripleta[i];
+						// 	}
+						// 	else
+						// 	{
+						// 		tripleta_=tripleta_+tripleta[i];
+						// 	}
 
-						}
+						// }
+						//jugada.tripleta=tripleta_;
 						
 						if ($('#Apuesta').val()=='') 
 						{
@@ -172,10 +266,43 @@ function AgregarJugada()
 						}
 						else
 						{
-							alert(sorteo+'  '+tripleta_+' Por: '+$('#Apuesta').val());
+							
+							//alert(jugada.sorteo+'  '+jugada.tripleta+' Por: '+$('#Apuesta').val());
+							for (var i = 0; i < sorteos_.length; i++) 
+							{
+								
+							
+								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th>'+sorteos_[i]+'</th>  <th>'+tripleta+'</th> <th>'+$('#Apuesta').val()+'</th></tr>');
+								jugadaId=jugadaId+1;
+							}
+
+
+							$('#Apuesta').val(" ");
+							$.each(checks, function(i)
+								{
+				
+									if ($(this).prop("checked")==true )
+									{
+										$(this).prop("checked",false);
+									}
+				
+								});
+
+
+							$.each(dupletas, function(i)
+							{
+								
+								$(this).val(" ");
+								
+								
+								
+							});
 						}
 					}
+
+
 			}
+			
 
 		});
 }
@@ -184,3 +311,5 @@ function AgregarJugada()
 
 VerificarCredencialesLogin()
 AgregarJugada()
+anularJugada()
+seleccionarJugada()
