@@ -11,7 +11,9 @@ use DB;
 
 class Cargar extends Controller
 
-{public function login()
+{
+
+    public function login()
     {
         Session::forget('sidebar');
         Session::forget('modulos');
@@ -59,11 +61,7 @@ class Cargar extends Controller
 
           $respuesta=[$usuario->username];
         }
-<<<<<<< HEAD
-       return ($vistas);
-=======
       return ($respuesta);
->>>>>>> 0c5bee5534f92147e151968d1178008b2cd8bc89
 
     }
 
@@ -145,8 +143,5 @@ class Cargar extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+  
 }

@@ -89,7 +89,7 @@
 							<span>TOTAL APUESTA</span>
 						</div>
 						<div class="col l6">
-							<span>TOTAL</span>
+							<span id="dineroTotal"></span>
 						</div>
 					</div>
 					<div class="col l12 botonera center">
