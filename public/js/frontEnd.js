@@ -44,9 +44,6 @@ function VerificarCredencialesLogin()
 		
 			posting.fail(function() {
 				
-				alert('Error de conexion,Comuniquese con el administrador');
-			});
-
 				swal({
 						title:'Error inesperado!!',//Contenido del modal
 						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
@@ -56,7 +53,9 @@ function VerificarCredencialesLogin()
 						html: true
 					});
 			})
-		});	
+
+		
+
 	});
 }
 
