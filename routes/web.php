@@ -21,6 +21,7 @@ Route::get('/home','Cargar@apuesta');
 
 ////////Verificar Credenciales del login ///////////////////////////
 Route::post('/loginVerificar','Cargar@loginVerificar');
+Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');

@@ -10,8 +10,8 @@ class Vista extends Model
     protected $table="vistas";
     protected $fillable=['id','descripcion','ruta','padre','dependencia'];
 
-    public function usuarios()
+    public function perfiles()
     {
-    	 return $this->belongsToMany('App\Usuario');
+    	 return $this->belongsToMany('App\Perfil');
     }
 }

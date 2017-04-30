@@ -52,7 +52,7 @@ var jugadaId=1;
 						showConfirmButton:false,//Eliminar boton de confirmacion
 						html: true
 					});
-			})
+			});
 
 		
 
@@ -307,12 +307,99 @@ function AgregarJugada()
 		});
 }
 
+function InsertarUsuario () 
+{
+	$('#insUsuarioAgr').click(function()
+		{
+			var usuario=$('#userAgr').val();
+			var clave=$('#passwordAgr').val();
+			var perfil=$('#perfilAgr').val();
+			var formulario=$('#usuarioAgregar');
+			var data=formulario.serialize();
+			var url="/insertarUsuarios";
+		
+			if (usuario=="" || clave==""|| perfil==null) 
+			{
+				swal({
+						title:'Campos vacios!!!!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Debe llenar todos los Campos'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+						
+
+
+			}
+			else
+			{
+				var posting=$.post( url,data,function(resultado)
+				{
+					
+					if (resultado[0]==0) 
+					{
+						swal({
+						title:'Registro existente!!!!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'El usuario: '+resultado[1]+ ' se encuetra creado en el sistema </p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+
+					}
+					else
+					{
+						$('#listaUsuarios').append('   <p class="usuarionombre" id="usuario'+resultado[2]+'">'+resultado[1]+'</p>       <div class="acciones">     <a href="#modaledit"  id="edit'+resultado[2]+'"><i class="small editar material-icons">mode_edit</i></a>    <a href="" id="elim'+resultado[2]+'"><i class="borrar small material-icons">delete</i></a>   </div>');
+
+						swal({
+
+								title:'Insercion exitosa!!!.',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+'El  usuario: '+resultado[1]+' se inserto correctamente en el sistema </p>',
+								timer:2500,//Tiempo de retardo en ejecucion del modal
+								type: "success",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html:true
+														
+							});
+
+					}
+
+
+
+				});
+				posting.fail(function() {
+				
+				swal({
+						title:'Error inesperado!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+				});
+
+			}
+			
+
+
+		});
+
+
+
+
+
+}
+
 
 
 			VerificarCredencialesLogin()
 			AgregarJugada()
 			anularJugada()
 			seleccionarJugada()
+			InsertarUsuario()
 
 
 // $(document).ready(function()

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaUsuarios extends Migration
+class TablaPremios extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class TablaUsuarios extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('premios', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username',100);
-            $table->string('password',100);
-    
-
-        
-            
+            $table->integer('primerPremio')->default(0);
+            $table->integer('segundoPremio')->default(0);
+            $table->integer('tercerPremio')->default(0);
         });
     }
 
@@ -31,6 +28,6 @@ class TablaUsuarios extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('premios');
     }
 }

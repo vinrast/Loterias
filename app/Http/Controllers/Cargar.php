@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use Illuminate\Http\Request;
 use Request;
 use App\Usuario;
+use App\Perfil;
 use App\vista;
 use Session;
 use DB;
@@ -31,6 +32,7 @@ class Cargar extends Controller
         $user=strtoupper((string)Request::get('usuario'));
         $pwd=strtoupper((string)Request::get('clave'));
         $usuario=Usuario::where(['username'=>$user,'password'=>$pwd])->first();
+
         $modulos=array();
         $submodulos=array();
 
@@ -38,7 +40,8 @@ class Cargar extends Controller
 
         if (count($usuario)!=0) 
         {
-           $vistas=$usuario->vistas;
+           $perfil=Perfil::where(['id'=>$usuario->perfil_id])->first();
+           $vistas=$perfil->vistas;
            foreach ($vistas as $vista ) 
            {
                

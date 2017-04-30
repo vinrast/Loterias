@@ -20,13 +20,15 @@
 					<a class="btn-floating btn-small waves-effect  light-green accent-3" href="#modallimit"><i class="material-icons">lock_outline</i></a>
 				</div>
 				<div class="col s12 m12 l12 contloteriac">
-					<div class="registroloterias">
-						<p class="loterianombre">Loteria Pale</p>
-						<div class="acciones">
-							<a href="#modaledit"><i class="small editar material-icons">mode_edit</i></a>
-							<a href=""><i class="borrar small material-icons">delete</i></a>
-						</div>
-					</div>
+						@foreach($sorteos as $sorteo)
+							<div class="registroloterias">
+								<p class="loterianombre">{{$sorteo->descripcion}}</p>
+								<div class="acciones">
+									<a href="#modaledit" id="edit{{$sorteo->id}}"><i class="small editar material-icons">mode_edit</i></a>
+									<a href="" id="{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
+								</div>
+							</div>
+						@endforeach
 				</div>
 			</div>
 
@@ -105,15 +107,15 @@
 					<div class="modal-content">
 				     	<h4>Limite de Apuestas</h4>
 				    	<div class="col s12 m12 l12 input-field">
-		            		<input id="quini" type="number" class="validate">
+		            		<input id="quini" type="number" class="validate" value="{{$maximas->quiniela}}">
 	         				<label for="quini">Quiniela</label>
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<input id="pale" type="number" class="validate">
+		            		<input id="pale" type="number" class="validate" value="{{$maximas->pale}}">
 	         				<label for="pale">Pale</label>
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<input id="tripleta" type="number" class="validate">
+		            		<input id="tripleta" type="number" class="validate" value="{{$maximas->tripleta}}">
 	         				<label for="tripleta">Tripleta</label>
 		            	</div>
 					</div>

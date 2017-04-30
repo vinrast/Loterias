@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TablaUsuarioVista extends Migration
+class TablaPerfilVista extends Migration
 {
    
     public $timestamps=false;
@@ -15,13 +15,13 @@ class TablaUsuarioVista extends Migration
      */
     public function up()
     {
-        Schema::create('usuario_vista', function (Blueprint $table) 
+        Schema::create('perfil_vista', function (Blueprint $table) 
         {
             $table->increments('id');
-            $table->integer('usuario_id')->unsigned();
+            $table->integer('perfil_id')->unsigned();
             $table->integer('vista_id')->unsigned();
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            $table->foreign('perfil_id')->references('id')->on('perfiles');
             $table->foreign('vista_id')->references('id')->on('vistas');
 
            
@@ -35,6 +35,6 @@ class TablaUsuarioVista extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuario_vista');
+        Schema::dropIfExists('perfil_vista');
     }
 }

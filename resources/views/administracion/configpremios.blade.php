@@ -18,15 +18,15 @@
 						<div class="col s12 m12 l12 ">
 							<div class="">
 								<div class="col s12 m12 l12 input-field">
-				            		<input id="1ero" type="number" class="validate">
+				            		<input id="1ero" type="number" class="validate" value="{{$quiniela->primerPremio}}">
 			         				<label for="1ero">1era Posición</label>
 				            	</div>
 				            	<div class="col s12 m12 l12 input-field">
-				            		<input id="2do" type="number" class="validate">
+				            		<input id="2do" type="number" class="validate" value="{{$quiniela->segundoPremio}}">
 			         				<label for="2do">2da Posición</label>
 				            	</div>
 				            	<div class="col s12 m12 l12 input-field">
-				            		<input id="3ra" type="number" class="validate">
+				            		<input id="3ra" type="number" class="validate" value="{{$quiniela->tercerPremio}}">
 			         				<label for="3ra">3ra Posición</label>
 				            	</div>
 							</div>
@@ -39,15 +39,15 @@
 						<div class="col s12 m12 l12 ">
 							<div class="">
 								<div class="col s12 m12 l12 input-field">
-				            		<input id="1ero" type="number" class="validate">
+				            		<input id="1ero" type="number" class="validate" value="{{$pale->primerPremio}}">
 			         				<label for="1ero">1era  y 2da Posición</label>
 				            	</div>
 				            	<div class="col s12 m12 l12 input-field">
-				            		<input id="2do" type="number" class="validate">
+				            		<input id="2do" type="number" class="validate" value="{{$pale->segundoPremio}}">
 			         				<label for="2do">1era  y 3ra Posición</label>
 				            	</div>
 				            	<div class="col s12 m12 l12 input-field">
-				            		<input id="3ra" type="number" class="validate">
+				            		<input id="3ra" type="number" class="validate" value="{{$pale->tercerPremio}}">
 			         				<label for="3ra"> 2da y 3ra Posición</label>
 				            	</div>
 							</div>
@@ -60,11 +60,11 @@
 						<div class="col s12 m12 l12 ">
 							<div class="">
 								<div class="col s12 m12 l12 input-field">
-				            		<input id="1ero" type="number" class="validate">
+				            		<input id="1ero" type="number" class="validate" value="{{$tripleta->primerPremio}}">
 			         				<label for="1ero">Tripleta</label>
 				            	</div>
 				            	<div class="col s12 m12 l12 input-field">
-				            		<input id="2do" type="number" class="validate">
+				            		<input id="2do" type="number" class="validate" value="{{$tripleta->segundoPremio}}">
 			         				<label for="2do">2 de 3</label>
 				            	</div>
 							</div>

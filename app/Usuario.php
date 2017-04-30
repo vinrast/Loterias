@@ -8,10 +8,7 @@ class Usuario extends Model
 {
     public $timestamps=false;
     protected $table="Usuarios";
-    protected $fillable=['id','username','password'];
+    protected $fillable=['id','username','password','perfil_id'];
 
-    public function vistas()
-    {
-    	 return $this->belongsToMany('App\Vista');
-    }
+   
 }
