@@ -16,21 +16,31 @@
 							<span>Reportes</span>
 						</div>
 					</div>
-					<div class="col s12 m6 l6 ">
-							<div class="">
-								<div class="input-field">
-				            		<input id="1ero" type="number" class="validate">
-			         				<label for="1ero">1era Posición</label>
-				            	</div>
-				            	<div class="input-field">
-				            		<input id="2do" type="number" class="validate">
-			         				<label for="2do">2da Posición</label>
-				            	</div>
-				            	<div class="input-field">
-				            		<input id="3ra" type="number" class="validate">
-			         				<label for="3ra">3ra Posición</label>
-				            	</div>
-							</div>
+					<div class="col s12 m9 l9 ">
+						<div class="col s12 m3 l3">
+								<input name="group1" type="radio" id="test1" />
+								<label for="test1">Rango</label>
+		            	</div>
+		            	<div class="col s12 m4 l4">
+		            			<label>Desde</label>
+								<input type="date" class="datepicker">	
+		            	</div>
+		            	<div class="col s12 m4 l4">
+		            			<label>Hasta</label>
+								<input type="date" class="datepicker">
+		            	</div>
+		            	<div class="col s12 m3 l3">
+								<input name="group1" type="radio" id="test2" />
+								<label for="test2">Del</label>
+		            	</div>
+		            	<div class="col s12 m4 l4">
+							<select>
+								<option value="" disabled selected>Seleccione una Opcion</option>
+								<option value="1">Día</option>
+								<option value="2">Día Anterior</option>
+								<option value="3">Mes</option>
+							</select>
+		            	</div>
 					</div>
 					
 
