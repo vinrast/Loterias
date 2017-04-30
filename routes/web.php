@@ -24,3 +24,6 @@ Route::post('/loginVerificar','Cargar@loginVerificar');
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');
+Route::get('/administracion/set_premios','Administracion@config_premio');
+
+Route::get('/reportes','Reportes@index');

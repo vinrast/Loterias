@@ -17,6 +17,7 @@
 				<div class="col s12 m12 l12 push-l5 contaddloteria">
 					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">note_add</i></a>
 					<a class="btn-floating btn-small waves-effect  purple darken-1" href="#modalset"><i class="material-icons">power_settings_new</i></a>
+					<a class="btn-floating btn-small waves-effect  light-green accent-3" href="#modallimit"><i class="material-icons">lock_outline</i></a>
 				</div>
 				<div class="col s12 m12 l12 contloteriac">
 					<div class="registroloterias">
@@ -46,8 +47,8 @@
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
@@ -69,13 +70,13 @@
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
   			</div>
-<!--///////////////////////// MODAL CONFIGURACION CIERRE TURNO//////////////////////////////////////////////////-->
+<!--///////////////////////// MODAL CONFIGURACION CIERRE SORTEO//////////////////////////////////////////////////////-->
 			<div id="modalset" class="modal sethorario">
 				<form class="#" action="#" method="#">
 					<div class="modal-content">
@@ -91,12 +92,38 @@
 		            	</div>
 					</div>
 	    			<div class="botonera-modal">
-		    			<center>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
+		    			<center>	
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
+  			</div>
+<!--///////////////////////// MODAL MAXIMO APUESTAS ///////////////////////////////////////////////////////////////////-->
+			<div id="modallimit" class="modal addusuario">
+				<form class="#" action="#" method="#">
+					<div class="modal-content">
+				     	<h4>Limite de Apuestas</h4>
+				    	<div class="col s12 m12 l12 input-field">
+		            		<input id="quini" type="number" class="validate">
+	         				<label for="quini">Quiniela</label>
+		            	</div>
+		            	<div class="col s12 m12 l12 input-field">
+		            		<input id="pale" type="number" class="validate">
+	         				<label for="pale">Pale</label>
+		            	</div>
+		            	<div class="col s12 m12 l12 input-field">
+		            		<input id="tripleta" type="number" class="validate">
+	         				<label for="tripleta">Tripleta</label>
+		            	</div>
+					</div>
+	    			<div class="botonera-modal">
+		    			<center>
+		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
+		    			</center>
+	    			</div>
+				</form>		
   			</div>
 
 		</div>

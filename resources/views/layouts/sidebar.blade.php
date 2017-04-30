@@ -2,10 +2,10 @@
 	<div class="menu">
 		<ul>
 			@foreach($modulos as $menu)
-				<li ><a class="" href="{{$menu->ruta}}">{{$menu->descripcion}}</a></li>
+				<a class="" href="{{$menu->ruta}}"><li >{{$menu->descripcion}}</li></a>
 				@foreach($submodulos as $link)
 					@if($link->dependencia==$menu->id)
-						<li ><a class="" href="{{$link->ruta}}">{{$link->descripcion}}</a></li>
+						<a class="" href="{{$link->ruta}}"><li >{{$link->descripcion}}</li></a>
 					@endif
 				@endforeach
 			@endforeach
