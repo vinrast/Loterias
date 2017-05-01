@@ -24,7 +24,7 @@
 		            	</div>
 		            	<div class="row">
 		            		<button class="btn  waves-effect red lighten-1" type="reset" name="reiniciar">Borrar</button>
-	            			<button class="btn  waves-effect waves-light" type="button" name="ingre" id="Ingresar__">Entrar</button>
+	            			<button class="btn  waves-effect waves-light" type="submit" name="ingre" id="Ingresar__">Entrar</button>
 		            	</div>
 	            	</form>
 	            </div>

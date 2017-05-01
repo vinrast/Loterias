@@ -50,6 +50,8 @@ $(document).ready(function(){
 
 //////////////////////////////////////// FUNCIONALIDAD DEL SIDEBAR ////////////////////////////////////////////////
 
-
+	$('#Ingresar__').click(function(e){
+		e.preventDefault();
+	})
 });
 

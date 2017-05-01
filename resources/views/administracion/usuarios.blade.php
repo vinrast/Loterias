@@ -49,8 +49,8 @@
 		            	<div class="input-field col s12">
     						<select name="perfilAgr_" id="perfilAgr">
 								<option value="0" disabled selected>Seleccione un perfil</option>
-								<option value="1">Vendedor</option>
-								<option value="2">Administrador</option>
+								<option value="2">Vendedor</option>
+								<option value="1">Administrador</option>
 						    </select>
     						<label>Tipo de perfil</label>
   						</div>
@@ -71,12 +71,11 @@
 					<div class="modal-content">
 				     	<h4>Editar Usuario</h4>
 				    	<div class="col s12 m12 l12 input-field">
-		            		<input id="userEdit" type="text" class="validate" name="userEdit_">
-	         				<label for="userEdit">Usuario</label>
+		            		<input id="userEdit" type="text" class="validate" placeholder="Usuario" name="userEdit_">
+	         				
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<input id="passwordEdit" type="password" class="validate" name="passwordEdit_">
-	         				<label for="passwordEdit">Contraseña</label>
+		            		<input id="passwordEdit" type="password" class="validate" placeholder="Contraseña" name="passwordEdit_">
 		            	</div>
 		            	<div class="input-field col s12">
     						<select name="perfilEdit_" id="perfilEdit">

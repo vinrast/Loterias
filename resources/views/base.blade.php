@@ -13,6 +13,7 @@
     <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/materialize.min.js')}}"></script>
     <script src="{{asset('js/frontEnd.js')}}"></script>
+    <script src="{{asset('js/reloj.js')}}"></script>
     <script src="{{asset('plugins/sweetalert/sweetalert.min.js')}}"></script>
 </body>
 </html>
