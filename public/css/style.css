@@ -14,22 +14,72 @@ body{
     text-align: center;
     border-style: ridge; 
     border-width: 1px;
-    background-color: #fff;
+    background-color: #757575;
 }
+.cont-menu{
+    width: 100%;
+    display: inline-block;
+}
+.cont-menu .menu{
+    margin-top: 0px;
+    width: 100%;
+}
+.menu li a{
+    display: block;
+    border-bottom: 1px solid rgba(0,0,0, 0.2);
+    border-top: 1px solid rgba(255,255,255, 0.2);
+    background:#3e3f44;
+    text-decoration:none;
+    color:#FFF;
+    text-shadow: 1px 0px 1px rgba(0,0,0,0.2);
+    filter: dropshadow(color=#000, offx=1, offy=0);
+    padding:10px;
+    padding-left:20px;
+}
+ 
+.menu li ul li a{
+    font-size:14px;
+    color:#47689d;
+    text-shadow: 1px 0px 1px rgba(255,255,255,0.5);
+    
+}
+ 
+.menu li a:hover{
+    background:#26a69a;
+    -moz-transition: background 0.3s ease-in;
+    -webkit-transition: background 0.3s ease-in;
+    -o-transition: background 0.3s ease-in;
+}
+ 
 .menu ul{
-    margin: 0 !important;
+    margin:0;
+    padding:0;
+    list-style:none;
+    height:0;
+    overflow: hidden;
+    transition:1s;
+    -moz-transition:1s;
+    -webkit-transition:1s;
 }
-.menu a{
-    color:  #00897b;
+ 
+.menu li:hover ul{
+    height:40px;
+    overflow: hidden;
 }
-.menu ul li{
-    height: 40px;
-    margin-top: 5px;
+ 
+.menu li ul li a{
+    background:#757575;
+    color: #FFF;
 }
-.menu ul li:hover{
-    background-color: #eee;
-    font-weight: bolder;
+ 
+.menu ul li a:hover {
+    background: none repeat scroll 0 0 #ccc;
+    color: #47689d;
+    -moz-transition: color 0.4s ease;
+    -webkit-transition: color 0.4s ease;
+    -o-transition: color 0.4s ease;
 }
+
 .calendario{
     font-family: 'PT Sans Narrow', sans-serif; 
     font-size: 15px;

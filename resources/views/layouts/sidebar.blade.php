@@ -1,13 +1,19 @@
 <div class="col s12 m2 l2 sidebar">
-	<div class="menu">
-		<ul>
+	<div class="cont-menu">
+		<ul class="menu">
 			@foreach($modulos as $menu)
-				<a class="" href="{{$menu->ruta}}"><li >{{$menu->descripcion}}</li></a>
+			<li >
+				<a class="" href="{{$menu->ruta}}">{{$menu->descripcion}}</a>
 				@foreach($submodulos as $link)
 					@if($link->dependencia==$menu->id)
-						<a class="" href="{{$link->ruta}}"><li >{{$link->descripcion}}</li></a>
+					<ul>
+						<li >
+							<a href="{{$link->ruta}}">{{$link->descripcion}}</a>
+						</li>
+					</ul>
 					@endif
 				@endforeach
+			</li>
 			@endforeach
 		</ul>
 	</div>
