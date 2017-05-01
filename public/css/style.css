@@ -140,6 +140,12 @@ body{
     border-width: 1px;
     border-top: 0;
 }
+.celda{
+    width: 60px !important;
+}
+.celda1{
+    width: 200px;
+}
 /*//////////////////////////////////////// TOTALIZADOR /////////////////////////////////////////////////////////*/
 
 .totalizador{
@@ -180,7 +186,7 @@ body{
     overflow-x: hidden;
 }
 .usuarios,.registroloterias{
-    padding: 0;
+    padding: 5px;
     margin: 0
 }
 .usuarionombre,.loterianombre{
@@ -189,7 +195,6 @@ body{
 }
 .acciones{
     display: inline;
-    padding-left: 430px;
 }
 .acciones a{
     color: rgba(33, 33, 33, 0.7);

@@ -13,15 +13,15 @@
 				<div class="contusuariot" >
 					<span>Usuarios</span>
 				</div>
-				<div class="col s12 m12 l12 push-l5 contaddusuario ">
+				<div class="col s12 m12 l12 contaddusuario ">
 					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">perm_identity</i></a>
 				</div>
 				<div class="col s12 m12 l12 contusuarioc">
 					
 					@foreach($usuarios as $usuario)
-							<div class="usuarios" id="listaUsuarios">
-								<p class="usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</p>
-								<div class="acciones">
+							<div class=" col s12 m12 l12 usuarios" id="listaUsuarios">
+								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
+								<div class="col s12 m2 l2 push-l4 acciones">
 									<a href="#modaledit"  id="edit{{$usuario->id}}"><i class="small editar material-icons">mode_edit</i></a>
 									<a href="" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
@@ -57,8 +57,8 @@
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
-		    				<button class="btn  waves-effect waves-light" type="button" name="insertarAgr" id="insUsuarioAgr">Guardar</button>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="restaurarAgr" id="resUsuarioAgr">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="button" name="insertarAgr" id="insUsuarioAgr">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>

@@ -14,16 +14,16 @@
 				<div class="contloteriat" >
 					<span>Loterias</span>
 				</div>
-				<div class="col s12 m12 l12 push-l5 contaddloteria">
+				<div class="col s12 m12 l12  contaddloteria">
 					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">note_add</i></a>
 					<a class="btn-floating btn-small waves-effect  purple darken-1" href="#modalset"><i class="material-icons">power_settings_new</i></a>
 					<a class="btn-floating btn-small waves-effect  light-green accent-3" href="#modallimit"><i class="material-icons">lock_outline</i></a>
 				</div>
 				<div class="col s12 m12 l12 contloteriac">
 						@foreach($sorteos as $sorteo)
-							<div class="registroloterias">
-								<p class="loterianombre">{{$sorteo->descripcion}}</p>
-								<div class="acciones">
+							<div class="col s12 m12 l12 registroloterias">
+								<div class="col s12 m6 l6 loterianombre">{{$sorteo->descripcion}}</div>
+								<div class="col s12 m2 l2 push-l4 acciones">
 									<a href="#modaledit" id="edit{{$sorteo->id}}"><i class="small editar material-icons">mode_edit</i></a>
 									<a href="" id="{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
@@ -82,7 +82,7 @@
 			<div id="modalset" class="modal sethorario">
 				<form class="#" action="#" method="#">
 					<div class="modal-content">
-				     	<h4>Tiempo para Cierre de Sorteos</h4>
+				     	<h4>Cierre de Venta</h4>
 				    	<div class="col s12 m12 l12 input-field">
 		            		<select>
 								<option value="" disabled selected>Seleccione una opcion</option>

@@ -72,8 +72,8 @@
 					<div class="resultadoc" id="jugadasTickets">
 						<table id="tablaJugadas">
 							<!-- <tr class="resultadoi" id="filaJugada">
-								<th><input type="checkbox" id="#" /><label for="#"></label></th>
-								<th>Loteria 1</th>
+								<th class="celda"><input type="checkbox" id="#" /><label for="#"></label></th>
+								<th class="celda1">Loteria 1</th>
 								<th>25-03-18</th>
 								<th>2.00</th>
 							</tr> -->

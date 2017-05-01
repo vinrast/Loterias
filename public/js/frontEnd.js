@@ -223,7 +223,7 @@ function AgregarJugada()
 				if (c==0) 
 					{
 						swal({
-								title:'Debe ingresar al menos una dupleta!!',//Contenido del modal
+								title:'Debe ingresar al menos una Quiniela!!',//Contenido del modal
 								text: '<p style="font-size: 1.5em;">'+''+'</p>',
 								timer:2000,//Tiempo de retardo en ejecucion del modal
 								type: "warning",
@@ -270,7 +270,7 @@ function AgregarJugada()
 							{
 								
 							
-								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th>'+sorteos_[i]+'</th>  <th>'+tripleta+'</th> <th id="apuesta'+jugadaId+'">'+$('#Apuesta').val()+'</th></tr>');
+								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+jugadaId+'" >'+$('#Apuesta').val()+'</th></tr>');
 								valor=valor+parseInt($('#Apuesta').val());
 								jugadaId=jugadaId+1;
 							}
@@ -351,7 +351,7 @@ function InsertarUsuario ()
 					}
 					else
 					{
-						$('#listaUsuarios').append('   <p class="usuarionombre" id="usuario'+resultado[2]+'">'+resultado[1]+'</p>       <div class="acciones">     <a href="#modaledit"  id="edit'+resultado[2]+'"><i class="small editar material-icons">mode_edit</i></a>    <a href="" id="elim'+resultado[2]+'"><i class="borrar small material-icons">delete</i></a>   </div>');
+						$('#listaUsuarios').append('   <div class="col s12 m6 l6 usuarionombre" id="usuario'+resultado[2]+'">'+resultado[1]+'</div>       <div class="col s12 m2 l2 push-l4 acciones">     <a href="#modaledit"  id="edit'+resultado[2]+'"><i class="small editar material-icons">mode_edit</i></a>    <a href="" id="elim'+resultado[2]+'"><i class="borrar small material-icons">delete</i></a>   </div>');
 
 						swal({
 
