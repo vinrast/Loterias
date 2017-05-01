@@ -23,7 +23,7 @@
 						@foreach($sorteos as $sorteo)
 							<div class="col s12 m12 l12 registroloterias">
 								<div class="col s12 m6 l6 loterianombre">{{$sorteo->descripcion}}</div>
-								<div class="col s12 m2 l2 push-l4 acciones">
+								<div class="col s12 m2 l2 push-l5 acciones">
 									<a href="#modaledit" id="edit{{$sorteo->id}}"><i class="small editar material-icons">mode_edit</i></a>
 									<a href="" id="{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>

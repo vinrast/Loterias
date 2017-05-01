@@ -21,7 +21,7 @@
 					@foreach($usuarios as $usuario)
 							<div class=" col s12 m12 l12 usuarios" id="listaUsuarios">
 								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
-								<div class="col s12 m2 l2 push-l4 acciones">
+								<div class="col s12 m2 l2 push-l5 acciones">
 									<a href="#modaledit" class="editar" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="small material-icons">mode_edit</i></a>
 									<a href="" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
@@ -80,8 +80,8 @@
 		            	<div class="input-field col s12">
     						<select name="perfilEdit_" id="perfilEdit">
 								<option value="" selected disabled>Seleccione un perfil</option>
-								<option value="1">Vendedor</option>
-								<option value="2">Administrador</option>
+								<option value="2">Vendedor</option>
+								<option value="1">Administrador</option>
 						    </select>
     						<label>Tipo de perfil</label>
   						</div>

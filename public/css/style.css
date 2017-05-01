@@ -241,10 +241,11 @@ body{
 }
 .usuarionombre,.loterianombre{
     display: inline;
-    padding-left: 15px
+    padding-left: 5px !important;
 }
 .acciones{
     display: inline;
+    padding: 0px !important;
 }
 .acciones a{
     color: rgba(33, 33, 33, 0.7);
