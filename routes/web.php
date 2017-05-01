@@ -27,5 +27,6 @@ Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');
 Route::get('/administracion/set_premios','Administracion@config_premio');
+Route::get('administracion/usuarios/traer_registro', 'Administracion@registro_actual');
 
 Route::get('/reportes','Reportes@index');

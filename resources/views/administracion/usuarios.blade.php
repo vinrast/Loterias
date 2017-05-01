@@ -22,7 +22,7 @@
 							<div class=" col s12 m12 l12 usuarios" id="listaUsuarios">
 								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
 								<div class="col s12 m2 l2 push-l4 acciones">
-									<a href="#modaledit"  id="edit{{$usuario->id}}"><i class="small editar material-icons">mode_edit</i></a>
+									<a href="#modaledit" class="editar" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="small material-icons">mode_edit</i></a>
 									<a href="" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
 							</div>
@@ -80,7 +80,7 @@
 		            	</div>
 		            	<div class="input-field col s12">
     						<select name="perfilEdit_" id="perfilEdit">
-								<option value="" disabled selected>Seleccione un perfil</option>
+								<option value="" selected disabled>Seleccione un perfil</option>
 								<option value="1">Vendedor</option>
 								<option value="2">Administrador</option>
 						    </select>
@@ -89,8 +89,8 @@
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
-		    				<button class="btn  waves-effect waves-light" type="button" name="insertarEdit_" id="insertarEdit">Guardar</button>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="restaurarEdit_" id="restaurarEdit">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="button" name="insertarEdit_" id="insertarEdit">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
