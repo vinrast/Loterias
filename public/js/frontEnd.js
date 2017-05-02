@@ -1,5 +1,48 @@
 var jugadaId=1;
-			var valor=0;
+var valor=0;
+
+function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta) 
+{
+	
+	
+							for (var i = 0; i < sorteos_.length; i++) 
+							{
+								
+							
+								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+jugadaId+'" >'+$('#Apuesta').val()+'</th></tr>');
+								valor=valor+parseInt($('#Apuesta').val());
+								jugadaId=jugadaId+1;
+							}
+
+
+							$('#dineroTotal').text(valor);
+							$('#Apuesta').val(" ");
+							$.each(checks, function(i)
+								{
+				
+									if ($(this).prop("checked")==true )
+									{
+										$(this).prop("checked",false);
+									}
+				
+								});
+
+
+							$.each(dupletas, function(i)
+							{
+								
+								$(this).val(" ");
+								
+								
+								
+							});
+
+
+
+
+
+}
+
 
 			function VerificarCredencialesLogin()
 			{
@@ -264,38 +307,62 @@ function AgregarJugada()
 						else
 						{
 							
-							//alert(jugada.sorteo+'  '+jugada.tripleta+' Por: '+$('#Apuesta').val());
-							for (var i = 0; i < sorteos_.length; i++) 
-							{
-								
-							
-								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+jugadaId+'" >'+$('#Apuesta').val()+'</th></tr>');
-								valor=valor+parseInt($('#Apuesta').val());
-								jugadaId=jugadaId+1;
-							}
+							 var tipos=['quiniela','pale','tripleta'];
+							 var url='/verificarApuesta';
+							 var datos=[$('#Apuesta').val(),tripleta,c];
+							 var consulta= $.get(url,{datos:datos},function(resultado)
+							 {
+							 	if (resultado[0]==0)
+							 	{
+
+							 		swal({
+											title:'Apuesta no permitida!!',//Contenido del modal
+											text: '<p style="font-size: 1.5em;">'+'El limite de ventas para '+tipos[c-1]+' fue logrado'+'</p>',
+											timer:4000,//Tiempo de retardo en ejecucion del modal
+											type: "error",
+											showConfirmButton:false,//Eliminar boton de confirmacion
+											html: true
+										});
 
 
-							$('#dineroTotal').text(valor);
-							$('#Apuesta').val(" ");
-							$.each(checks, function(i)
+							 	}
+							 	else if(resultado[0]==3)
+							 	{
+
+							 		swal({
+											title:'Apuesta no permitida!!',//Contenido del modal
+											text: '<p style="font-size: 1.5em;">'+'Usted cuenta con  '+resultado[1]+' euros para realizar esta apuesta de '+tipos[c-1]+'</p>',
+											timer:4000,//Tiempo de retardo en ejecucion del modal
+											type: "error",
+											showConfirmButton:false,//Eliminar boton de confirmacion
+											html: true
+										});
+
+
+							 	}
+							 	else if(resultado[0]==1 || resultado[0]==2)
+							 	{
+							 		verificarApuesta(sorteos_,jugadaId,checks,dupletas,tripleta);
+							 	}
+							 	
+
+
+							 });
+							consulta.fail(function()
 								{
-				
-									if ($(this).prop("checked")==true )
-									{
-										$(this).prop("checked",false);
-									}
-				
+									swal({
+											title:'Error inesperado!!',//Contenido del modal
+											text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+											timer:2000,//Tiempo de retardo en ejecucion del modal
+											type: "error",
+											showConfirmButton:false,//Eliminar boton de confirmacion
+											html: true
+										});
+
+
 								});
 
-
-							$.each(dupletas, function(i)
-							{
-								
-								$(this).val(" ");
-								
-								
-								
-							});
+							
 						}
 					}
 

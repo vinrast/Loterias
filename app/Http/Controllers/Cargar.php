@@ -6,7 +6,10 @@ namespace App\Http\Controllers;
 use Request;
 use App\Usuario;
 use App\Perfil;
-use App\vista;
+use App\Vista;
+use App\Maxima;
+use App\Jugada;
+use App\Apuesta;
 use Session;
 use DB;
 
@@ -68,6 +71,97 @@ class Cargar extends Controller
 
     }
 
+    public function verificarApuesta()
+    {
+      
+       
+        $columnas=['quiniela','pale','tripleta'];
+        $datos=Request::get('datos');
+        $apuesta=(int)$datos[0];
+        $tripleta=$datos[1];
+        $tipoJugada=(int)$datos[2];
+
+        // $datos=[1,'22-34-54',1];
+        // $apuesta=$datos[0];
+        // $tripleta=$datos[1];
+        // $tipoJugada=$datos[2]; 
+
+        $resp=[0,0];
+
+        $consultaJugada=Jugada::where('numero',$tripleta)->first();
+        $maxima=Maxima::where(['id'=>1])->first();
+        $campo=$columnas[$tipoJugada-1];
+       
+
+        if (count($consultaJugada)==0)//si no existe la jugada se crea
+        {
+           $idJ=DB::table('jugadas')->insertGetId
+          (['numero'=>$tripleta,'tipo'=>$tipoJugada,'acumulado'=>0]);
+
+          $acumulado=0;
+
+        }
+        else//si existe
+        {
+          $idJ=$consultaJugada->id;
+          $acumulado=$consultaJugada->acumulado;
+         
+        }
+        /////////////////////////Si puede realizarse la apuesta o no /////////////////////////////////
+        ///0 se encuentra cumplida, 1 exito y queda dinero, 2 se cumplio la meta con esa apuesta, 3 se sobrepasa se debe indicar cuanto falta
+       if($acumulado==$maxima->$campo)
+       {
+         $resp[0]=0;//se cumplio la meta
+       }
+       elseif($acumulado<=$maxima->$campo)
+       {
+        
+            $diferencia=($maxima->$campo)-$acumulado;
+            if ($apuesta<$diferencia) //si la apuesta esmejor a lo que queda
+            {
+                $resp[0]=1;
+                $resp[1]=$diferencia-$apuesta;
+            }
+            elseif($apuesta==$diferencia)//si la apuesta es igual a lo que queda//se cumple la meta
+            {
+                $resp[0]=2;
+
+            }
+            elseif($apuesta>$diferencia)//si la puesta se pasa
+            {
+                $resp[0]=3;
+                $resp[1]=$diferencia;
+            }
+       }
+       ////////////////////////////////////////////////////////////////////////////////////////////
+       ////////////////////////////////////////////Apuesta ////////////////////////////////////////
+
+        if($resp[0]==1 || $resp[0]==2)
+        {      
+               $consultaApuesta=Apuesta::where('cantidad',$apuesta)->first();
+
+                if (count($consultaApuesta)==0) //si no existe se crea
+                {
+                  
+                  $idA=DB::table('apuestas')->insertGetId
+                  (['cantidad'=>$apuesta]);
+                }
+                else//si existe
+                {
+                  $idA=$consultaApuesta->id;
+                }
+
+                $idAs=DB::table('apuesta_jugada')->insertGetId
+                (['apuesta_id'=>$idA,'jugada_id'=>$idJ]);
+
+                DB::table('jugadas')->where('id',$idJ)->update(['acumulado'=>$acumulado+$apuesta]);
+        }
+
+        
+
+      return($resp);
+      
+    }
 
    
     public function apuesta()
