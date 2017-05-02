@@ -153,7 +153,6 @@ $("#chekJugadas").change(function()
 
 function AgregarJugada()
 {
-
 	$("#ADD").click(function()
 		{
 			var sorteos=document.getElementById('sorteosDisponibles');
@@ -309,6 +308,9 @@ function AgregarJugada()
 
 function InsertarUsuario () 
 {
+	$('#insUsuarioAgr').click(function(e){
+		e.preventDefault();
+	});
 	$('#insUsuarioAgr').click(function()
 		{
 			var usuario=$('#userAgr').val();

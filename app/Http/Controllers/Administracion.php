@@ -77,19 +77,51 @@ class Administracion extends Controller{
     return view('administracion.configpremios',['modulos'=>$modulos,'submodulos'=>$submodulos,'quiniela'=>$quiniela,'pale'=>$pale,'tripleta'=>$tripleta]);
   }
 
-  public function registro_actual(){
+  public function usuario_actual(){
     $id=Request::get('datos');
     $consulta=DB::table('usuarios')->where('id','=',$id)->first();
     if (count($consulta)==1) {
       $respuesta =  array(  $consulta->username,
                             $consulta->password,
                             $consulta->perfil_id,
-                            1
+                            1,
                     );
     }
     else{
       $respuesta = 0; 
     }     
       return $respuesta; 
+  }
+
+  public function modificar_usuario_actual(){
+    $id=Request::get('iduser');
+    $user=strtoupper((string)Request::get('userEdit_'));
+    $password=strtoupper((string)Request::get('passwordEdit_'));
+    $perfil=Request::get('perfilEdit_');
+    $resultado=[0,null,null];//existe,username,id
+    $consulta=DB::table('usuarios')->where('id','<>',$id)->where('username',$user)->first();
+    if (count($consulta)!=0) {
+      $resultado[1]=$consulta->username;
+      $resultado[2]=$consulta->id;
+    }     
+    else{
+      DB::table('usuarios')->where('id',$id)->update( 
+                                                      [   'username'=>$user,
+                                                          'password'=>$password,
+                                                          'perfil_id'=>$perfil      
+                                                      ]);
+      $resultado[0]=1;
+      $resultado[1]=$user;
+      $resultado[2]=$id;
     }
+    return $resultado;
+  }
+
+  public function borrar_usuario(){
+    $id=Request::get('datos');
+    $eliminar=0;
+    $eliminar=DB::table('usuarios')->where('id', '=', $id)->delete();
+
+    return $eliminar;
+  }
 }

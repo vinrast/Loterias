@@ -23,7 +23,7 @@
 								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
 								<div class="col s12 m2 l2 push-l5 acciones">
 									<a href="#modaledit" class="editar" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="small material-icons">mode_edit</i></a>
-									<a href="" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
+									<a href="#" class="borrar" data-registro="{{$usuario->id}}" data-nombre="{{$usuario->username}}" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
 							</div>
 					@endforeach
@@ -47,27 +47,28 @@
 	         				<label for="passwordAgr">Contraseña</label>
 		            	</div>
 		            	<div class="input-field col s12">
-    						<select name="perfilAgr_" id="perfilAgr">
+    						<select name="perfilAgr_"  class="browser-default" id="perfilAgr">
 								<option value="0" disabled selected>Seleccione un perfil</option>
 								<option value="2">Vendedor</option>
 								<option value="1">Administrador</option>
 						    </select>
-    						<label>Tipo de perfil</label>
   						</div>
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="restaurarAgr" id="resUsuarioAgr">Borrar</button>
-		    				<button class="btn  waves-effect waves-light" type="button" name="insertarAgr" id="insUsuarioAgr">Guardar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="insertarAgr" id="insUsuarioAgr">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
 	    			
   			</div>
 <!--///////////////////////////////////////// MODAL EDITAR /////////////////////////////////////////////////////-->			
+			
 			<div id="modaledit" class="modal editusuario">
 				<form id="usuarioEditar">
 				 {{ csrf_field() }}
+				 	<input type="hidden" name="iduser" id="iduser">
 					<div class="modal-content">
 				     	<h4>Editar Usuario</h4>
 				    	<div class="col s12 m12 l12 input-field">
@@ -78,18 +79,17 @@
 		            		<input id="passwordEdit" type="password" class="validate" placeholder="Contraseña" name="passwordEdit_">
 		            	</div>
 		            	<div class="input-field col s12">
-    						<select name="perfilEdit_" id="perfilEdit">
-								<option value="" selected disabled>Seleccione un perfil</option>
+    						<select name="perfilEdit_" class="browser-default" id="perfilEdit">
+								<option value="" selected>Seleccione un perfil</option>
 								<option value="2">Vendedor</option>
 								<option value="1">Administrador</option>
 						    </select>
-    						<label>Tipo de perfil</label>
   						</div>
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="restaurarEdit_" id="restaurarEdit">Borrar</button>
-		    				<button class="btn  waves-effect waves-light" type="button" name="insertarEdit_" id="insertarEdit">Guardar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" name="insertarEdit_" id="insertarEdit">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>

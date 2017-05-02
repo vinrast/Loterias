@@ -27,6 +27,7 @@ Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');
 Route::get('/administracion/set_premios','Administracion@config_premio');
-Route::get('administracion/usuarios/traer_registro', 'Administracion@registro_actual');
-
+Route::get('/administracion/usuarios/traer_registro', 'Administracion@usuario_actual');
+Route::post('/administracion/usuarios/modificarUsuario', 'Administracion@modificar_usuario_actual');
+Route::get('/administracion/usuarios/borrar', 'Administracion@borrar_usuario');
 Route::get('/reportes','Reportes@index');
