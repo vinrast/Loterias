@@ -342,7 +342,7 @@ function AgregarJugada()
 							 	}
 							 	else if(resultado[0]==1 || resultado[0]==2)
 							 	{
-							 		verificarApuesta(sorteos_,jugadaId,checks,dupletas,tripleta);
+							 		verificarApuesta(sorteos_,jugadaId,checks,dupletas,tripleta);//lista las jugadas que seran ligadas a un ticket
 							 	}
 							 	
 
@@ -353,7 +353,7 @@ function AgregarJugada()
 									swal({
 											title:'Error inesperado!!',//Contenido del modal
 											text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
-											timer:2000,//Tiempo de retardo en ejecucion del modal
+											timer:3000,//Tiempo de retardo en ejecucion del modal
 											type: "error",
 											showConfirmButton:false,//Eliminar boton de confirmacion
 											html: true
