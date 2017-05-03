@@ -10,3 +10,4 @@ class Sorteo extends Model
     protected $table="sorteos";
     protected $fillable=['id','descripcion','horaSorteo','tiempoCierre'];
 }
+

@@ -21,6 +21,7 @@ class Cargar extends Controller
     {
         Session::forget('sidebar');
         Session::forget('modulos');
+        Session::forget('usuario');
         Session::forget('submodulos');
         return view('login');
     }
@@ -63,6 +64,7 @@ class Cargar extends Controller
           
           Session::push('modulos',$modulos);//datos del menu segun el usuario logueado
           Session::push('submodulos',$submodulos);
+          Session::push('usuario',$usuario);
         
 
           $respuesta=[$usuario->username];
