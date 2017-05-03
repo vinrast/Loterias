@@ -214,7 +214,7 @@ function AgregarJugada()
 				if ($(this).prop("checked")==true )
 				{
 					c=c+1;
-					//alert($(this).attr('data-descripcion'));
+					
 					sorteos_.push($(this).attr('data-descripcion'));
 				}
 				
@@ -238,6 +238,7 @@ function AgregarJugada()
 				var sorteos=document.getElementById('tripleta');
 				var dupletas=sorteos.getElementsByTagName("input");
 				var tripleta=" ";
+				var aux=[];
 				c=0;
 
 				$.each(dupletas, function(i)
@@ -246,21 +247,31 @@ function AgregarJugada()
 					if ($(this).val()!='')
 					{
 						c=c+1;
-						if (c==1) 
-						{
-							tripleta=tripleta+$(this).val();
-						}
-						else
-						{
-							tripleta=tripleta+'-'+$(this).val();
-						}
-						
+
+						aux.push($(this).val());//valores en un arreglo
 					}
 					
 					
 				});
 
+				//////////////////ordenar elementos de la tripleta ////////////////
 
+					if (c==2) 
+					{
+						aux.sort(function(a,b){return a-b;});
+					}
+					for (var i =0; i<aux.length ;i++) 
+					{
+						if(i==0)
+						{
+							tripleta=tripleta+String(aux[i]);
+						}
+						else
+						{
+							tripleta=tripleta+'-'+String(aux[i]);
+						}
+					}
+				/////////////////////////////////////////////////////////////////////
 
 				if (c==0) 
 					{
@@ -276,20 +287,8 @@ function AgregarJugada()
 					}
 				else
 					{
-						// var tripleta_='';
-						// for (var i = 0; i < tripleta.length; i++) 
-						// {
-						// 	if(i>0)
-						// 	{
-						// 		tripleta_=tripleta_+'-'+tripleta[i];
-						// 	}
-						// 	else
-						// 	{
-						// 		tripleta_=tripleta_+tripleta[i];
-						// 	}
-
-						// }
-						//jugada.tripleta=tripleta_;
+						
+						
 						
 						if ($('#Apuesta').val()=='') 
 						{
@@ -309,8 +308,9 @@ function AgregarJugada()
 							
 							 var tipos=['quiniela','pale','tripleta'];
 							 var url='/verificarApuesta';
-							 var datos=[$('#Apuesta').val(),tripleta,c];
+							 var datos=[$('#Apuesta').val(),tripleta,c,sorteos_];
 							 var consulta= $.get(url,{datos:datos},function(resultado)
+							 
 							 {
 							 	if (resultado[0]==0)
 							 	{
