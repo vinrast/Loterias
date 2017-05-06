@@ -20,11 +20,11 @@
 				</div>
 				<div class="col s12 m12 l12 contloteriac">
 						@foreach($sorteos as $sorteo)
-							<div class="col s12 m12 l12 registroloterias">
+							<div class="col s12 m12 l12 registroloterias" id="registroloterias">
 								<div class="col s12 m6 l6 loterianombre">{{$sorteo->descripcion}}</div>
 								<div class="col s12 m2 l2 push-l5 acciones">
 									<a href="#modaledit" id="edit{{$sorteo->id}}"><i class="small editar material-icons">mode_edit</i></a>
-									<a href="" id="{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
+									<a href="" id="elim{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
 							</div>
 						@endforeach
@@ -34,22 +34,22 @@
 <!--/////////////////////////////////////    MODAL DE AGREGAR LOTERIA  ////////////////////////////////////////-->
 			
 			<div id="modaladd" class="modal addloteria">
-				<form class="#" action="#" method="#">
+				<form id="addlotery">
 					<div class="modal-content">
 				     	<h4>Agregar Loteria</h4>
 				    	<div class="col s12 m12 l12 input-field">
-		            		<input id="user" type="text" class="validate">
-	         				<label for="user">Loteria</label>
+		            		<input id="loteria" type="text" name="loteria" class="validate">
+	         				<label for="loteria">Loteria</label>
 		            	</div>
-		            	<div class="col s12 m12 l10input-field">
+		            	<div class="col s12 m12 l12">
 		            		<label for="horatra">Hora de Transmision</label>
-		            		<input id="horatra" type="time" class="validate">
+		            		<input id="horatra" name="horatra" type="time" class="validate">
 		            	</div>
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
+		    				<button class="btn  waves-effect waves-light" id="savelotery" type="submit" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>

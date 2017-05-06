@@ -34,7 +34,7 @@
 								<label for="test2">Del</label>
 		            	</div>
 		            	<div class="col s12 m4 l4">
-							<select>
+							<select class="browser-default">
 								<option value="" disabled selected>Seleccione una Opcion</option>
 								<option value="1">Día</option>
 								<option value="2">Día Anterior</option>

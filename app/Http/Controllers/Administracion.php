@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Request;
 use App\Pare;
 use App\Usuario;
+use App\Sorteo;
 use DB;
 
 
@@ -123,5 +124,29 @@ class Administracion extends Controller{
     $eliminar=DB::table('usuarios')->where('id', '=', $id)->delete();
 
     return $eliminar;
+  }
+
+  public function insertar_loteria(){
+    $loteria=Request::get('data');
+    $sorteo=ucwords(strtolower($loteria[0]));
+    $resultado=[0,null,null];
+    $consulta=Sorteo::where('descripcion',$sorteo)->first();
+    if (count($consulta)!=0){
+        $resultado[1]=$consulta->descripcion;
+    }     
+    else{
+      $loteria_id=DB::table('sorteos')->insertGetId
+          (
+
+            ['descripcion'=>$sorteo,'horaSorteo'=>$loteria[1]]
+          );
+
+        $resultado[0]=1;
+        $resultado[1]=$sorteo;
+        $resultado[2]=$loteria_id;
+
+    }
+
+    return $resultado;
   }
 }
