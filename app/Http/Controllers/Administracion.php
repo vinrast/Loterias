@@ -190,4 +190,24 @@ class Administracion extends Controller{
 
     return $eliminar;
   }
+  public function actualizar_configuracion_general(){
+    $respuesta=0;
+    $id=Request::get('id');
+    $quiniela=Request::get('quiniela');
+    $pale=Request::get('pale');
+    $tripleta=Request::get('tripleta');
+    $tiempo=Request::get('tiempo');
+    $consulta=DB::table('maximas')->where('id','=',$id)->first();
+    if (count($consulta)) {
+      DB::table('maximas')->where('id',$id)->update( 
+                                                      [   'quiniela'=>$quiniela,
+                                                          'pale'=>$pale,
+                                                          'tripleta'=>$tripleta,
+                                                          'tiempoCierre'=>$tiempo,
+                                                      ]);
+      $respuesta = 1;
+    }
+    
+  return $respuesta;
+  }
 }

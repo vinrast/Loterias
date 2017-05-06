@@ -343,6 +343,61 @@ $(document).ready(function(){
 		});
 	});
 
-///////////////////////////////////////////////// INSERTAR CONFIRGURACIONES GENERALES /////////////////////////////////////////////////
+///////////////////////////////////////////////// INSERTAR CONFIGURACIONES GENERALES /////////////////////////////////////////////////
+	$('#setgen').click(function(e){
+		e.preventDefault();
+	});
+	$('#resetgen').click(function(){
+		$('#quini').val('');
+		$('#pale').val('');
+		$('#tripleta').val('');
+		$('#tiempo> option[value=""]').attr('selected', 'true');
+	});
+		
 
+	$('#setgen').click(function(){
+		quiniela = $('#quini').val();
+		pale = $('#pale').val();
+		tripleta = $('#tripleta').val();
+		tiempo = $('tiempo').val();
+		formulario = $('#formsetgen')
+		datos = formulario.serialize();
+		url	= "/administracion/loterias/setgen"
+		if (quiniela=="" || pale=="" || tripleta=="" || tiempo==""){
+			swal({
+				title:'Campos vacios!!!!!',//Contenido del modal
+				text: '<p style="font-size: 1.5em;">'+'Debe llenar todos los Campos'+'</p>',
+				timer:2000,//Tiempo de retardo en ejecucion del modal
+				type: "error",
+				showConfirmButton:false,//Eliminar boton de confirmacion
+				html: true
+			});
+		}
+		else{
+			var posting=$.post( url,datos,function(resultado){
+					if (resultado==1){
+						swal({
+							title:'Actualización Exitosa!!!.',//Contenido del modal
+							text: '<p style="font-size: 1.5em;">'+'La Configuracion fue actualizada con exito </p>',
+							timer:1800,//Tiempo de retardo en ejecucion del modal
+							type: "success",
+							showConfirmButton:false,//Eliminar boton de confirmacion
+							html:true								
+						});
+					}
+				});
+				posting.fail(function() {
+					swal({
+							title:'Error inesperado!!',//Contenido del modal
+							text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+							timer:2000,//Tiempo de retardo en ejecucion del modal
+							type: "error",
+							showConfirmButton:false,//Eliminar boton de confirmacion
+							html: true
+						});
+				});
+
+
+		}
+	});
 });

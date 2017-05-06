@@ -22,7 +22,7 @@
 							<div class=" col s12 m12 l12 usuarios" id="listaUsuarios">
 								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
 								<div class="col s12 m2 l2 push-l5 acciones">
-									<a href="#modaledit" class="editarUsuario" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="small material-icons">mode_edit</i></a>
+									<a href="#modaledit" class="editarUsuario" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="editar small material-icons">mode_edit</i></a>
 									<a href="#" class="borrarUsuario" data-registro="{{$usuario->id}}" data-nombre="{{$usuario->username}}" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 								</div>
 							</div>

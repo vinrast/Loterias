@@ -81,34 +81,53 @@
   			</div>
 <!--///////////////////////// MODAL COFIGURACIONES GENERALES /////////////////////////////////////////////////////////////////-->
 			<div id="modallimit" class="modal addusuario">
-				<form class="#" action="#" method="#">
+				<form id="formsetgen" >
+					{{ csrf_field() }}
+					<input type="hidden" value="{{$maximas->id}}" id="idregistro" name="id"></input>
 					<div class="modal-content">
 				     	<h4>Configuraciones Generales</h4>
 				    	<div class="col s12 m12 l12 input-field">
-		            		<input id="quini" type="number" class="validate" value="{{$maximas->quiniela}}">
+		            		<input id="quini" type="number" name="quiniela" class="validate" value="{{$maximas->quiniela}}">
 	         				<label for="quini">Limite para Quinielas</label>
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<input id="pale" type="number" class="validate" value="{{$maximas->pale}}">
+		            		<input id="pale" type="number" name="pale" class="validate" value="{{$maximas->pale}}">
 	         				<label for="pale">Limite para Pales</label>
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<input id="tripleta" type="number" class="validate" value="{{$maximas->tripleta}}">
+		            		<input id="tripleta" type="number" name="tripleta" class="validate" value="{{$maximas->tripleta}}">
 	         				<label for="tripleta">Limite para Tripletas</label>
 		            	</div>
 		            	<div class="col s12 m12 l12 input-field">
-		            		<select class="browser-default">
+		            		<select class="browser-default" name="tiempo" id="tiempo">
+		            		@if($maximas->tiempoCierre==15)
+								<option value="" disabled>Tiempo de Cierre de Venta</option>
+								<option value="15" selected>15 minutos</option>
+								<option value="20">20 minutos</option>
+								<option value="30">30 minutos</option>
+							@elseif($maximas->tiempoCierre==20)
+								<option value="" disabled>Tiempo de Cierre de Venta</option>
+								<option value="15">15 minutos</option>
+								<option value="20" selected>20 minutos</option>
+								<option value="30">30 minutos</option>
+							@elseif($maximas->tiempoCierre==30)
+								<option value="" disabled>Tiempo de Cierre de Venta</option>
+								<option value="15">15 minutos</option>
+								<option value="20">20 minutos</option>
+								<option value="30" selected>30 minutos</option>
+							@else
 								<option value="" disabled selected>Tiempo de Cierre de Venta</option>
 								<option value="15">15 minutos</option>
 								<option value="20">20 minutos</option>
 								<option value="30">30 minutos</option>
+							@endif
 							</select>
 		            	</div>
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
-		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
+		    				<button class="btn  waves-effect red lighten-1" type="button" id="resetgen" name="action">Borrar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" id="setgen" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>		
