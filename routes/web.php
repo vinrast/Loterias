@@ -31,6 +31,9 @@ Route::get('/administracion/usuarios/traer_registro', 'Administracion@usuario_ac
 Route::post('/administracion/usuarios/modificarUsuario', 'Administracion@modificar_usuario_actual');
 Route::get('/administracion/usuarios/borrar', 'Administracion@borrar_usuario');
 Route::get('/administracion/addlotery', 'Administracion@insertar_loteria');
+Route::get('/administracion/loterias/traer_loteria', 'Administracion@loteria_actual');
+Route::any('/administracion/loterias/modificarLoteria', 'Administracion@modificar_loteria_actual');
+Route::get('/administracion/loterias/borrar', 'Administracion@borrar_loteria');
 
 
 Route::get('/reportes','Reportes@index');

@@ -149,4 +149,45 @@ class Administracion extends Controller{
 
     return $resultado;
   }
+  public function loteria_actual(){
+    $id=Request::get('datos');
+    $consulta=DB::table('sorteos')->where('id','=',$id)->first();
+    if (count($consulta)==1) {
+      $respuesta =  array(  $consulta->descripcion,
+                            $consulta->horaSorteo,
+                            1,
+                    );
+    }
+    else{
+      $respuesta = 0; 
+    }     
+      return $respuesta; 
+  }
+  public function modificar_loteria_actual(){
+    $id=Request::get('idlotery');
+    $loteria=ucwords(strtolower(Request::get('loteria_e')));
+    $horat=ucwords(strtolower(Request::get('horatra_e')));
+    $resultado=[0,null,null];//existe,username,id
+    $consulta=DB::table('sorteos')->where('id','<>',$id)->where('descripcion',$loteria)->first();
+    if (count($consulta)!=0) {
+      $resultado[1]=$consulta->descripcion;
+    }     
+    else {
+      DB::table('sorteos')->where('id',$id)->update( 
+                                                      [   'descripcion'=>$loteria,
+                                                          'horaSorteo'=>$horat,
+                                                      ]);
+      $resultado[0]=1;
+      $resultado[1]=$loteria;
+      $resultado[2]=$id;
+    }
+    return $resultado;
+  }
+  public function borrar_loteria(){
+    $id=Request::get('datos');
+    $eliminar=0;
+    $eliminar=DB::table('sorteos')->where('id', '=', $id)->delete();
+
+    return $eliminar;
+  }
 }

@@ -23,8 +23,8 @@
 							<div class="col s12 m12 l12 registroloterias" id="registroloterias">
 								<div class="col s12 m6 l6 loterianombre">{{$sorteo->descripcion}}</div>
 								<div class="col s12 m2 l2 push-l5 acciones">
-									<a href="#modaledit" id="edit{{$sorteo->id}}"><i class="small editar material-icons">mode_edit</i></a>
-									<a href="" id="elim{{$sorteo->id}}"><i class="borrar small material-icons">delete</i></a>
+									<a href="#modaledit" id="edit{{$sorteo->id}}" data-registro="{{$sorteo->id}}" class="editarLoteria"><i class="editar small material-icons">mode_edit</i></a>
+									<a href="#" id="elim{{$sorteo->id}}" data-registro="{{$sorteo->id}}" data-nombre="{{$sorteo->descripcion}}" class="borrarLoteria"><i class="borrar small material-icons">delete</i></a>
 								</div>
 							</div>
 						@endforeach
@@ -35,6 +35,7 @@
 			
 			<div id="modaladd" class="modal addloteria">
 				<form id="addlotery">
+					{{ csrf_field() }}
 					<div class="modal-content">
 				     	<h4>Agregar Loteria</h4>
 				    	<div class="col s12 m12 l12 input-field">
@@ -57,22 +58,23 @@
   			</div>
 <!--///////////////////////////////////////// MODAL EDITAR /////////////////////////////////////////////////////-->			
 			<div id="modaledit" class="modal editloteria">
-				<form class="#" action="#" method="#">
+				<form id="loteriaE">
+					{{ csrf_field() }}
+					<input type="hidden" name="idlotery" id="idlotery">
 					<div class="modal-content">
 				     	<h4>Editar Loteria</h4>
 				    	<div class="col s12 m12 l12 input-field">
-		            		<input id="user" type="text" class="validate">
-	         				<label for="user">Loteria</label>
+		            		<input id="loteria_e" name="loteria_e" type="text" placeholder="Loteria" class="validate">
 		            	</div>
-		            	<div class="col s12 m12 l10input-field">
-		            		<label for="horatra">Hora de Transmision</label>
-		            		<input id="horatra" type="time" class="validate">
+		            	<div class="col s12 m12 l12">
+		            		<label for="horatra_e">Hora de Transmision</label>
+		            		<input id="horatra_e" name="horatra_e" type="time" class="validate">
 		            	</div>
 					</div>
 	    			<div class="botonera-modal">
 		    			<center>
 		    				<button class="btn  waves-effect red lighten-1" type="reset" name="action">Borrar</button>
-		    				<button class="btn  waves-effect waves-light" type="submit" name="action">Guardar</button>
+		    				<button class="btn  waves-effect waves-light" type="submit" id="editarLoteria" name="action">Guardar</button>
 		    			</center>
 	    			</div>
 				</form>
