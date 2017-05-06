@@ -198,7 +198,7 @@ class Administracion extends Controller{
     $tripleta=Request::get('tripleta');
     $tiempo=Request::get('tiempo');
     $consulta=DB::table('maximas')->where('id','=',$id)->first();
-    if (count($consulta)) {
+    if (count($consulta)==1) {
       DB::table('maximas')->where('id',$id)->update( 
                                                       [   'quiniela'=>$quiniela,
                                                           'pale'=>$pale,
@@ -207,7 +207,41 @@ class Administracion extends Controller{
                                                       ]);
       $respuesta = 1;
     }
-    
+  return $respuesta;
+  }
+  public function actualizar_premios(){
+    $respuesta=0;
+    $qid=Request::get('qid');
+    $pid=Request::get('pid');
+    $tid=Request::get('tid');
+    $q1=Request::get('q1');
+    $q2=Request::get('q2');
+    $q3=Request::get('q3');
+    $p1=Request::get('p1');
+    $p2=Request::get('p2');
+    $p3=Request::get('p3');
+    $t1=Request::get('t1');
+    $t2=Request::get('t2');
+    $consulta1=DB::table('premios')->where('id','=',$qid)->first();
+    $consulta2=DB::table('premios')->where('id','=',$pid)->first();
+    $consulta3=DB::table('premios')->where('id','=',$tid)->first();
+    if (count($consulta1)==1 && count($consulta2)==1 && count($consulta3)==1 ) {
+      DB::table('premios')->where('id',$qid)->update( 
+                                                      [   'primerPremio'=>$q1,
+                                                          'segundoPremio'=>$q2,
+                                                          'tercerPremio'=>$q3 
+                                                      ]);
+      DB::table('premios')->where('id',$pid)->update( 
+                                                      [   'primerPremio'=>$p1,
+                                                          'segundoPremio'=>$p2,
+                                                          'tercerPremio'=>$p3,
+                                                      ]);
+      DB::table('premios')->where('id',$tid)->update( 
+                                                      [   'primerPremio'=>$t1,
+                                                          'segundoPremio'=>$t2
+                                                      ]);
+      $respuesta = 1;
+    }
   return $respuesta;
   }
 }

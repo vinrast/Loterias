@@ -49,8 +49,9 @@
 		            	<div class="input-field col s12">
     						<select name="perfilAgr_"  class="browser-default" id="perfilAgr">
 								<option value="0" disabled selected>Seleccione un perfil</option>
-								<option value="2">Vendedor</option>
 								<option value="1">Administrador</option>
+								<option value="2">Vendedor</option>
+
 						    </select>
   						</div>
 					</div>
@@ -81,8 +82,9 @@
 		            	<div class="col s12 m12 l12">
     						<select name="perfilEdit_" class="browser-default" id="perfilEdit">
 								<option value="" selected>Seleccione un perfil</option>
-								<option value="2">Vendedor</option>
 								<option value="1">Administrador</option>
+								<option value="2">Vendedor</option>
+
 						    </select>
   						</div>
 					</div>

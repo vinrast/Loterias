@@ -375,29 +375,91 @@ $(document).ready(function(){
 		}
 		else{
 			var posting=$.post( url,datos,function(resultado){
-					if (resultado==1){
-						swal({
-							title:'Actualización Exitosa!!!.',//Contenido del modal
-							text: '<p style="font-size: 1.5em;">'+'La Configuracion fue actualizada con exito </p>',
-							timer:1800,//Tiempo de retardo en ejecucion del modal
-							type: "success",
-							showConfirmButton:false,//Eliminar boton de confirmacion
-							html:true								
-						});
-					}
-				});
-				posting.fail(function() {
+				if (resultado==1){
 					swal({
-							title:'Error inesperado!!',//Contenido del modal
-							text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
-							timer:2000,//Tiempo de retardo en ejecucion del modal
-							type: "error",
-							showConfirmButton:false,//Eliminar boton de confirmacion
-							html: true
-						});
-				});
-
-
+						title:'Actualización Exitosa!!!.',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'La Configuracion fue actualizada con exito </p>',
+						timer:1800,//Tiempo de retardo en ejecucion del modal
+						type: "success",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html:true								
+					});
+				}
+			});
+			posting.fail(function() {
+				swal({
+						title:'Error inesperado!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+			});
 		}
 	});
+//////////////////////////////////////////// ACTUALIZAR PREMIACIONES  ////////////////////////////////////////////////////////////
+	$('#setprem').click(function(e){
+		e.preventDefault();
+	});
+	$('#resetprem').click(function(){
+		$('#1eroq').val('');
+		$('#2doq').val('');
+		$('#3raq').val('');
+		$('#1erop').val('');
+		$('#2dop').val('');
+		$('#3rap').val('');
+		$('#1erot').val('');
+		$('#2dot').val('');
+	});
+		
+
+	$('#setprem').click(function(){
+		q1= $('#1eroq').val();
+		q2= $('#2doq').val();
+		q3= $('#3raq').val();
+		p1= $('#1erop').val();
+		p2= $('#2dop').val();
+		p3= $('#3rap').val();
+		t1= $('#1erot').val();
+		t2= $('#2dot').val();
+		formulario = $('#formsetprem')
+		datos = formulario.serialize();
+		url	= "/administracion/premios/actualizar"
+		if (q1=="" || q2=="" || q3=="" || p1=="" || p2=="" || p3=="" || t1=="" || t2==""){
+			swal({
+				title:'Campos vacios!!!!!',//Contenido del modal
+				text: '<p style="font-size: 1.5em;">'+'Debe llenar todos los Campos'+'</p>',
+				timer:2000,//Tiempo de retardo en ejecucion del modal
+				type: "error",
+				showConfirmButton:false,//Eliminar boton de confirmacion
+				html: true
+			});
+		}
+		else{
+			var posting=$.post( url,datos,function(resultado){
+				if (resultado==1){
+					swal({
+						title:'Actualización Exitosa!!!.',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'La premiación fue actualizada con exito </p>',
+						timer:1800,//Tiempo de retardo en ejecucion del modal
+						type: "success",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html:true								
+					});
+				}
+			});
+			posting.fail(function() {
+				swal({
+						title:'Error inesperado!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+			});
+		}
+	});
+
 });
