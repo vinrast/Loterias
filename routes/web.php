@@ -37,3 +37,6 @@ Route::get('/administracion/loterias/borrar', 'Administracion@borrar_loteria');
 Route::any('/administracion/loterias/setgen', 'Administracion@actualizar_configuracion_general');
 Route::any('/administracion/premios/actualizar', 'Administracion@actualizar_premios');
 Route::get('/reportes','Reportes@index');
+
+
+Route::get('/prueba','Reportes@hora');
