@@ -8,12 +8,19 @@ class Ticket extends Model
 {
     public $timestamps=false;
     protected $table="tickets";
-    protected $fillable=['id','numero','fecha','vendedor'];
+    protected $fillable=['id','numero','fecha','usuario_id'];
 
-public function jugadas()
+    public function transacciones()
     {
-    	 return $this->belongsToMany('App\Jugada);
+    	 return $this->hasMany('App\Transaccion');
     }
+
+    public function usuario()
+    {
+    	 return $this->belongsTo('App\Usuario');
+    }
+
+
 
 }
 

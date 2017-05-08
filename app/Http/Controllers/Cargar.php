@@ -73,7 +73,7 @@ class Cargar extends Controller
 
     }
 
-    public function verificarApuesta()
+   public function verificarApuesta()
     {
       
        
@@ -82,23 +82,27 @@ class Cargar extends Controller
         $apuesta=(int)$datos[0];
         $tripleta=$datos[1];
         $tipoJugada=(int)$datos[2];
+        $sorteosId=$datos[3];
+        $sorteosDe=$datos[4];
+        $usuario=Session::get('usuario');
+        $usuario=$usuario[0];
 
-        // $datos=[1,'22-34-54',1];
-        // $apuesta=$datos[0];
-        // $tripleta=$datos[1];
-        // $tipoJugada=$datos[2]; 
+        
 
-        $resp=[0,0];
+        $resp=[];
+
 
         $consultaJugada=Jugada::where('numero',$tripleta)->first();
+        $consultaApuesta=Apuesta::where('cantidad',$apuesta)->first();
         $maxima=Maxima::where(['id'=>1])->first();
+        
         $campo=$columnas[$tipoJugada-1];
        
-
+        ////insertar jugada
         if (count($consultaJugada)==0)//si no existe la jugada se crea
         {
            $idJ=DB::table('jugadas')->insertGetId
-          (['numero'=>$tripleta,'tipo'=>$tipoJugada,'acumulado'=>0]);
+          (['numero'=>$tripleta,'tipo'=>$tipoJugada]);
 
           $acumulado=0;
 
@@ -106,66 +110,128 @@ class Cargar extends Controller
         else//si existe
         {
           $idJ=$consultaJugada->id;
-          $acumulado=$consultaJugada->acumulado;
-         
         }
-        /////////////////////////Si puede realizarse la apuesta o no /////////////////////////////////
-        ///0 se encuentra cumplida, 1 exito y queda dinero, 2 se cumplio la meta con esa apuesta, 3 se sobrepasa se debe indicar cuanto falta
-       if($acumulado==$maxima->$campo)
-       {
-         $resp[0]=0;//se cumplio la meta
-       }
-       elseif($acumulado<=$maxima->$campo)
-       {
+        ///////////////////////////////////////////////
+        //insertar apuesta//////////////////////////
+         if (count($consultaApuesta)==0)//si no existe la jugada se crea
+        {
+           $idA=DB::table('apuestas')->insertGetId
+          (['cantidad'=>$apuesta]);
+
+          $acumulado=0;
+
+        }
+        else//si existe
+        {
+          $idA=$consultaApuesta->id;
+        }
+
         
-            $diferencia=($maxima->$campo)-$acumulado;
-            if ($apuesta<$diferencia) //si la apuesta esmejor a lo que queda
-            {
-                $resp[0]=1;
-                $resp[1]=$diferencia-$apuesta;
-            }
-            elseif($apuesta==$diferencia)//si la apuesta es igual a lo que queda//se cumple la meta
-            {
-                $resp[0]=2;
-
-            }
-            elseif($apuesta>$diferencia)//si la puesta se pasa
-            {
-                $resp[0]=3;
-                $resp[1]=$diferencia;
-            }
-       }
-       ////////////////////////////////////////////////////////////////////////////////////////////
-       ////////////////////////////////////////////Apuesta ////////////////////////////////////////
-
-        if($resp[0]==1 || $resp[0]==2)
-        {      
-               $consultaApuesta=Apuesta::where('cantidad',$apuesta)->first();
-
-                if (count($consultaApuesta)==0) //si no existe se crea
-                {
+        ///////////////////sorteoJugada/////////////////////////////
+                  $longitud=count($sorteosId);
                   
-                  $idA=DB::table('apuestas')->insertGetId
-                  (['cantidad'=>$apuesta]);
-                }
-                else//si existe
-                {
-                  $idA=$consultaApuesta->id;
-                }
+                  for ($i=0; $i <$longitud ; $i++) 
+                  { 
+                    
+                     $consultaSorteoJugada=DB::table('jugada_sorteo')->where(['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i]])->first();
+                      if (count($consultaSorteoJugada)==0) //si no existe
+                        {
+                          $idSj=DB::table('jugada_sorteo')->insertGetId
+                          (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i]]);
+                           $acumuladoSj=0;
 
-                $idAs=DB::table('apuesta_jugada')->insertGetId
-                (['apuesta_id'=>$idA,'jugada_id'=>$idJ]);
+                      
+                         
+                        }
+                    else
+                    {
+                      $idSj=$consultaSorteoJugada->id;
+                      $acumuladoSj=$consultaSorteoJugada->acumulado;
+                    }
 
-                DB::table('jugadas')->where('id',$idJ)->update(['acumulado'=>$acumulado+$apuesta]);
-        }
+                    $consultaVentas=DB::table('ventas')->where(['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i]])->first();
+                    if (count($consultaVentas)==0) 
+                    {
+                        # code...
+                        
+                        if ($acumuladoSj==$maxima->$campo)
+                        {
+                          array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,0,0));
 
+                        }
+                        else if($acumuladoSj<$maxima->$campo)
+                        {
+
+                           $diferencia=($maxima->$campo)-$acumuladoSj;
+                           if($apuesta<$diferencia)//apuesta permitida y quedan euros para apostar
+                           {
+                             array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
+                           
+                             $idV=DB::table('ventas')->insertGetId
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                           }
+                           else if($diferencia==$apuesta)//apuesta cumple con el limite de apuestas 
+                           {
+                             array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,2,0));
+                               $idV=DB::table('ventas')->insertGetId
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                           }
+                           else if($apuesta>$diferencia)//la apuesta excede los limites
+                           {
+                            array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,3,$diferencia));
+                           }
+                           
+
+                        }
+                    }
+                    else
+                    {
+                       array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,4,0));
+                    }
+
+
+                  }
+
+
+     
         
 
       return($resp);
       
     }
-
    
+    
+     public function imprimirTicket()
+    {
+      
+      $consultaM=DB::table('maximas')->where('id',2)->first();
+     
+      $fecha=date('d').'-'.date('m').'-'.date('y');//fecha del servidor
+      $numero='ltr-'.date('d').date('m').'-'.$consultaM->ticket;
+      $consultaM=DB::table('maximas')->where('id',2)->update(['ticket'=>$consultaM->ticket+1]);
+      $usuario=Session::get('usuario');
+      $usuario=$usuario[0];
+
+       $idT=DB::table('tickets')->insertGetId
+      (['numero'=>$numero,'fecha'=>$fecha,'usuario_id'=>$usuario->id]);
+
+
+      $ventas=DB::table('ventas')->where('usuario_id',$usuario->id)->get();
+      foreach ($ventas as $venta) 
+      {
+        DB::table('transacciones')->insert
+        (['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id,'apuesta_id'=>$venta->apuesta_id,'ticket_id'=>$idT]);
+      }
+
+      $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
+
+      return([$fecha,$numero,$usuario->id]);
+
+    }
+
+
+
+
     public function apuesta()
     {
         
