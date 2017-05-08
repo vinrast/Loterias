@@ -10,5 +10,11 @@ class Usuario extends Model
     protected $table="usuarios";
     protected $fillable=['id','username','password','perfil_id'];
 
+    public function tickets()
+    {
+    	 return $this->hasMany('App\Ticket');
+   
+    }
+
    
 }

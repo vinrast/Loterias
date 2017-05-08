@@ -94,7 +94,7 @@
 					</div>
 					<div class="col l12 botonera center">
 						<a class="waves-effect waves-light btn red" id="anularJugada">Anular</a>
-						<a class="waves-effect waves-light btn">Imprimir</a>
+						<a class="waves-effect waves-light btn" id="imprimirTicket">Imprimir</a>
 					</div>
 				</div>
 			</div>
