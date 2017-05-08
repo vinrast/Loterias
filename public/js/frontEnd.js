@@ -1,6 +1,40 @@
 var jugadaId=1;
 var valor=0;
 
+
+function imprimirTicket() 
+{
+	$('#imprimirTicket').click(function()
+		{
+			var premios=['primerPremio','segundoPremio','tercerPremio','Apuesta'];
+			var tabla=document.getElementById('tablaJugadas');
+			var checks=tabla.getElementsByTagName("input");
+
+			for (var i = 0; i < premios.length; i++) 
+			{
+				$('#'+premios[i]).val('');
+			}
+
+			if(checks.length>0)
+			{
+				 var url='/imprimirTicket';
+
+				 var imprimir= $.get(url,function(resultado)
+							 {
+
+							 	alert(resultado);
+
+
+
+							 });
+			}
+
+		
+		});
+}
+
+
+
 function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta) 
 {
 	
@@ -202,6 +236,7 @@ function AgregarJugada()
 			var checks=sorteos.getElementsByTagName("input");
 			var jugada=new Object();
 			var sorteos_=[];
+			var ids=[];
 			var jugadas=[];
 			var apuestas=[];
 
@@ -216,6 +251,7 @@ function AgregarJugada()
 					c=c+1;
 					
 					sorteos_.push($(this).attr('data-descripcion'));
+					ids.push($(this).attr('data-id'));
 				}
 				
 			});
@@ -246,9 +282,17 @@ function AgregarJugada()
 					
 					if ($(this).val()!='')
 					{
-						c=c+1;
+							if ($(this).val()>=0 && $(this).val()<=9) //de 0 a 9
+							{
+								c=c+1;
+								aux.push('0'+$(this).val());
+							}
+							else
+							{
+							c=c+1;
 
-						aux.push($(this).val());//valores en un arreglo
+							aux.push($(this).val());//valores en un arreglo
+							}
 					}
 					
 					
@@ -256,7 +300,7 @@ function AgregarJugada()
 
 				//////////////////ordenar elementos de la tripleta ////////////////
 
-					if (c==2) 
+					if (c==2 || c==3) 
 					{
 						aux.sort(function(a,b){return a-b;});
 					}
@@ -308,42 +352,71 @@ function AgregarJugada()
 							
 							 var tipos=['quiniela','pale','tripleta'];
 							 var url='/verificarApuesta';
-							 var datos=[$('#Apuesta').val(),tripleta,c,sorteos_];
+							 var datos=[$('#Apuesta').val(),tripleta,c,ids,sorteos_];
+							 var sorteos__=[];
 							 var consulta= $.get(url,{datos:datos},function(resultado)
-							 
 							 {
-							 	if (resultado[0]==0)
+							 	
+							 	
+
+							 	var mensaje="";
+							 	var longitud=resultado.length;
+							 	for (var i = 0; i < longitud; i++) 
 							 	{
 
-							 		swal({
-											title:'Apuesta no permitida!!',//Contenido del modal
-											text: '<p style="font-size: 1.5em;">'+'El limite de ventas para '+tipos[c-1]+' fue logrado'+'</p>',
-											timer:4000,//Tiempo de retardo en ejecucion del modal
-											type: "error",
-											showConfirmButton:false,//Eliminar boton de confirmacion
-											html: true
-										});
+							 		
+							 		if(resultado[i][3]==0)
+							 		{
+							 		
+							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  meta de ventas cumplida <br>';
+							 		
 
+							 		}
+							 		else if(resultado[i][3]==3)
+							 		{
+							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  usted cuenta solo con '+resultado[i][4]+' euros '+' <br>';
+							 		
+							 		}
+							 		else if(resultado[i][3]==2)
+							 		{
 
+							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  con esta apuesta se logra la meta de ventas  '+' <br>';
+
+							 		}
+							 		else if(resultado[i][3]==4)
+							 		{
+
+							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  esta jugada se encuentra en el ticket  '+' <br>';
+							 		}
+							 		else
+							 		{
+
+							 			sorteos__.push(resultado[i][1]);
+							 		}
 							 	}
-							 	else if(resultado[0]==3)
+									 	
+							 	if(mensaje!="")
 							 	{
+									 					 		
+									 				swal({
+													title:'Apuesta no permitida para  '+tipos[c-1]+'!!!!',//Contenido del modal
+													text: '<p style="font-size: 1em;">'+mensaje+'</p>',
+													//timer:,//Tiempo de retardo en ejecucion del modal
+													type: "error",
+													showConfirmButton:true,//Eliminar boton de confirmacion
+													html: true
+												});
+								}
+								if(sorteos__!=[])
+								{
+									verificarApuesta(sorteos__,jugadaId,checks,dupletas,tripleta);
+								}
 
-							 		swal({
-											title:'Apuesta no permitida!!',//Contenido del modal
-											text: '<p style="font-size: 1.5em;">'+'Usted cuenta con  '+resultado[1]+' euros para realizar esta apuesta de '+tipos[c-1]+'</p>',
-											timer:4000,//Tiempo de retardo en ejecucion del modal
-											type: "error",
-											showConfirmButton:false,//Eliminar boton de confirmacion
-											html: true
-										});
+							 	
+
+							 	
 
 
-							 	}
-							 	else if(resultado[0]==1 || resultado[0]==2)
-							 	{
-							 		verificarApuesta(sorteos_,jugadaId,checks,dupletas,tripleta);//lista las jugadas que seran ligadas a un ticket
-							 	}
 							 	
 
 
@@ -372,6 +445,7 @@ function AgregarJugada()
 
 		});
 }
+
 
 function InsertarUsuario () 
 {
@@ -469,6 +543,7 @@ function InsertarUsuario ()
 			anularJugada()
 			seleccionarJugada()
 			InsertarUsuario()
+			imprimirTicket()
 
 
 // $(document).ready(function()
