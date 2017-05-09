@@ -288,21 +288,22 @@ function AgregarJugada()
 												
 						if($(this).val().length==1)
 						{
-							c=c+1;
+							
 							aux.push('0'+$(this).val());
 						}
 						else if($(this).val().length==2)
 						{
-							c=c+1;
+							
 
 							aux.push($(this).val());//valores en un arreglo
 
 						}
 						else if($(this).val().length>2)
 						{
-							c=c+1;
+							
 							errorDup=errorDup+' '+$(this).val()+' '+'<br>';
 						}
+						c=c+1;
 
 
 
