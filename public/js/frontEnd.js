@@ -275,6 +275,9 @@ function AgregarJugada()
 				var dupletas=sorteos.getElementsByTagName("input");
 				var tripleta=" ";
 				var aux=[];
+				var inc=0;
+				var errorDup="";
+
 				c=0;
 
 				$.each(dupletas, function(i)
@@ -282,40 +285,35 @@ function AgregarJugada()
 					
 					if ($(this).val()!='')
 					{
-							if ($(this).val()>=0 && $(this).val()<=9) //de 0 a 9
-							{
-								c=c+1;
-								aux.push('0'+$(this).val());
-							}
-							else
-							{
+												
+						if($(this).val().length==1)
+						{
+							c=c+1;
+							aux.push('0'+$(this).val());
+						}
+						else if($(this).val().length==2)
+						{
 							c=c+1;
 
 							aux.push($(this).val());//valores en un arreglo
-							}
+
+						}
+						else if($(this).val().length>2)
+						{
+							c=c+1;
+							errorDup=errorDup+' '+$(this).val()+' '+'<br>';
+						}
+
+
+
+
 					}
 					
 					
 				});
 
-				//////////////////ordenar elementos de la tripleta ////////////////
 
-					if (c==2 || c==3) 
-					{
-						aux.sort(function(a,b){return a-b;});
-					}
-					for (var i =0; i<aux.length ;i++) 
-					{
-						if(i==0)
-						{
-							tripleta=tripleta+String(aux[i]);
-						}
-						else
-						{
-							tripleta=tripleta+'-'+String(aux[i]);
-						}
-					}
-				/////////////////////////////////////////////////////////////////////
+				
 
 				if (c==0) 
 					{
@@ -329,11 +327,44 @@ function AgregarJugada()
 						});
 						
 					}
+				else if (c>0 && errorDup!="")
+				{
+					swal({
+								title:'Las siguientes combinaciones son invalidas: ',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+errorDup+'</p>',
+								
+								type: "error",
+								showConfirmButton: true,//Eliminar boton de confirmacion
+								html: true
+						});
+
+				}
 				else
 					{
 						
 						
+						//////////////////ordenar elementos de la tripleta ////////////////
+
+								if (c==2 || c==3) 
+								{
+									aux.sort(function(a,b){return a-b;});
+								}
+								for (var i =0; i<aux.length ;i++) 
+								{
+									if(i==0)
+									{
+										tripleta=tripleta+String(aux[i]);
+									}
+									else
+									{
+										tripleta=tripleta+'-'+String(aux[i]);
+									}
+								}
+						/////////////////////////////////////////////////////////////////////
 						
+
+
+
 						if ($('#Apuesta').val()=='') 
 						{
 								swal({
