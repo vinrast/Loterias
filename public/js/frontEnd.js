@@ -146,7 +146,7 @@ function anularJugada()
 			var checks=tabla.getElementsByTagName("input");
 			var longitud=checks.length;
 			var ids=[];
-			alert(longitud); //totales
+	
 			var c=0;//seleccionados
 
 			$.each(checks,function()
@@ -441,6 +441,14 @@ function AgregarJugada()
 							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> |Se encuentra en el ticket  </label> </div>';
 							 			
 							 		}
+
+							 		else if(resultado[i][3]==5)
+							 		{
+
+							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La apuesta:  </label>  <label style="font-size: 0.8em;color: #072150  ;"> '+$('#Apuesta').val()+'  €  </label>  ' +'<label style="font-size: 0.8em;color: #D42304;;"> | no es valida para la jugada de  </label>   <label style="font-size: 0.8em;color: #D42304;  ;">'+tipos[resultado[i][0]-1]+'  </label>  '+'<label style="font-size: 0.8em;color: #D42304;"> ingresada </label>        </div>';
+							 			
+							 		}
+
 							 		else
 							 		{
 
