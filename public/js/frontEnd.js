@@ -146,7 +146,7 @@ function anularJugada()
 			var checks=tabla.getElementsByTagName("input");
 			var longitud=checks.length;
 			var ids=[];
-	
+			
 			var c=0;//seleccionados
 
 			$.each(checks,function()
@@ -417,38 +417,30 @@ function AgregarJugada()
 							 		if(resultado[i][3]==0)
 							 		{
 							 		
-							 			mensaje=mensaje+'<div> <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Jugada no permitida, se ha logrado el maximo de ventas</label> </div>';
+							 			mensaje=mensaje+'<div> <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | No esta permitida, se ha logrado el maximo de ventas.</label> </div>';
 							 			
 							 		
 
 							 		}
 							 		else if(resultado[i][3]==3)
 							 		{
-							 			mensaje=mensaje+'<div  > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EEB20D;"> | Usted cuenta con: '+resultado[i][4]+' €  para ella' + '</label> </div>';
+							 			mensaje=mensaje+'<div  > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EA8613;"> | Presenta una apuesta excesiva, usted cuenta con: '+resultado[i][4]+' €  para ella.' + '</label> </div>';
 							 			
 							 		
 							 		}
 							 		else if(resultado[i][3]==2)
 							 		{
 
-							 			mensaje=mensaje+'<div > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #0A6E32;"> | Logra la meta de ventas para  '+tipos[resultado[i][2]-1]+'</label> </div>';
+							 			mensaje=mensaje+'<div > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #0A6E32;"> | Alcanzo la meta de ventas para  '+tipos[resultado[i][2]-1]+'.</label> </div>';
 							 			sorteos__.push(resultado[i][1]);
 
 							 		}
 							 		else if(resultado[i][3]==4)
 							 		{
 
-							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> |Se encuentra en el ticket  </label> </div>';
+							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Se encuentra en el ticket  </label> </div>';
 							 			
 							 		}
-
-							 		else if(resultado[i][3]==5)
-							 		{
-
-							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La apuesta:  </label>  <label style="font-size: 0.8em;color: #072150  ;"> '+$('#Apuesta').val()+'  €  </label>  ' +'<label style="font-size: 0.8em;color: #D42304;;"> | no es valida para la jugada de  </label>   <label style="font-size: 0.8em;color: #D42304;  ;">'+tipos[resultado[i][0]-1]+'  </label>  '+'<label style="font-size: 0.8em;color: #D42304;"> ingresada </label>        </div>';
-							 			
-							 		}
-
 							 		else
 							 		{
 
