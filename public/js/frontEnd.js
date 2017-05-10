@@ -400,25 +400,29 @@ function AgregarJugada()
 							 		if(resultado[i][3]==0)
 							 		{
 							 		
-							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  meta de ventas cumplida <br>';
+							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Jugada no permitida, se ha logrado el maximo de ventas</label> </div>';
+							 			
 							 		
 
 							 		}
 							 		else if(resultado[i][3]==3)
 							 		{
-							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  usted cuenta solo con '+resultado[i][4]+' euros '+' <br>';
+							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EEB20D;"> | Usted cuenta con: '+resultado[i][4]+' €  para ella' + '</label> </div>';
+							 			
 							 		
 							 		}
 							 		else if(resultado[i][3]==2)
 							 		{
 
-							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  con esta apuesta se logra la meta de ventas  '+' <br>';
+							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #0A6E32;"> | Logra la meta de ventas para  '+tipos[resultado[i][2]-1]+'</label> </div>';
+							 			sorteos__.push(resultado[i][1]);
 
 							 		}
 							 		else if(resultado[i][3]==4)
 							 		{
 
-							 			mensaje=mensaje+'-> '+resultado[i][1]+' | '+tripleta+' | '+$('#Apuesta').val()+' |  esta jugada se encuentra en el ticket  '+' <br>';
+							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> |Se encuentra en el ticket  </label> </div>';
+							 			
 							 		}
 							 		else
 							 		{
@@ -430,13 +434,13 @@ function AgregarJugada()
 							 	if(mensaje!="")
 							 	{
 									 					 		
-									 				swal({
-													title:'Apuesta no permitida para  '+tipos[c-1]+'!!!!',//Contenido del modal
-													text: '<p style="font-size: 1em;">'+mensaje+'</p>',
-													//timer:,//Tiempo de retardo en ejecucion del modal
-													type: "error",
-													showConfirmButton:true,//Eliminar boton de confirmacion
-													html: true
+									 			swal({
+														title:'Tengo un comentario para ti !!!  ',//Contenido del modal
+														text: '<p style="font-size: 0.8em;">'+mensaje+'</p>',
+														//timer:,//Tiempo de retardo en ejecucion del modal
+														type: "warning",
+														showConfirmButton:true,//Eliminar boton de confirmacion
+														html: true
 												});
 								}
 								if(sorteos__!=[])
