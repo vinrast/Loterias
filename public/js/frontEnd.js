@@ -146,8 +146,8 @@ function anularJugada()
 			var checks=tabla.getElementsByTagName("input");
 			var longitud=checks.length;
 			var ids=[];
-			//alert(longitud); la longitud es correcta
-			var c=0;
+			alert(longitud); //totales
+			var c=0;//seleccionados
 
 			$.each(checks,function()
 				{
@@ -159,31 +159,47 @@ function anularJugada()
 					}
 				
 				});
-			if (c==0 && longitud>0) 
-			{
-				// swal({
-				// 		title:'Debe seleccionar las jugadas que desea anular!!',//Contenido del modal
-				// 		text: '<p style="font-size: 1.5em;">'+''+'</p>',
-				// 		timer:2000,//Tiempo de retardo en ejecucion del modal
-				// 		type: "warning",
-				// 		showConfirmButton:false,//Eliminar boton de confirmacion
-				// 		html: true
-				// 	});
-			}
-			else
+			
+			if(c>0 && longitud>0)
 			{
 
-					for (var i = 0; i < ids.length; i++)
-					 {
-						
-					 	valor=valor-parseInt($("#apuesta"+ids[i]).text());
-						$('#filaJugada'+ids[i]).remove();
-						
-					}
+							
+				 var url='/anularJugada';
 
-					$("#chekJugadas").prop('checked',false);
+				 var eliminar= $.get(url,{datos:ids},function(resultado)
+					{
 
-					$('#dineroTotal').text(valor);
+							 	
+							if(resultado>0)
+							{
+
+
+									for (var i = 0; i < ids.length; i++)
+									 {
+										
+									 	valor=valor-parseInt($("#apuesta"+ids[i]).text());
+										$('#filaJugada'+ids[i]).remove();
+										
+									}
+
+									$("#chekJugadas").prop('checked',false);
+
+									$('#dineroTotal').text(valor);
+						}
+					});
+				 eliminar.fail(function()
+								{
+									swal({
+											title:'Error inesperado!!',//Contenido del modal
+											text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+											timer:3000,//Tiempo de retardo en ejecucion del modal
+											type: "error",
+											showConfirmButton:false,//Eliminar boton de confirmacion
+											html: true
+										});
+
+
+								});
 					
 
 			}
@@ -235,6 +251,7 @@ function AgregarJugada()
 			var sorteos=document.getElementById('sorteosDisponibles');
 			var checks=sorteos.getElementsByTagName("input");
 		
+			var jugadaId=$('#jugadaId').val(); 
 			var sorteos_=[];
 			var ids=[];
 			var jugadas=[];
@@ -384,7 +401,7 @@ function AgregarJugada()
 							
 							 var tipos=['quiniela','pale','tripleta'];
 							 var url='/verificarApuesta';
-							 var datos=[$('#Apuesta').val(),tripleta,c,ids,sorteos_];
+							 var datos=[$('#Apuesta').val(),tripleta,c,ids,sorteos_,jugadaId];
 							 var sorteos__=[];
 							 var consulta= $.get(url,{datos:datos},function(resultado)
 							 {
@@ -400,28 +417,28 @@ function AgregarJugada()
 							 		if(resultado[i][3]==0)
 							 		{
 							 		
-							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Jugada no permitida, se ha logrado el maximo de ventas</label> </div>';
+							 			mensaje=mensaje+'<div> <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Jugada no permitida, se ha logrado el maximo de ventas</label> </div>';
 							 			
 							 		
 
 							 		}
 							 		else if(resultado[i][3]==3)
 							 		{
-							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EEB20D;"> | Usted cuenta con: '+resultado[i][4]+' €  para ella' + '</label> </div>';
+							 			mensaje=mensaje+'<div  > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EEB20D;"> | Usted cuenta con: '+resultado[i][4]+' €  para ella' + '</label> </div>';
 							 			
 							 		
 							 		}
 							 		else if(resultado[i][3]==2)
 							 		{
 
-							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #0A6E32;"> | Logra la meta de ventas para  '+tipos[resultado[i][2]-1]+'</label> </div>';
+							 			mensaje=mensaje+'<div > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #0A6E32;"> | Logra la meta de ventas para  '+tipos[resultado[i][2]-1]+'</label> </div>';
 							 			sorteos__.push(resultado[i][1]);
 
 							 		}
 							 		else if(resultado[i][3]==4)
 							 		{
 
-							 			mensaje=mensaje+'<div style=" border: 1px solid #000000; ;" > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> |Se encuentra en el ticket  </label> </div>';
+							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> |Se encuentra en el ticket  </label> </div>';
 							 			
 							 		}
 							 		else
