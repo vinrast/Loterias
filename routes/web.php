@@ -24,6 +24,7 @@ Route::post('/loginVerificar','Cargar@loginVerificar');
 Route::get('/verificarApuesta','Cargar@verificarApuesta');
 Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 Route::get('/imprimirTicket','Cargar@imprimirTicket');
+Route::get('/anularJugada','Cargar@anularJugada');
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');

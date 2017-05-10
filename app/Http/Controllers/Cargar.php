@@ -84,6 +84,7 @@ class Cargar extends Controller
         $tipoJugada=(int)$datos[2];
         $sorteosId=$datos[3];
         $sorteosDe=$datos[4];
+        $jugadaId=$datos[5];
         $usuario=Session::get('usuario');
         $usuario=$usuario[0];
 
@@ -168,13 +169,13 @@ class Cargar extends Controller
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
                            
                              $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
                            }
                            else if($diferencia==$apuesta)//apuesta cumple con el limite de apuestas 
                            {
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,2,0));
                                $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
                            }
                            else if($apuesta>$diferencia)//la apuesta excede los limites
                            {
@@ -201,7 +202,22 @@ class Cargar extends Controller
     }
    
     
-     public function imprimirTicket()
+    
+    public function anularJugada()
+    {
+      $datos=Request::get('datos');
+      $aux=0;
+      for ($i=0; $i <count($datos) ; $i++) 
+      { 
+        $aux=$aux+(DB::table('ventas')->where('fila',$datos[$i])->delete());
+      }
+
+
+      return($aux);
+
+    }
+
+    public function imprimirTicket()
     {
       
       $consultaM=DB::table('maximas')->where('id',2)->first();
