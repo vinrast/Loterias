@@ -29,7 +29,7 @@ function imprimirTicket()
 							 });
 			}
 
-		
+			$('#jugadaId').val(0);
 		});
 }
 
@@ -43,9 +43,9 @@ function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta)
 							{
 								
 							
-								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+jugadaId+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+jugadaId+'" data-idj="'+jugadaId+'"/><label for="check'+jugadaId+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+jugadaId+'" >'+$('#Apuesta').val()+'</th></tr>');
+								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+$('#'+jugadaId).val()+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+$('#'+jugadaId).val()+'" data-idj="'+$('#'+jugadaId).val()+'"/><label for="check'+$('#'+jugadaId).val()+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+$('#'+jugadaId).val()+'" >'+$('#Apuesta').val()+'</th></tr>');
 								valor=valor+parseInt($('#Apuesta').val());
-								jugadaId=jugadaId+1;
+								$('#'+jugadaId).val(parseInt($('#'+jugadaId).val())+1);
 							}
 
 
@@ -234,7 +234,7 @@ function AgregarJugada()
 		{
 			var sorteos=document.getElementById('sorteosDisponibles');
 			var checks=sorteos.getElementsByTagName("input");
-			var jugada=new Object();
+		
 			var sorteos_=[];
 			var ids=[];
 			var jugadas=[];
@@ -441,7 +441,7 @@ function AgregarJugada()
 								}
 								if(sorteos__!=[])
 								{
-									verificarApuesta(sorteos__,jugadaId,checks,dupletas,tripleta);
+									verificarApuesta(sorteos__,'jugadaId',checks,dupletas,tripleta);
 								}
 
 							 	
