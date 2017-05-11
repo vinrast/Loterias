@@ -84,6 +84,7 @@ class Cargar extends Controller
         $tipoJugada=(int)$datos[2];
         $sorteosId=$datos[3];
         $sorteosDe=$datos[4];
+        $jugadaId=$datos[5];
         $usuario=Session::get('usuario');
         $usuario=$usuario[0];
 
@@ -99,7 +100,7 @@ class Cargar extends Controller
         $campo=$columnas[$tipoJugada-1];
        
         ////insertar jugada
-        if (count($consultaJugada)==0)//si no existe la jugada se crea
+        if (count($consultaJugada)==0 )//si no existe la jugada se crea
         {
            $idJ=DB::table('jugadas')->insertGetId
           (['numero'=>$tripleta,'tipo'=>$tipoJugada]);
@@ -115,13 +116,17 @@ class Cargar extends Controller
         //insertar apuesta//////////////////////////
          if (count($consultaApuesta)==0)//si no existe la jugada se crea
         {
-           $idA=DB::table('apuestas')->insertGetId
-          (['cantidad'=>$apuesta]);
+              
+          if($apuesta>0 && $apuesta<=$maxima->$campo)
+          {
+               $idA=DB::table('apuestas')->insertGetId
+              (['cantidad'=>$apuesta]);
 
-          $acumulado=0;
+              $acumulado=0;
+          }
 
         }
-        else//si existe
+        else if(count($consultaApuesta)>0)//si existe
         {
           $idA=$consultaApuesta->id;
         }
@@ -168,13 +173,13 @@ class Cargar extends Controller
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
                            
                              $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
                            }
                            else if($diferencia==$apuesta)//apuesta cumple con el limite de apuestas 
                            {
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,2,0));
                                $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
                            }
                            else if($apuesta>$diferencia)//la apuesta excede los limites
                            {
@@ -201,7 +206,60 @@ class Cargar extends Controller
     }
    
     
-     public function imprimirTicket()
+    
+    public function anularJugada()
+    {
+      $datos=Request::get('datos');
+      $aux=0;
+      for ($i=0; $i <count($datos) ; $i++) 
+      { 
+        $aux=$aux+(DB::table('ventas')->where('fila',$datos[$i])->delete());
+      }
+
+
+      return($aux);
+
+    }
+
+    public function obtenerApuesta($apuesta_id=48)
+    {
+      
+
+      $apuesta=DB::table('apuestas')->where('id',$apuesta_id)->first();
+      if(count($apuesta)!=0)
+      {
+        $apuesta=$apuesta->cantidad;
+      }
+      else
+      {
+        $apuesta=0;
+      }
+
+
+      return($apuesta);
+    }
+
+    public function obtenerAcumulado($sorteo_id=1,$jugada_id=110)
+    {
+      
+      $acumulado=DB::table('jugada_sorteo')->where(['jugada_id'=>$jugada_id,'sorteo_id'=>$sorteo_id])->first();
+      if(count($acumulado)!=0)
+      {
+        $acumulado=$acumulado->acumulado;
+      }
+      else
+      {
+        $acumulado=0;
+      }
+
+      return($acumulado);
+    }
+
+
+
+
+
+    public function imprimirTicket()
     {
       
       $consultaM=DB::table('maximas')->where('id',2)->first();
@@ -221,6 +279,10 @@ class Cargar extends Controller
       {
         DB::table('transacciones')->insert
         (['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id,'apuesta_id'=>$venta->apuesta_id,'ticket_id'=>$idT]);
+
+         $acumulado=$this->obtenerAcumulado($venta->sorteo_id,$venta->jugada_id);
+         $apuesta=($this->obtenerApuesta($venta->apuesta_id))+$acumulado;
+         $consultaM=DB::table('jugada_sorteo')->where(['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id])->update(['acumulado'=>$apuesta]);
       }
 
       $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
