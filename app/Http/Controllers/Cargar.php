@@ -221,6 +221,44 @@ class Cargar extends Controller
 
     }
 
+    public function obtenerApuesta($apuesta_id=48)
+    {
+      
+
+      $apuesta=DB::table('apuestas')->where('id',$apuesta_id)->first();
+      if(count($apuesta)!=0)
+      {
+        $apuesta=$apuesta->cantidad;
+      }
+      else
+      {
+        $apuesta=0;
+      }
+
+
+      return($apuesta);
+    }
+
+    public function obtenerAcumulado($sorteo_id=1,$jugada_id=110)
+    {
+      
+      $acumulado=DB::table('jugada_sorteo')->where(['jugada_id'=>$jugada_id,'sorteo_id'=>$sorteo_id])->first();
+      if(count($acumulado)!=0)
+      {
+        $acumulado=$acumulado->acumulado;
+      }
+      else
+      {
+        $acumulado=0;
+      }
+
+      return($acumulado);
+    }
+
+
+
+
+
     public function imprimirTicket()
     {
       
@@ -242,10 +280,9 @@ class Cargar extends Controller
         DB::table('transacciones')->insert
         (['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id,'apuesta_id'=>$venta->apuesta_id,'ticket_id'=>$idT]);
 
-      //    $apu=Db::table('apuestas')->where('id',$venta->apuesta_id)->first();
-      //    $acu=DB::table('jugada_sorteo')->where(['jugada_id'=>$venta->jugada_id,'sorteo'=>$venta->sorteo_id])->first();
-
-      //    DB::table('jugada_sorteo')->where(['jugada_id'=>$venta->jugada_id,'sorteo'=>$venta->sorteo_id])->update(['acumulado'=>$acu->acumulado+$apu->cantidad]);
+         $acumulado=$this->obtenerAcumulado($venta->sorteo_id,$venta->jugada_id);
+         $apuesta=($this->obtenerApuesta($venta->apuesta_id))+$acumulado;
+         $consultaM=DB::table('jugada_sorteo')->where(['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id])->update(['acumulado'=>$apuesta]);
       }
 
       $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
