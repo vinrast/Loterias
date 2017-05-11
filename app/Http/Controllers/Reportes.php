@@ -17,7 +17,9 @@ class Reportes extends Controller{
     }
 
     public function hora(){
-		echo date("H:i",time());
+    	$hora = date("h:i a",time()-2100);
+    	return $hora;
+		
     }
 }
 
