@@ -10,6 +10,7 @@ use App\Vista;
 use App\Maxima;
 use App\Jugada;
 use App\Apuesta;
+use Carbon\Carbon;
 use Session;
 use DB;
 
@@ -259,22 +260,35 @@ class Cargar extends Controller
 
 
 
-    public function imprimirTicket()
+    public function NroTicket()
+    {
+
+      $preFijo="Ltr-";
+
+      $fecha=Carbon::now();
+      $fecha=$fecha->format('d-m-');
+
+      $numero=DB::table('maximas')->where('id',2)->first();
+      $actualizar=DB::Table('maximas')->where('id',2)->update(['ticket'=>$numero->ticket+1]);
+      $numero=$numero->ticket;
+
+     
+      return($preFijo.$fecha.$numero);
+    }
+
+
+    public function obtenerFecha()
+    {
+      $fecha=Carbon::now();
+      $fecha=$fecha->toDateTimeString();
+      return($fecha);
+    }
+
+    public function actualizarTransacciones($usuario,$idT)
     {
       
-      $consultaM=DB::table('maximas')->where('id',2)->first();
+      $ventas=DB::table('ventas')->where('usuario_id',$usuario)->get();
      
-      $fecha=date('d').'-'.date('m').'-'.date('y');//fecha del servidor
-      $numero='ltr-'.date('d').date('m').'-'.$consultaM->ticket;
-      $consultaM=DB::table('maximas')->where('id',2)->update(['ticket'=>$consultaM->ticket+1]);
-      $usuario=Session::get('usuario');
-      $usuario=$usuario[0];
-
-       $idT=DB::table('tickets')->insertGetId
-      (['numero'=>$numero,'fecha'=>$fecha,'usuario_id'=>$usuario->id]);
-
-
-      $ventas=DB::table('ventas')->where('usuario_id',$usuario->id)->get();
       foreach ($ventas as $venta) 
       {
         DB::table('transacciones')->insert
@@ -283,11 +297,42 @@ class Cargar extends Controller
          $acumulado=$this->obtenerAcumulado($venta->sorteo_id,$venta->jugada_id);
          $apuesta=($this->obtenerApuesta($venta->apuesta_id))+$acumulado;
          $consultaM=DB::table('jugada_sorteo')->where(['jugada_id'=>$venta->jugada_id,'sorteo_id'=>$venta->sorteo_id])->update(['acumulado'=>$apuesta]);
+     
+
       }
 
-      $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
 
-      return([$fecha,$numero,$usuario->id]);
+    }
+
+
+    public function imprimirTicket()
+    {
+      
+     ////////Numero de ticket y fecha//////////////////
+      $numero=$this->NroTicket();
+      $fecha=$this->obtenerFecha();
+
+     //////////////Usuario//////////////////////
+      $usuario=Session::get('usuario');
+      $usuario=$usuario[0];
+     //////////////////////////////////////////// 
+
+      //////////////insertar ticket////////////////////////////////////////
+        $idT=DB::table('tickets')->insertGetId
+      (['numero'=>$numero,'fecha'=>$fecha,'usuario_id'=>$usuario->id]);
+      //////////////////////////////////////////////////////////////////////
+
+     // /////////////////////Actualizar transacciones ////////////////////////
+       $this->actualizarTransacciones($usuario->id,$idT);
+     // /////////////////////////////////////////////////////////////////// 
+
+     //  ////////////////Vaciar ventas //////////////////////////////////////////////
+        $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
+     //  /////////////////////////////////////////////////////////////////////////////
+
+      
+
+      return($numero);
 
     }
 
