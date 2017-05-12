@@ -41,4 +41,4 @@ Route::any('/administracion/premios/actualizar', 'Administracion@actualizar_prem
 Route::get('/reportes','Reportes@index');
 
 
-Route::get('/prueba','Cargar@obtenerAcumulado');
+Route::get('/prueba','Reportes@hora');

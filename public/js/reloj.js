@@ -10,11 +10,10 @@ $(document).ready(function(){
 
 function hora(){
 	var url="/prueba";
-	var data
+	var data;
 	var posting=$.get( url,data,function(resultado){
 		document.getElementById('hora').firstChild.nodeValue = resultado
 		setTimeout("hora()",1000);
-
 	});
 }
 
