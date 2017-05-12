@@ -345,6 +345,7 @@ class Cargar extends Controller
     {
       
      $idT=$ticket_id;
+     $total=0;
      $ventas=[];
 
      $sorteos=DB::table('sorteos')->get();
@@ -360,25 +361,45 @@ class Cargar extends Controller
           
           if ($transaccion->sorteo_id==$sorteo->id) 
           {
-            array_push($aux[1],$transaccion);
+            $apuesta=DB::table('apuestas')->where(['id'=>$transaccion->apuesta_id])->first();
+            $jugada=DB::Table('jugadas')->where(['id'=>$transaccion->jugada_id])->first();
+
+           
+            array_push($aux[1],$jugada->numero);
+            array_push($aux[1],$apuesta->cantidad);
+       
+            $total=$total+$apuesta->cantidad;
+
           }
         }
 
         if($aux[1]!=[])
         {
 
+         
+      
           array_push($ventas,$aux);
         }
      }
-
+      // foreach ($ventas as $venta) 
+      // {
+      //   echo $venta[0];
+      //   foreach ($venta[1] as $jug) 
+      //   {
+      //     echo"<br><br>".$jug."<br><br>";
+      //   }
+      // }
 
        
 
 
 
-        return view('ticket',['numero'=>$consulta->numero,'fecha'=>$consulta->fecha,'ventas'=>$ventas]);
+        
+       return view('ticket',['numero'=>$consulta->numero,'fecha'=>$consulta->fecha,'ventas'=>$ventas,'total'=>$total]);
     }
     
+
+
 
     public function apuesta()
     {

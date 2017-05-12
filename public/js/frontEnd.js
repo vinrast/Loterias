@@ -31,7 +31,7 @@ function limpiarVentas()
 
 	var generar= $.get(url,function(resultado)
 		{
-			//alert(resultado);
+			alert(resultado);
 			url='/imprimirTicket/'+resultado;
 			window.open(url, "Ticket", "width=300, height=500");
 			//setTimeout(function(){location.href = url;},400);

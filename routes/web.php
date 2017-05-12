@@ -25,8 +25,8 @@ Route::get('/verificarApuesta','Cargar@verificarApuesta');
 Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 Route::get('/generarTicket','Cargar@generarTicket');
 Route::get('/generarTicket','Cargar@generarTicket');;
-//Route::get('/imprimirTicket','Cargar@imprimirTicket');
-Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');	
+Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');
+//Route::get('/pruebaIm/{ticket_id}','Cargar@imprimirTicket');	
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');
