@@ -27,20 +27,35 @@ function borrarJugadas () //borra la lista de jugadas
 
 function limpiarVentas() 
 {
-	var url='/imprimirTicket';
+	var url='/generarTicket';
 
-	var imprimir= $.get(url,function(resultado)
+	var generar= $.get(url,function(resultado)
 		{
-			alert(resultado);
-
+			//alert(resultado);
+			url='/imprimirTicket/'+resultado;
+			window.open(url, "Ticket", "width=300, height=500");
+			//setTimeout(function(){location.href = url;},400);
 
 
 		});
+	generar.fail(function() {
+				
+				swal({
+						title:'Error al generar el ticket!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+			});
+
+
 }
 
 
 
-function imprimirTicket() 
+function generarTicket() 
 {
 	$('#imprimirTicket').click(function()
 		{
@@ -638,7 +653,7 @@ function InsertarUsuario ()
 			anularJugada()
 			seleccionarJugada()
 			InsertarUsuario()
-			imprimirTicket()
+			generarTicket()
 
 
 // $(document).ready(function()

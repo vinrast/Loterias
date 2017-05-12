@@ -305,9 +305,10 @@ class Cargar extends Controller
     }
 
 
-    public function imprimirTicket()
+    public function generarTicket()
     {
       
+     
      ////////Numero de ticket y fecha//////////////////
       $numero=$this->NroTicket();
       $fecha=$this->obtenerFecha();
@@ -331,13 +332,53 @@ class Cargar extends Controller
      //  /////////////////////////////////////////////////////////////////////////////
 
       
+     
 
-      return($numero);
+      return($idT);
 
     }
 
 
 
+
+    public function imprimirTicket($ticket_id)
+    {
+      
+     $idT=$ticket_id;
+     $ventas=[];
+
+     $sorteos=DB::table('sorteos')->get();
+     $transacciones=DB::table('transacciones')->where('ticket_id',$idT)->get();
+     $consulta=DB::table('tickets')->where('id',$idT)->first();
+
+     foreach ($sorteos as $sorteo) 
+     {
+       
+        $aux=[$sorteo->descripcion,[]];
+        foreach ($transacciones as $transaccion) 
+        {
+          
+          if ($transaccion->sorteo_id==$sorteo->id) 
+          {
+            array_push($aux[1],$transaccion);
+          }
+        }
+
+        if($aux[1]!=[])
+        {
+
+          array_push($ventas,$aux);
+        }
+     }
+
+
+       
+
+
+
+        return view('ticket',['numero'=>$consulta->numero,'fecha'=>$consulta->fecha,'ventas'=>$ventas]);
+    }
+    
 
     public function apuesta()
     {
