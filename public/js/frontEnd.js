@@ -1,35 +1,80 @@
-var jugadaId=1;
-var valor=0;
 
 
-function imprimirTicket() 
+
+
+function borrarJugadas () //borra la lista de jugadas
+{
+	
+	var premios=['primerPremio','segundoPremio','tercerPremio','Apuesta'];
+	
+	for (var i = 0; i < premios.length; i++) 
+	{
+		$('#'+premios[i]).val('');
+	}
+
+
+	for ( var i=0;i<$('#jugadaId').val(); i++) 
+	{
+		$('#filaJugada'+i).remove();
+		
+	}
+	$('#jugadaId').val(0);
+	$('#dineroTotal').text(	'0 €');
+	$("#chekJugadas").prop('checked',false);
+
+
+}
+
+function limpiarVentas() 
+{
+	var url='/generarTicket';
+
+	var generar= $.get(url,function(resultado)
+		{
+			//alert(resultado);
+			url='/imprimirTicket/'+resultado;
+			window.open(url, "Ticket", "width=300, height=500");
+			//setTimeout(function(){location.href = url;},400);
+
+
+		});
+	generar.fail(function() {
+				
+				swal({
+						title:'Error al generar el ticket!!',//Contenido del modal
+						text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+						timer:2000,//Tiempo de retardo en ejecucion del modal
+						type: "error",
+						showConfirmButton:false,//Eliminar boton de confirmacion
+						html: true
+					});
+			});
+
+
+}
+
+
+
+function generarTicket() 
 {
 	$('#imprimirTicket').click(function()
 		{
-			var premios=['primerPremio','segundoPremio','tercerPremio','Apuesta'];
+			
 			var tabla=document.getElementById('tablaJugadas');
 			var checks=tabla.getElementsByTagName("input");
 
-			for (var i = 0; i < premios.length; i++) 
-			{
-				$('#'+premios[i]).val('');
-			}
-
+			
 			if(checks.length>0)
 			{
-				 var url='/imprimirTicket';
+				 
 
-				 var imprimir= $.get(url,function(resultado)
-							 {
-
-							 	alert(resultado);
-
-
-
-							 });
+				 borrarJugadas();
+				 limpiarVentas();
 			}
 
-			$('#jugadaId').val(0);
+			
+
+			
 		});
 }
 
@@ -38,18 +83,21 @@ function imprimirTicket()
 function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta) 
 {
 	
-	
+			var valor=0;
+
 							for (var i = 0; i < sorteos_.length; i++) 
 							{
 								
 							
-								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+$('#'+jugadaId).val()+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+$('#'+jugadaId).val()+'" data-idj="'+$('#'+jugadaId).val()+'"/><label for="check'+$('#'+jugadaId).val()+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+$('#'+jugadaId).val()+'" >'+$('#Apuesta').val()+'</th></tr>');
-								valor=valor+parseInt($('#Apuesta').val());
+								$('#tablaJugadas').append(' <tr class="resultadoi" id="filaJugada'+$('#'+jugadaId).val()+'" data-apuesta="'+$('#Apuesta').val()+'">  <th class="celda"><input type="checkbox" class="checkJugada" id="check'+$('#'+jugadaId).val()+'" data-idj="'+$('#'+jugadaId).val()+'"/><label for="check'+$('#'+jugadaId).val()+'" ></label></th>  <th class="celda1">'+sorteos_[i]+'</th>  <th class="celda1">'+tripleta+'</th> <th id="apuesta'+$('#'+jugadaId).val()+'" >'+$('#Apuesta').val()+' €'+'</th></tr>');
+								valor=parseInt($('#valorTotal').val())+parseInt($('#Apuesta').val());
+								$('#valorTotal').val(valor);
+								
 								$('#'+jugadaId).val(parseInt($('#'+jugadaId).val())+1);
 							}
 
 
-							$('#dineroTotal').text(valor);
+							$('#dineroTotal').text(	valor+' €');
 							$('#Apuesta').val(" ");
 							$.each(checks, function(i)
 								{
@@ -146,6 +194,7 @@ function anularJugada()
 			var checks=tabla.getElementsByTagName("input");
 			var longitud=checks.length;
 			var ids=[];
+			var valor=0;
 			
 			var c=0;//seleccionados
 
@@ -165,6 +214,9 @@ function anularJugada()
 
 							
 				 var url='/anularJugada';
+				 var elemento=null;
+				 var valor=$('#valorTotal').val();
+
 
 				 var eliminar= $.get(url,{datos:ids},function(resultado)
 					{
@@ -177,14 +229,19 @@ function anularJugada()
 									for (var i = 0; i < ids.length; i++)
 									 {
 										
-									 	valor=valor-parseInt($("#apuesta"+ids[i]).text());
+									 	
+									 	elemento=$('#filaJugada'+ids[i]);
+									 	valor=valor-parseInt(elemento.attr('data-apuesta'));
+
+									 	
 										$('#filaJugada'+ids[i]).remove();
 										
 									}
-
+									 $('#valorTotal').val(valor);
+									
 									$("#chekJugadas").prop('checked',false);
 
-									$('#dineroTotal').text(valor);
+									$('#dineroTotal').text(	valor +' €');
 						}
 					});
 				 eliminar.fail(function()
@@ -596,7 +653,7 @@ function InsertarUsuario ()
 			anularJugada()
 			seleccionarJugada()
 			InsertarUsuario()
-			imprimirTicket()
+			generarTicket()
 
 
 // $(document).ready(function()

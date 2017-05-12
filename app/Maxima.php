@@ -8,5 +8,5 @@ class Maxima extends Model
 {
     public $timestamps=false;
     protected $table="maximas";
-    protected $fillable=['id','quiniela','pale','tripleta','tiempoCierre'];
+    protected $fillable=['id','quiniela','pale','tripleta','tiempoCierre','ticket'];
 }

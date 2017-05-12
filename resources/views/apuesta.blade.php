@@ -97,6 +97,7 @@
 						<a class="waves-effect waves-light btn" id="imprimirTicket">Imprimir</a>
 					</div>
 					<input  id="jugadaId" type="hidden" value=0>
+					<input  id="valorTotal" type="hidden" value=0>
 				</div>
 			</div>
 		</div>

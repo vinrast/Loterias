@@ -16,7 +16,8 @@ class Reportes extends Controller{
       return view('reportes.index',['modulos'=>$modulos,'submodulos'=>$submodulos]);
     }
 
-    public function hora(){
+    public function hora()
+    {
     	$hora = date("h:i a",time()-2100);
     	return $hora;
 		
