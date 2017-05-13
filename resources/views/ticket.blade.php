@@ -4,7 +4,7 @@
 @endsection  
 @section('contenido')
     
-    <span style="text-align: center;font-size:1.2em;">Agencia de loterias XXXX</span>
+    <span style="text-align: center;font-size:1.3em;">Agencia de loterias XXXX</span>
     <div  style="text-align: left;border-top: black 1px solid;">
           
           <br>
@@ -22,11 +22,14 @@
                      
                         <table style="width:100%;height:20%;">
                                 
-                                <tr style=" width:50%;height:50%;">
+                             
                                 @foreach($jugada[1] as $lista)
-                                    <td style="text-align: center; width:50%;height:50%;font-size:0.9em;">{{$lista." €"}}</td>
+                                   <tr style=" width:50%;height:50%;">
+                                       <td style="text-align: center; width:50%;height:50%;font-size:0.9em;">{{$lista[0]}}</td>
+                                       <td style="text-align: center; width:50%;height:50%;font-size:0.9em;">{{$lista[1]." €"}}</td>
+                                  </tr>
                                 @endforeach
-                                </tr>
+                                
 
 
                         </table>
@@ -39,9 +42,9 @@
           <br>
           <br>
          
-          <div  style="text-align:right;font-size:1.2em;">
+          <div  style="text-align:right;font-size:1.3em;border-top: black 1px solid;">
               
-               <span >{{  "total: ".$total."  €" }}</span>
+               <span >{{  "Total: ".$total."  €" }}</span>
                              
                                 
           </div>

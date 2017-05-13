@@ -19,13 +19,14 @@ function borrarJugadas () //borra la lista de jugadas
 		
 	}
 	$('#jugadaId').val(0);
+	$('#valorTotal').val(0);
 	$('#dineroTotal').text(	'0 €');
 	$("#chekJugadas").prop('checked',false);
 
 
 }
 
-function limpiarVentas() 
+function limpiarVentasImprimir() 
 {
 	var url='/generarTicket';
 
@@ -34,7 +35,7 @@ function limpiarVentas()
 			alert(resultado);
 			url='/imprimirTicket/'+resultado;
 			window.open(url, "Ticket", "width=300, height=500");
-			//setTimeout(function(){location.href = url;},400);
+			
 
 
 		});
@@ -69,7 +70,7 @@ function generarTicket()
 				 
 
 				 borrarJugadas();
-				 limpiarVentas();
+				 limpiarVentasImprimir();
 			}
 
 			

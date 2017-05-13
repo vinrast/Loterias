@@ -365,8 +365,8 @@ class Cargar extends Controller
             $jugada=DB::Table('jugadas')->where(['id'=>$transaccion->jugada_id])->first();
 
            
-            array_push($aux[1],$jugada->numero);
-            array_push($aux[1],$apuesta->cantidad);
+            array_push($aux[1],[$jugada->numero,$apuesta->cantidad]);
+            //array_push($aux[1],$apuesta->cantidad);
        
             $total=$total+$apuesta->cantidad;
 
@@ -377,16 +377,20 @@ class Cargar extends Controller
         {
 
          
-      
+       
           array_push($ventas,$aux);
         }
      }
+      // // dd($ventas);
       // foreach ($ventas as $venta) 
       // {
+        
       //   echo $venta[0];
       //   foreach ($venta[1] as $jug) 
       //   {
-      //     echo"<br><br>".$jug."<br><br>";
+      //     echo"<br>".$jug[0];
+      //     echo"<br>".$jug[1];
+      //     echo "<br>---------------<br>";
       //   }
       // }
 
