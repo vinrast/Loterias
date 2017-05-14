@@ -11,12 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/cargar','Cargar@index');
-Route::get('/login','Cargar@login');
+Route::get('/','Cargar@login');
 Route::get('/home','Cargar@apuesta');
 
 ////////Verificar Credenciales del login ///////////////////////////

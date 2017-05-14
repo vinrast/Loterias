@@ -17,7 +17,7 @@
 				<div class="loterias">
 					<ul id="sorteosDisponibles">
 						@foreach($sorteos as $sorteo)
-							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}"/><label for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label> </li>
+							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
 						@endforeach
 					</ul>
 				</div>

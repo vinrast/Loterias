@@ -135,6 +135,21 @@ body{
     border-top: 0;
     
 }
+
+ .tag{
+    float: right;
+    color:#fff;
+    padding: 0.3rem 1rem;
+    border-top: 3px solid;
+    border-color:#e57373; 
+    background-color: rgba(33, 33, 33, 0.7);
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    transition: all 0.3s ease;
+    margin-bottom: 0.3rem;
+    position: relative;
+    display: none;
+}
 .loteriai label{
     color: #000;
 }
