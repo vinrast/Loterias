@@ -21,8 +21,8 @@ class Reportes extends Controller{
     {
       $consulta = DB::table('sorteos')->select('id','horaSorteo')->get();
       $cierre=DB::table('maximas')->select('tiempoCierre')->first();
-    	$hora = date("h:i a",time()-50000);
-      $hora_ = date("H:i:s",time()-50000);
+    	$hora = date("h:i a",time());
+      $hora_ = date("H:i:s",time());
       $mes = date("n",time());
       $dia = date("w",time());
       $dia_mes = date("j",time());

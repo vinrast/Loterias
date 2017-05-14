@@ -59,6 +59,10 @@ function consulta(){
                 $('#loteria'+resultado[6][x].id+'').attr('disabled','disabled');
                 $('#tag'+resultado[6][x].id+'').css({ display:"inline"});
             }
+            else{
+                $('#loteria'+resultado[6][x].id+'').removeAttr('disabled','disable');
+                $('#tag'+resultado[6][x].id+'').css({ display:"none"});
+            }
 
         }
         setTimeout("consulta()",1000);
