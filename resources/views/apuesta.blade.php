@@ -5,7 +5,7 @@
 @section('contenido')
 	@include('layouts/header')
 	<div class="row">
-			@include('layouts/sidebar')
+		@include('layouts/sidebar')
 		<div class="col s12 m9 l9 consola">
 
 <!--////////////////////////////////////////AREA DE LOTERIAS DISPONIBLES//////////////////////////////////////-->
@@ -17,7 +17,7 @@
 				<div class="loterias">
 					<ul id="sorteosDisponibles">
 						@foreach($sorteos as $sorteo)
-							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
+							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label id="la{{$sorteo->id}}" for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
 						@endforeach
 					</ul>
 				</div>

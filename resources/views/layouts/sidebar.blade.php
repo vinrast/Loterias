@@ -1,5 +1,5 @@
 <div class="col s12 m2 l2 sidebar">
-	<div class="cont-menu">
+	<div class="cont-menu ">
 		<ul class="menu">
 			@foreach($modulos as $menu)
 			<li >

@@ -2,15 +2,28 @@ body{
     font-family: 'Ropa Sans', sans-serif;
     overflow-y: hidden;
 }
+
+html,body{
+
+margin:0px;
+
+height:100%;
+
+}
+
 .consola{
     margin-top: 30px;
 }
 /*////////////////////////////////////////// SIDEBAR ///////////////////////////////////////////////////////////*/
+.row{
+    margin:0px;
 
+    height:100%;
+}
 .sidebar{
     margin: 0;
     padding: 0 !important;
-    height: 570px;
+    height: 100%;
     text-align: center;
     border-style: ridge; 
     border-width: 1px;

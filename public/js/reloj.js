@@ -58,10 +58,12 @@ function consulta(){
             if (resultado[1]>=resultado[6][x].horaSorteo) {
                 $('#loteria'+resultado[6][x].id+'').attr('disabled','disabled');
                 $('#tag'+resultado[6][x].id+'').css({ display:"inline"});
+                $('#la'+resultado[6][x].id+'').css({ cursor:"default"});
             }
             else{
                 $('#loteria'+resultado[6][x].id+'').removeAttr('disabled','disable');
                 $('#tag'+resultado[6][x].id+'').css({ display:"none"});
+                $('#la'+resultado[6][x].id+'').css({ cursor:"pointer"});
             }
 
         }
