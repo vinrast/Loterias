@@ -57,6 +57,7 @@ function consulta(){
         for(x in resultado[6]){
             if (resultado[1]>=resultado[6][x].horaSorteo) {
                 $('#loteria'+resultado[6][x].id+'').attr('disabled','disabled');
+                $('#loteria'+resultado[6][x].id+'').prop('checked', false); 
                 $('#tag'+resultado[6][x].id+'').css({ display:"inline"});
                 $('#la'+resultado[6][x].id+'').css({ cursor:"default"});
             }
