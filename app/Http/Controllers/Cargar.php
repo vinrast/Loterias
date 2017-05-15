@@ -169,7 +169,7 @@ class Cargar extends Controller
                         {
 
                            $diferencia=($maxima->$campo)-$acumuladoSj;
-                           if($apuesta<$diferencia)//apuesta permitida y quedan euros para apostar
+                           if(($apuesta<$diferencia) &&($apuesta>0))//apuesta permitida y quedan euros para apostar
                            {
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
                            
@@ -185,6 +185,10 @@ class Cargar extends Controller
                            else if($apuesta>$diferencia)//la apuesta excede los limites
                            {
                             array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,3,$diferencia));
+                           }
+                           else if(($apuesta<$diferencia) &&($apuesta==0))
+                           {
+                            array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,5,$diferencia));
                            }
                            
 
@@ -263,10 +267,10 @@ class Cargar extends Controller
     public function NroTicket()
     {
 
-      $preFijo="Ltr-";
+      $preFijo="LTR-";
 
       $fecha=Carbon::now();
-      $fecha=$fecha->format('d-m-');
+      $fecha=$fecha->format('dm');
 
       $numero=DB::table('maximas')->where('id',2)->first();
       $actualizar=DB::Table('maximas')->where('id',2)->update(['ticket'=>$numero->ticket+1]);
@@ -280,8 +284,14 @@ class Cargar extends Controller
     public function obtenerFecha()
     {
       $fecha=Carbon::now();
-      $fecha=$fecha->toDateTimeString();
+      $fecha=$fecha->toDateString();
       return($fecha);
+    }
+     public function obtenerHora()
+    {
+      $hora=Carbon::now();
+      $hora=$hora->toTimeString();
+      return($hora);
     }
 
     public function actualizarTransacciones($usuario,$idT)
@@ -312,6 +322,7 @@ class Cargar extends Controller
      ////////Numero de ticket y fecha//////////////////
       $numero=$this->NroTicket();
       $fecha=$this->obtenerFecha();
+      $hora=$this->obtenerHora();
 
      //////////////Usuario//////////////////////
       $usuario=Session::get('usuario');
@@ -320,7 +331,7 @@ class Cargar extends Controller
 
       //////////////insertar ticket////////////////////////////////////////
         $idT=DB::table('tickets')->insertGetId
-      (['numero'=>$numero,'fecha'=>$fecha,'usuario_id'=>$usuario->id]);
+      (['numero'=>$numero,'fecha'=>$fecha,'hora'=>$hora,'usuario_id'=>$usuario->id]);
       //////////////////////////////////////////////////////////////////////
 
      // /////////////////////Actualizar transacciones ////////////////////////
@@ -381,25 +392,13 @@ class Cargar extends Controller
           array_push($ventas,$aux);
         }
      }
-      // // dd($ventas);
-      // foreach ($ventas as $venta) 
-      // {
-        
-      //   echo $venta[0];
-      //   foreach ($venta[1] as $jug) 
-      //   {
-      //     echo"<br>".$jug[0];
-      //     echo"<br>".$jug[1];
-      //     echo "<br>---------------<br>";
-      //   }
-      // }
-
+     
        
 
 
 
         
-       return view('ticket',['numero'=>$consulta->numero,'fecha'=>$consulta->fecha,'ventas'=>$ventas,'total'=>$total]);
+       return view('ticket',['numero'=>$consulta->numero,'fecha'=>$consulta->fecha,'hora'=>$consulta->hora,'ventas'=>$ventas,'total'=>$total]);
     }
     
 

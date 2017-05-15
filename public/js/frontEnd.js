@@ -1,6 +1,47 @@
 
+function presionarEnter()
+{
+	$( "#Apuesta" ).keypress( function (e) 
+	{
+ 		 var tecla = (document.all) ? e.keyCode : e.which;
+ 		 if(tecla==13)
+ 		 {
+ 		 	 $('#ADD').trigger('click');
+ 		 }
+ 		
+ 			
+ 	});
+ 		
+}
 
 
+function buscarResp (arreglo,elemento) 
+{
+	var respuesta=false;
+	for (var i = 0; i < arreglo.length; i++) 
+	{
+		if(arreglo[i]==elemento)
+		{
+			respuesta=true;
+		}
+	}
+
+	return respuesta;
+}
+
+function borrarInput(dupletas)
+{
+	
+	$.each(dupletas, function(i)
+		{
+								
+			$(this).val(" ");
+								
+								
+								
+		});
+
+}
 
 function borrarJugadas () //borra la lista de jugadas
 {
@@ -81,7 +122,7 @@ function generarTicket()
 
 
 
-function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta) 
+function insertarApuesta (sorteos_,jugadaId,tripleta) 
 {
 	
 			var valor=0;
@@ -99,26 +140,11 @@ function verificarApuesta (sorteos_,jugadaId,checks,dupletas,tripleta)
 
 
 							$('#dineroTotal').text(	valor+' €');
-							$('#Apuesta').val(" ");
-							$.each(checks, function(i)
-								{
-				
-									if ($(this).prop("checked")==true )
-									{
-										$(this).prop("checked",false);
-									}
-				
-								});
+							
+							
 
 
-							$.each(dupletas, function(i)
-							{
-								
-								$(this).val(" ");
-								
-								
-								
-							});
+							
 
 
 
@@ -352,6 +378,7 @@ function AgregarJugada()
 				var aux=[];
 				var inc=0;
 				var errorDup="";
+				var idErr=null;
 
 				c=0;
 
@@ -377,6 +404,7 @@ function AgregarJugada()
 						{
 							
 							errorDup=errorDup+' '+$(this).val()+' '+'<br>';
+							idErr=$(this);
 						}
 						c=c+1;
 
@@ -401,19 +429,19 @@ function AgregarJugada()
 								showConfirmButton:false,//Eliminar boton de confirmacion
 								html: true
 						});
-						
+						$('#primerPremio').focus();
 					}
 				else if (c>0 && errorDup!="")
 				{
 					swal({
-								title:'Las siguientes combinaciones son invalidas: ',//Contenido del modal
+								title:'Las siguientes combinaciones no son dupletas : ',//Contenido del modal
 								text: '<p style="font-size: 1.5em;">'+errorDup+'</p>',
-								
+								timer:3000,
 								type: "error",
-								showConfirmButton: true,//Eliminar boton de confirmacion
+								showConfirmButton: false,//Eliminar boton de confirmacion
 								html: true
 						});
-
+					idErr.focus();
 				}
 				else
 					{
@@ -451,7 +479,7 @@ function AgregarJugada()
 										showConfirmButton:false,//Eliminar boton de confirmacion
 										html: true
 									});
-						
+							$('#Apuesta').focus();
 							
 						}
 						else
@@ -468,10 +496,12 @@ function AgregarJugada()
 
 							 	var mensaje="";
 							 	var longitud=resultado.length;
+							 	var respuestas=[];
 							 	for (var i = 0; i < longitud; i++) 
 							 	{
 
 							 		
+							 		respuestas.push(resultado[i][3]);
 							 		if(resultado[i][3]==0)
 							 		{
 							 		
@@ -482,9 +512,9 @@ function AgregarJugada()
 							 		}
 							 		else if(resultado[i][3]==3)
 							 		{
-							 			mensaje=mensaje+'<div  > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EA8613;"> | Presenta una apuesta excesiva, usted cuenta con: '+resultado[i][4]+' €  para ella.' + '</label> </div>';
+							 			mensaje=mensaje+'<div  > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+'<label style="font-size: 0.8em;color: #000000;"> Por: </label> <label style="font-size: 0.8em;color: #072150  ;">'+$('#Apuesta').val()+' € '+'  </label>  '+' <label style="font-size: 0.8em;color: #EA8613;"> |  Usted cuenta solo con: '+resultado[i][4]+' €  para ella.' + '</label> </div>';
 							 			
-							 		
+							 			
 							 		}
 							 		else if(resultado[i][3]==2)
 							 		{
@@ -497,6 +527,12 @@ function AgregarJugada()
 							 		{
 
 							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Se encuentra en el ticket  </label> </div>';
+							 			
+							 		}
+							 		else if(resultado[i][3]==5)
+							 		{
+
+							 			mensaje=mensaje+'<div " > <label style="font-size: 0.8em;color: #000000;"> La jugada: </label>  <label style="font-size: 0.8em;color: #072150  ;">'+tripleta+'  </label>  ' +'<label style="font-size: 0.8em;color: #000000;"> para: </label>   <label style="font-size: 0.8em;color: #072150  ;">'+resultado[i][1]+'  </label>  '+' <label style="font-size: 0.8em;color: #D42304;"> | Debe poseer una apuesta mayor que 0  </label> </div>';
 							 			
 							 		}
 							 		else
@@ -512,16 +548,56 @@ function AgregarJugada()
 									 			swal({
 														title:'Tengo un comentario para ti !!!  ',//Contenido del modal
 														text: '<p style="font-size: 0.8em;">'+mensaje+'</p>',
-														//timer:,//Tiempo de retardo en ejecucion del modal
+														timer:3000,//Tiempo de retardo en ejecucion del modal
 														type: "warning",
-														showConfirmButton:true,//Eliminar boton de confirmacion
+														showConfirmButton:false,//Eliminar boton de confirmacion
 														html: true
 												});
 								}
-								if(sorteos__!=[])
+							   if(sorteos__.length>0 )
 								{
-									verificarApuesta(sorteos__,'jugadaId',checks,dupletas,tripleta);
+									
+								
+									insertarApuesta(sorteos__,'jugadaId',tripleta);
+									if(buscarResp(respuestas,1)==true||(buscarResp(respuestas,2)==true))
+									{
+										if(buscarResp(respuestas,3)==true)
+											{
+												$('#Apuesta').val(" ");
+												$('#Apuesta').focus();
+											}
+											else
+											{
+												   $('#Apuesta').val(" ");
+												   borrarInput(dupletas);
+												   $('#primerPremio').focus();
+
+											}
+									}
+
 								}
+								else if(sorteos__.length==0)
+								{
+									
+									if((buscarResp(respuestas,3)==true)||((buscarResp(respuestas,5)==true)))
+									{
+										$('#Apuesta').val(" ");
+										$('#Apuesta').focus();
+										
+									}
+									else
+									{
+										borrarInput(dupletas);
+										$('#Apuesta').val(" ");
+										$('#primerPremio').focus();
+									}
+
+									
+									
+									
+
+								}
+
 
 							 	
 
@@ -655,6 +731,7 @@ function InsertarUsuario ()
 			seleccionarJugada()
 			InsertarUsuario()
 			generarTicket()
+			presionarEnter()
 
 
 // $(document).ready(function()

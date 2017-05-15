@@ -12,7 +12,7 @@
 */
 
 Route::get('/cargar','Cargar@index');
-Route::get('/','Cargar@login');
+Route::get('/login','Cargar@login');
 Route::get('/home','Cargar@apuesta');
 
 ////////Verificar Credenciales del login ///////////////////////////
@@ -23,6 +23,7 @@ Route::get('/generarTicket','Cargar@generarTicket');
 Route::get('/generarTicket','Cargar@generarTicket');
 Route::get('/anularJugada','Cargar@anularJugada');
 Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');
+Route::get('/obtenerNumero','Cargar@NroTicket');
 //Route::get('/pruebaIm/{ticket_id}','Cargar@imprimirTicket');	
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
