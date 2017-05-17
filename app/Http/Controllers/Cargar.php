@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Http\Request;
+
 use Request;
 use App\Usuario;
 use App\Perfil;
@@ -20,10 +20,7 @@ class Cargar extends Controller
 
     public function login()
     {
-        Session::forget('sidebar');
-        Session::forget('modulos');
-        Session::forget('usuario');
-        Session::forget('submodulos');
+      
         return view('login');
     }
 
@@ -154,7 +151,7 @@ class Cargar extends Controller
                       $idSj=$consultaSorteoJugada->id;
                       $acumuladoSj=$consultaSorteoJugada->acumulado;
                     }
-
+                    $fecha=$this->obtenerFecha();
                     $consultaVentas=DB::table('ventas')->where(['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i]])->first();
                     if (count($consultaVentas)==0) 
                     {
@@ -174,13 +171,13 @@ class Cargar extends Controller
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
                            
                              $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
                            }
                            else if($diferencia==$apuesta)//apuesta cumple con el limite de apuestas 
                            {
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,2,0));
                                $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
                            }
                            else if($apuesta>$diferencia)//la apuesta excede los limites
                            {
@@ -297,6 +294,8 @@ class Cargar extends Controller
     public function actualizarTransacciones($usuario,$idT)
     {
       
+      
+
       $ventas=DB::table('ventas')->where('usuario_id',$usuario)->get();
      
       foreach ($ventas as $venta) 
@@ -409,15 +408,56 @@ class Cargar extends Controller
         
         $modulos=Session::get('modulos');
         $submodulos=Session::get('submodulos');
+        $usuario=Session::get('usuario');
+        $usuario=$usuario[0];
+        $fecha=$this->obtenerFecha();
+        $ventas=DB::table('ventas')->where(['usuario_id'=>$usuario->id,'fecha'=>$fecha])->get();
+        $ventas_=[];
+        $jugadaId=0;
+        $total=0;
+        if(count($ventas)!=0)
+        {
+          foreach ($ventas as $venta) 
+          {
+            $sorteo=DB::table('sorteos')->where('id',$venta->sorteo_id)->first();
+            if($sorteo->disponible==1 && $fecha==$venta->fecha)//si el sorteo esta disponible y es la fecha del dia
+            {
+              $jugada=DB::table('jugadas')->where('id',$venta->jugada_id)->first();
+              $apuesta=DB::table('apuestas')->where('id',$venta->apuesta_id)->first();
+              $aux=[$sorteo->descripcion,$jugada->numero,$apuesta->cantidad,$venta->fila];
+              $jugadaId=$venta->fila+1;
+              $total=$total+$apuesta->cantidad;
+              array_push($ventas_,$aux);
+            }
+            else
+            {
+              $eliminar=DB::table('ventas')->where('id',$venta->id)->delete();//elimina la venta
+            }
+          }
+
+        }
+        else
+        {
+          $ventas_=[];
+        }
 
         $modulos=$modulos[0];
         $submodulos=$submodulos[0];
 
         $sorteos=DB::table('sorteos')->get();
 
-        return view('apuesta',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos]);
+        return view('apuesta',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos,'ventas'=>$ventas_,'fila'=>$jugadaId,'total'=>$total]);
     }
    
+    public function cerrarSession()
+    {
+        Session::forget('sidebar');
+        Session::forget('modulos');
+        Session::forget('usuario');
+        Session::forget('submodulos');
+        return 1;
+    }
+
 
     /**
      * Show the form for creating a new resource.
