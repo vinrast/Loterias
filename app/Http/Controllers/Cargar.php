@@ -272,8 +272,8 @@ class Cargar extends Controller
       $fecha=Carbon::now();
       $fecha=$fecha->format('dm');
 
-      $numero=DB::table('maximas')->where('id',2)->first();
-      $actualizar=DB::Table('maximas')->where('id',2)->update(['ticket'=>$numero->ticket+1]);
+      $numero=DB::table('maximas')->where('id',1)->first();
+      $actualizar=DB::Table('maximas')->where('id',1)->update(['ticket'=>$numero->ticket+1]);
       $numero=$numero->ticket;
 
      
@@ -335,7 +335,7 @@ class Cargar extends Controller
       //////////////////////////////////////////////////////////////////////
 
      // /////////////////////Actualizar transacciones ////////////////////////
-       $this->actualizarTransacciones($usuario->id,$idT);
+      // $this->actualizarTransacciones($usuario->id,$idT);
      // /////////////////////////////////////////////////////////////////// 
 
      //  ////////////////Vaciar ventas //////////////////////////////////////////////

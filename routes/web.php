@@ -20,7 +20,6 @@ Route::post('/loginVerificar','Cargar@loginVerificar');
 Route::get('/verificarApuesta','Cargar@verificarApuesta');
 Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
 Route::get('/generarTicket','Cargar@generarTicket');
-Route::get('/generarTicket','Cargar@generarTicket');
 Route::get('/anularJugada','Cargar@anularJugada');
 Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');
 Route::get('/obtenerNumero','Cargar@NroTicket');
@@ -38,6 +37,7 @@ Route::any('/administracion/loterias/modificarLoteria', 'Administracion@modifica
 Route::get('/administracion/loterias/borrar', 'Administracion@borrar_loteria');
 Route::any('/administracion/loterias/setgen', 'Administracion@actualizar_configuracion_general');
 Route::any('/administracion/premios/actualizar', 'Administracion@actualizar_premios');
+Route::get('/administracion/jugada_dia','Administracion@insertar_jugada_dia');
 Route::get('/reportes','Reportes@index');
 
 

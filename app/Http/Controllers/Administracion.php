@@ -244,4 +244,13 @@ class Administracion extends Controller{
     }
   return $respuesta;
   }
+  public function insertar_jugada_dia(){
+    $modulos=\Session::get('modulos');
+    $modulos=$modulos[0];
+    $submodulos=\Session::get('submodulos');
+    $submodulos=$submodulos[0];
+    $sorteos=DB::table('sorteos')->get();
+  
+    return view('administracion.jugada_dia',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos]);
+  }
 }
