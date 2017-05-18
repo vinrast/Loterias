@@ -71,12 +71,18 @@
 					</div>
 					<div class="resultadoc" id="jugadasTickets">
 						<table id="tablaJugadas">
-							<!-- <tr class="resultadoi" id="filaJugada">
-								<th class="celda"><input type="checkbox" id="#" /><label for="#"></label></th>
-								<th class="celda1">Loteria 1</th>
-								<th>25-03-18</th>
-								<th>2.00</th>
-							</tr> -->
+								
+						@if(count($ventas)>0)
+							@foreach($ventas as $venta)
+									<tr class="resultadoi" id="filaJugada{{$venta[3]}}" data-apuesta="{{$venta[2]}}">
+										<th class="celda" ><input type="checkbox" class="checkJugada" id="check{{$venta[3]}}" data-idj="{{$venta[3]}}"><label for="check{{$venta[3]}}"></label></th>
+
+										<th class="celda1">{{$venta[0]}}</th>
+										<th class="celda1">{{$venta[1]}}</th>
+										<th class="celda1">{{$venta[2]." €"}}</th>
+									</tr> 
+							@endforeach
+						@endif
 						</table>
 					</div>
 				</div>
@@ -89,15 +95,15 @@
 							<span>TOTAL APUESTA</span>
 						</div>
 						<div class="col l6">
-							<span id="dineroTotal"></span>
+							<span id="dineroTotal">{{$total." €"}}</span>
 						</div>
 					</div>
 					<div class="col l12 botonera center">
 						<a class="waves-effect waves-light btn red" id="anularJugada">Anular</a>
 						<a class="waves-effect waves-light btn" id="imprimirTicket">Imprimir</a>
 					</div>
-					<input  id="jugadaId" type="hidden" value=0>
-					<input  id="valorTotal" type="hidden" value=0>
+					<input  id="jugadaId" type="hidden" value="{{$fila}}">
+					<input  id="valorTotal" type="hidden" value="{{$total}}">
 				</div>
 			</div>
 		</div>

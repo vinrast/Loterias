@@ -23,6 +23,7 @@ Route::get('/generarTicket','Cargar@generarTicket');
 Route::get('/anularJugada','Cargar@anularJugada');
 Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');
 Route::get('/obtenerNumero','Cargar@NroTicket');
+Route::get('/CerrarSession','Cargar@cerrarSession');
 //Route::get('/pruebaIm/{ticket_id}','Cargar@imprimirTicket');	
 //////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');

@@ -1,4 +1,5 @@
 
+
 function presionarEnter()
 {
 	$( "#Apuesta" ).keypress( function (e) 
@@ -12,6 +13,76 @@ function presionarEnter()
  			
  	});
  		
+}
+
+function CerrarSession() 
+{
+	$('#CerrarSession').click(function()
+		{
+		  
+		  
+
+		  swal({
+				title: "Cierre de sesion",
+				text: "¿ Desea cerrar sesion ?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor:"#319A0E",
+				confirmButtonText: "Si",
+				cancelButtonText: "Cancelar",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			 },
+
+			 function(isConfirm)
+			 {
+			 	if(isConfirm)//pasar peticion
+			 	{
+			 		
+					var url='/CerrarSession';
+				
+					var cerrar= $.get(url,function(resultado)
+						{
+							if (resultado==1) 
+							{
+								location.href = "/login";
+							}
+							
+						});
+				 		cerrar.fail(function() 
+				 		{
+				
+							swal({
+								title:'Error al cerrar sesion!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+'Pongase en contacto con el administrador'+'</p>',
+								timer:2000,//Tiempo de retardo en ejecucion del modal
+								type: "error",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html: true
+							});
+						});
+			    	
+
+			 		 
+			 	}
+			 	else
+			 	{
+			 			swal({
+								title:'Cierre de sesion cancelado!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+'La sesion se mantendra abierta'+'</p>',
+								timer:2000,//Tiempo de retardo en ejecucion del modal
+								type: "success",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html: true
+							});
+			 	}
+			 }
+			 );
+			 	
+
+		});	 
+
+				
 }
 
 
@@ -367,7 +438,7 @@ function AgregarJugada()
 						showConfirmButton:false,//Eliminar boton de confirmacion
 						html: true
 					});
-				
+				$('#primerPremio').focus();
 			}
 			else if(c>=1)//si se seleccionan sorteos
 			{
@@ -404,7 +475,10 @@ function AgregarJugada()
 						{
 							
 							errorDup=errorDup+' '+$(this).val()+' '+'<br>';
-							idErr=$(this);
+							if(idErr==null)
+							{
+							  idErr=$(this);
+							}
 						}
 						c=c+1;
 
@@ -559,8 +633,8 @@ function AgregarJugada()
 									
 								
 									insertarApuesta(sorteos__,'jugadaId',tripleta);
-									if(buscarResp(respuestas,1)==true||(buscarResp(respuestas,2)==true))
-									{
+									alert('respuestas: '+respuestas);
+									alert('sorteos: '+sorteos__)
 										if(buscarResp(respuestas,3)==true)
 											{
 												$('#Apuesta').val(" ");
@@ -573,14 +647,17 @@ function AgregarJugada()
 												   $('#primerPremio').focus();
 
 											}
-									}
+									
 
 								}
 								else if(sorteos__.length==0)
 								{
 									
+									alert('respuestas: '+respuestas);
+									alert('sorteos: '+sorteos__)
 									if((buscarResp(respuestas,3)==true)||((buscarResp(respuestas,5)==true)))
 									{
+										
 										$('#Apuesta').val(" ");
 										$('#Apuesta').focus();
 										
@@ -732,6 +809,8 @@ function InsertarUsuario ()
 			InsertarUsuario()
 			generarTicket()
 			presionarEnter()
+			CerrarSession() 
+			mensaje()
 
 
 // $(document).ready(function()
