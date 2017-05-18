@@ -3,7 +3,7 @@
 		<ul class="menu">
 			@foreach($modulos as $menu)
 			<li >
-				<a class="" href="{{$menu->ruta}}">{{$menu->descripcion}}</a>
+				<a class="{{$menu->clase}}" href="{{$menu->ruta}}">{{$menu->descripcion}}</a>
 				@foreach($submodulos as $link)
 					@if($link->dependencia==$menu->id)
 					<ul>

@@ -35,6 +35,10 @@ $(document).ready(function(){
 	$('#insertarEdit').click(function(event){
 		event.preventDefault();
 	});
+	$('.link').click(function(event){
+		event.preventDefault();
+	});
+	$('.link').css({ cursor:"default"});
 
 	$('#insertarEdit').click(function()
 		{
