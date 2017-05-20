@@ -20,13 +20,15 @@ class TablaVentas extends Migration
             $table->integer('jugada_id')->unsigned();
             $table->integer('sorteo_id')->unsigned();
             $table->integer('apuesta_id')->unsigned();
-            $table->integer('usuario_id')->unsigned();
+            $table->string('usuario');
+            $table->integer('fila');
+            $table->date('fecha');
             
 
             $table->foreign('jugada_id')->references('id')->on('jugadas');
             $table->foreign('sorteo_id')->references('id')->on('sorteos');
             $table->foreign('apuesta_id')->references('id')->on('apuestas');
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+          
             
             
         });

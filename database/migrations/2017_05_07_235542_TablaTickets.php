@@ -16,11 +16,12 @@ class TablaTickets extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
             $table->string('numero',100);
-            $table->datetime('fecha');
-            $table->integer('usuario_id')->unsigned();
+            $table->date('fecha');
+            $table->time('hora');
+            $table->string('usuario',100);
 
 
-            $table->foreign('usuario_id')->references('id')->on('usuarios');
+            
             
 
 

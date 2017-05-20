@@ -171,13 +171,13 @@ class Cargar extends Controller
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,1,$diferencia-$apuesta));
                            
                              $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario'=>$usuario->username,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
                            }
                            else if($diferencia==$apuesta)//apuesta cumple con el limite de apuestas 
                            {
                              array_push($resp,array($sorteosId[$i],$sorteosDe[$i],$tipoJugada,2,0));
                                $idV=DB::table('ventas')->insertGetId
-                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario_id'=>$usuario->id,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
+                            (['jugada_id'=>$idJ,'sorteo_id'=>$sorteosId[$i],'apuesta_id'=>$idA,'usuario'=>$usuario->username,'fila'=>$jugadaId+$i,'fecha'=>$fecha]);
                            }
                            else if($apuesta>$diferencia)//la apuesta excede los limites
                            {
@@ -296,7 +296,7 @@ class Cargar extends Controller
       
       
 
-      $ventas=DB::table('ventas')->where('usuario_id',$usuario)->get();
+      $ventas=DB::table('ventas')->where('usuario',$usuario)->get();
      
       foreach ($ventas as $venta) 
       {
@@ -330,15 +330,15 @@ class Cargar extends Controller
 
       //////////////insertar ticket////////////////////////////////////////
         $idT=DB::table('tickets')->insertGetId
-      (['numero'=>$numero,'fecha'=>$fecha,'hora'=>$hora,'usuario_id'=>$usuario->id]);
+      (['numero'=>$numero,'fecha'=>$fecha,'hora'=>$hora,'usuario'=>$usuario->username]);
       //////////////////////////////////////////////////////////////////////
 
      // /////////////////////Actualizar transacciones ////////////////////////
-      // $this->actualizarTransacciones($usuario->id,$idT);
+      $this->actualizarTransacciones($usuario->username,$idT);
      // /////////////////////////////////////////////////////////////////// 
 
      //  ////////////////Vaciar ventas //////////////////////////////////////////////
-        $eliminar=DB::table('ventas')->where('usuario_id',$usuario->id)->delete();
+        $eliminar=DB::table('ventas')->where('usuario',$usuario->username)->delete();
      //  /////////////////////////////////////////////////////////////////////////////
 
       
@@ -411,7 +411,7 @@ class Cargar extends Controller
         $usuario=Session::get('usuario');
         $usuario=$usuario[0];
         $fecha=$this->obtenerFecha();
-        $ventas=DB::table('ventas')->where(['usuario_id'=>$usuario->id,'fecha'=>$fecha])->get();
+        $ventas=DB::table('ventas')->where(['usuario'=>$usuario->username,'fecha'=>$fecha])->get();
         $ventas_=[];
         $jugadaId=0;
         $total=0;
@@ -457,7 +457,89 @@ class Cargar extends Controller
         Session::forget('submodulos');
         return 1;
     }
+    public  function ordenarTripleta($vector)
+    {
+      $tripleta="";
+      for ($i=0; $i < count($vector); $i++) 
+      { 
+          if($i==1 || $i==2)
+          {
+            $tripleta=$tripleta.'-'.(string)$vector[$i];
+          }
+          else if($i==0)
+          {
+            $tripleta=(String)$vector[$i];
+          }
+      }  
 
+      return $tripleta;
+    }
+
+
+    public function jugadasGanadoras($premio1,$premio2,$premio3)
+    {
+      
+      $respuesta=[[],[],[]];
+
+     ///////////////////////quinielas/////////////////////////////////
+     array_push($respuesta[0],[$premio1,"primerPremio"]);
+     array_push($respuesta[0],[$premio2,"segundoPremio"]);
+     array_push($respuesta[0],[$premio3,"tercerPremio"]);
+     /////////////////////////////////////////////////////////////////
+
+
+     /////////////////////pales///////////////////////////////////////
+     $premio=[(integer)$premio1,(integer)$premio2];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[1],[$premio,"primerPremio"]);
+    
+     $premio=[(integer)$premio1,(integer)$premio3];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[1],[$premio,"segundoPremio"]);
+
+     $premio=[(integer)$premio2,(integer)$premio3];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[1],[$premio,"tercerPremio"]);
+     ////////////////////////////////////////////////////////////////
+
+
+     ////////////////////tripletas////////////////////////////////////
+     $premios=[(integer)$premio1,(integer)$premio2,(integer)$premio3];
+     sort($premios,1);
+     $tripleta=$this->ordenarTripleta($premios);
+     array_push($respuesta[2],[$tripleta,"primerPremio"]);
+     
+     $premio=[(integer)$premio1,(integer)$premio2];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[2],[$premio,"segundoPremio"]);
+    
+     $premio=[(integer)$premio1,(integer)$premio3];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[2],[$premio,"segundoPremio"]);
+
+     $premio=[(integer)$premio2,(integer)$premio3];
+     sort($premio,1);
+     $premio=$this->ordenarTripleta($premio);
+     array_push($respuesta[2],[$premio,"segundoPremio"]);
+
+
+     
+     
+
+
+     return $respuesta;
+    }
+
+
+    public function jGanadoras()
+    {
+      # code...
+    }
 
     /**
      * Show the form for creating a new resource.

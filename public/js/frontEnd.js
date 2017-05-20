@@ -811,7 +811,7 @@ function InsertarUsuario ()
 			generarTicket()
 			presionarEnter()
 			CerrarSession() 
-			mensaje()
+			
 
 
 // $(document).ready(function()
