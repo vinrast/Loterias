@@ -9,6 +9,7 @@
      <link href="https://fonts.googleapis.com/css?family=Ropa+Sans" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow" rel="stylesheet">
      <link rel="stylesheet" href="{{asset('plugins/sweetalert/sweetalert.css')}}">
+     <link rel="stylesheet" href="{{asset('css/animate.css')}}">
 </head>
 <body onload="inicio()">
     @yield('contenido')

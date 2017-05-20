@@ -257,7 +257,8 @@ function insertarApuesta (sorteos_,jugadaId,tripleta)
 											title:'Credenciales invalidos.',//Contenido del modal
 											timer:1500,//Tiempo de retardo en ejecucion del modal
 											type: "error",
-											showConfirmButton:false//Eliminar boton de confirmacion
+											showConfirmButton:false,//Eliminar boton de confirmacion
+											customClass: 'animated wobble'
 										});
 
 								}

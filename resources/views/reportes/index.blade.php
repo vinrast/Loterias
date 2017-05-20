@@ -8,7 +8,7 @@
 			@include('layouts/sidebar')
 		<div class="col s12 m9 l9 consola">
 
-<!--//////////////////////////////////////// CONTENEDOR CON LISTADO DE USUARIOS ////////////////////////////////-->
+<!--//////////////////////////////////////// XXXX ////////////////////////////////-->
 			<div class="col s12 m12 l12 push-l1  contpremio">
 				<form>
 					<div class="col s12 m12 l12  ">

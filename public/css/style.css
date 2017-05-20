@@ -304,7 +304,7 @@ height:100%;
 }
 
 
-/*///////////////////////////////////// VENTANAS MODALES////////////////////////////////////////////////////////*/
+/*///////////////////////////////////// VENTANAS MODALES/////////////////////////////////////////////////////////////////////*/
 
 .addusuario,.editusuario{
     width: 400px;
@@ -322,4 +322,22 @@ height:100%;
 .sethorario{
     width: 400px;
     height: 400px;
+}
+
+/*////////////////////////////////////////// ADMINISTRACION DE  JUGADA GANADORA //////////////////////////////////////////////////*/
+
+.descripcion{
+    padding: 15px !important;
+    font-size: 15px;
+}
+.no_sorteo, .no_ticket{
+    font-size: 30px;
+    padding:10px;
+    margin: 0px;
+    color:#bdbdbd;
+    display: none;
+}
+.contticket{
+    height: 480px;
+    margin-top: 30px;
 }

@@ -40,6 +40,7 @@ Route::any('/administracion/loterias/setgen', 'Administracion@actualizar_configu
 Route::any('/administracion/premios/actualizar', 'Administracion@actualizar_premios');
 Route::get('/administracion/jugada_dia','Administracion@insertar_jugada_dia');
 Route::get('/reportes','Reportes@index');
+Route::get('/buscar-ticket','Buscar_Ticket@index');
 
 
 Route::get('/prueba','Reportes@hora');
