@@ -17,7 +17,7 @@
 				<div class="loterias">
 					<ul id="sorteosDisponibles">
 						@foreach($sorteos as $sorteo)
-							<li class="loteriai"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label id="la{{$sorteo->id}}" for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
+							<li class="loteriai" id="sorteo{{$sorteo->id}}"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label id="la{{$sorteo->id}}" for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
 						@endforeach
 					</ul>
 				</div>
@@ -51,7 +51,7 @@
         			</div>
 				</div>
 				<div class="col s12 m2 l2 input-field agregar ">
-        			<a class="btn-floating btn-large waves-effect  indigo lighten-1" id="ADD"><i class="material-icons">add</i></a>
+        			<a class="btn-floating btn-large waves-effect  indigo lighten-1" id="ADD1"><i class="material-icons">add</i></a>
 				</div>
 			</div>
 
@@ -62,7 +62,7 @@
 					<div class="resultadot">
 						<table>
 							<tr>
-								<th><input type="checkbox" id="chekJugadas" /><label for="chekJugadas"></label></th>
+								<th><input class="checkPrincipal" type="checkbox" id="chekJugadas" /><label for="chekJugadas"></label></th>
 								<th>Sorteos</th>
 								<th>Jugadas</th>
 								<th>Apuestas</th>
@@ -72,14 +72,14 @@
 					<div class="resultadoc" id="jugadasTickets">
 						<table id="tablaJugadas">
 								
-						@if(count($ventas)>0)
+						@if($ventas!=null)
 							@foreach($ventas as $venta)
-									<tr class="resultadoi" id="filaJugada{{$venta[3]}}" data-apuesta="{{$venta[2]}}">
-										<th class="celda" ><input type="checkbox" class="checkJugada" id="check{{$venta[3]}}" data-idj="{{$venta[3]}}"><label for="check{{$venta[3]}}"></label></th>
+									<tr class="resultadoi" id="filaJugada{{$venta->fila}}"  data-id="{{$venta->fila}}">
+										<th class="celda" ><input type="checkbox" class="checkJugada" id="check{{$venta->fila}}" data-id="{{$venta->fila}}" data-apuesta="{{$venta->apuesta}}"><label for="check{{$venta->fila}}"></label></th>
 
-										<th class="celda1">{{$venta[0]}}</th>
-										<th class="celda1">{{$venta[1]}}</th>
-										<th class="celda1">{{$venta[2]." €"}}</th>
+										<th class="celda1">{{$venta->sorteo}}</th>
+										<th class="celda1">{{$venta->jugada}}</th>
+										<th class="celda1">{{$venta->apuesta." €"}}</th>
 									</tr> 
 							@endforeach
 						@endif

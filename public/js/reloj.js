@@ -51,25 +51,25 @@ function fecha(){
     });
 }
 function consulta(){
-    var url="/prueba";
-    var data;
-    var posting=$.get( url,data,function(resultado){
-        for(x in resultado[6]){
-            if (resultado[1]>=resultado[6][x].horaSorteo) {
-                $('#loteria'+resultado[6][x].id+'').attr('disabled','disabled');
-                $('#loteria'+resultado[6][x].id+'').prop('checked', false); 
-                $('#tag'+resultado[6][x].id+'').css({ display:"inline"});
-                $('#la'+resultado[6][x].id+'').css({ cursor:"default"});
-            }
-            else{
-                $('#loteria'+resultado[6][x].id+'').removeAttr('disabled','disable');
-                $('#tag'+resultado[6][x].id+'').css({ display:"none"});
-                $('#la'+resultado[6][x].id+'').css({ cursor:"pointer"});
-            }
+    // var url="/prueba";
+    // var data;
+    // var posting=$.get( url,data,function(resultado){
+    //     for(x in resultado[6]){
+    //         if (resultado[1]>=resultado[6][x].horaSorteo) {
+    //             $('#loteria'+resultado[6][x].id+'').attr('disabled','disabled');
+    //             $('#loteria'+resultado[6][x].id+'').prop('checked', false); 
+    //             $('#tag'+resultado[6][x].id+'').css({ display:"inline"});
+    //             $('#la'+resultado[6][x].id+'').css({ cursor:"default"});
+    //         }
+    //         else{
+    //             $('#loteria'+resultado[6][x].id+'').removeAttr('disabled','disable');
+    //             $('#tag'+resultado[6][x].id+'').css({ display:"none"});
+    //             $('#la'+resultado[6][x].id+'').css({ cursor:"pointer"});
+    //         }
 
-        }
-        setTimeout("consulta()",1000);
-    });
+    //     }
+    //     setTimeout("consulta()",1000);
+    // });
 }
 
 function inicio(){

@@ -8,6 +8,7 @@ use App\Pare;
 use App\Usuario;
 use App\Sorteo;
 use DB;
+use Carbon\Carbon;
 
 
 class Administracion extends Controller{
@@ -244,13 +245,235 @@ class Administracion extends Controller{
     }
   return $respuesta;
   }
+
+   public function obtener_fecha()
+    {
+      $fecha=Carbon::now();
+      $fecha=$fecha->toDateString();
+      return($fecha);
+    }
+
+
+
+public function convertir_cadena($array)
+{
+  $longitud=count($array);
+  $cadena="";
+
+  for ($i=0; $i <$longitud ; $i++) 
+  { 
+    if($i==1||$i==2)
+    {
+      $cadena=$cadena."-".$array[$i];
+    }
+    else
+    {
+      $cadena=$cadena.$array[$i];
+    }
+
+  }
+  return $cadena;
+}
+
+
+
+public function calcular_jugadas_quinielas($jugada)
+{
+  $jugada=explode("-", $jugada);
+  $quinielas=array("1er"=>(string)$jugada[0],"2do"=>(string)$jugada[1],"3er"=>(string)$jugada[2]);
+  return $quinielas;
+}
+
+public function calcular_jugadas_pales($jugada)
+{
+  $jugada=explode("-",$jugada);
+  $pale1=[(int)$jugada[0],(int)$jugada[1]];
+  $pale2=[(int)$jugada[0],(int)$jugada[2]];
+  $pale3=[(int)$jugada[1],(int)$jugada[2]];
+  asort($pale1);
+  asort($pale2);
+  asort($pale3);
+
+  $pale1=$this->convertir_cadena($pale1);
+  $pale2=$this->convertir_cadena($pale2);
+  $pale3=$this->convertir_cadena($pale3);
+
+  $pales=array("1er"=>$pale1,"2do"=>$pale2,"3er"=>$pale3);
+
+  return $pales;
+}
+
+public function calcular_jugadas_tripletas($jugada)
+{
+  $jugada=explode("-",$jugada);
+  $tripleta=[(int)$jugada[0],(int)$jugada[1],(int)$jugada[2]];
+  asort($tripleta);
+  $tripleta=$this->convertir_cadena($tripleta);
+  $tripletas=array("1er"=>$tripleta);
+  return $tripletas;
+  }
+  
+
+  public function buscar_transacciones($jugadas,$sorteo)
+  {
+   $fecha=$this->obtener_fecha();
+   $tipos=array("1"=>"quiniela","2"=>"pale","3"=>"tripleta");
+   $premios=array("1er"=>"primerPremio","2do"=>"segundoPremio","3er"=>"tercerPremio");
+
+    foreach ($jugadas as $llave => $valor) 
+    {
+     
+        $consulta=DB::table('tickets')->join('transacciones','tickets.id','=','transacciones.ticket_id')
+                                    ->join('jugadas','transacciones.jugada_id','=','jugadas.id')
+                                    ->join('sorteos','transacciones.sorteo_id','=','sorteos.id')
+                                    ->join('apuestas','transacciones.apuesta_id','=','apuestas.id')
+                                    ->select('tickets.numero as nro_ticket','sorteos.descripcion as sorteo','jugadas.numero as jugada',
+                                              'jugadas.tipo as tipo','apuestas.cantidad as apuesta')
+                                    ->where(['tickets.fecha'=>$fecha,'sorteos.descripcion'=>$sorteo,'jugadas.numero'=>$valor])->get();
+      
+        $c_registros=count($consulta);
+        
+        if($c_registros>0)
+        {
+          foreach ($consulta as $consulta) 
+          {
+            $premio=DB::table('premios')->where('id',$consulta->tipo)->first();
+            if($llave=="1er")
+            {
+              
+              $premio=$premio->primerPremio;
+              $premio_="Primer premio";
+            }
+            else if($llave=="2do")
+            {
+              
+              $premio=$premio->segundoPremio;
+              $premio_="Segundo Premio";
+            }
+            else if($llave=="3er")
+            {
+              
+              
+              $premio=$premio->tercerPremio;
+              $premio_="Tercer Premio";
+            }
+            
+            $tipo=$tipos[$consulta->tipo];
+
+    
+            $pago=$consulta->apuesta*$premio;
+            
+            DB::table('p_tickets')->insert
+            (
+              ['nro_ticket'=>$consulta->nro_ticket,'sorteo'=>$consulta->sorteo,'jugada'=>$valor,'tipo'=>$tipo,'premio'=>$premio_,'apuesta'=>$consulta->apuesta,'pago'=>$pago,'fecha'=>$fecha]
+            );
+          }
+            
+        }
+
+        
+
+   }
+   return 0;
+ }
+
+ public function cantidad_de_tickets($registros)
+ {
+   $tickets=[];
+   foreach ($registros as $ticket) 
+   {
+    if(in_array($ticket->nro_ticket, $tickets)==FALSE)
+      {array_push($tickets, $ticket->nro_ticket);}
+   }
+
+   return(count($tickets));
+ }
+  public function calcular_jugadas_ganadoras($jugada="23-24-25",$sorteo="Caracas-12:00 Pm")
+  {
+    $fecha=$this->obtener_fecha();
+    $retorno=[0,0,0];
+    $quinielas=$this->calcular_jugadas_quinielas($jugada);
+    $pales=$this->calcular_jugadas_pales($jugada);
+    $tripletas=$this->calcular_jugadas_tripletas($jugada);
+    $this->buscar_transacciones($quinielas,$sorteo);
+    $this->buscar_transacciones($tripletas,$sorteo);
+    $this->buscar_transacciones($pales,$sorteo);
+    $consulta=DB::table('p_tickets')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->orderBy('pago','desc')->get();
+    $suma=DB::table('p_tickets')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->sum('pago');
+    $n=$this->cantidad_de_tickets($consulta);
+    if($n!=0)
+    {
+      $retorno=[1,$n,$suma];
+    }
+
+
+    return ($retorno);
+  }
+  
+    
+  public function insertar_jugada_ganadora()
+{
+  $datos=Request::get('datos');
+  $fecha=$this->obtener_fecha();
+  $jugada=$datos[0];
+  $sorteo=$datos[1];
+  $consulta=DB::table('s_jugadas')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->first();
+  $retorno=0;
+  if($consulta->jugada=="XX-XX-XX")
+  {
+      
+      $retorno=DB::table('s_jugadas')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->update(['jugada'=>$jugada,'status'=>'disabled']);
+      $aux=$this->calcular_jugadas_ganadoras($jugada,$sorteo);
+  }
+  return ([$retorno,$aux]);
+}
+  
+
   public function insertar_jugada_dia(){
+    $fecha=$this->obtener_fecha();
     $modulos=\Session::get('modulos');
     $modulos=$modulos[0];
     $submodulos=\Session::get('submodulos');
     $submodulos=$submodulos[0];
-    $sorteos=DB::table('sorteos')->get();
+    $sorteos=DB::table('sorteos')->join('s_jugadas','sorteos.descripcion','=','s_jugadas.sorteo')->select('sorteos.descripcion as descripcion','sorteos.id as id','s_jugadas.jugada as jugada','s_jugadas.fecha as fecha','s_jugadas.status as status')
+                                ->where(['s_jugadas.fecha'=>$fecha])->get();
+
+   $sorteos_jugadas=[];
+   $sorteos_activos=[];
+   foreach ($sorteos as $sorteo) 
+   {
+      $aux=["","",""];
+      if ($sorteo->jugada!="XX-XX-XX") 
+      {
+        $jugada=explode("-",$sorteo->jugada);
+        $sorteos_activos[$sorteo->descripcion]=0;
+        if (count($jugada)==3) 
+        {
+          $aux[0]=$jugada[0];
+          $aux[1]=$jugada[1];
+          $aux[2]=$jugada[2];
+        }
+        elseif (count($jugada)==2) 
+        {
+          $aux[0]=$jugada[0];
+          $aux[1]=$jugada[1];
+        }
+        elseif (condition) 
+        {
+          $aux[0]=$jugada;
+        }
+        $sorteos_jugadas[$sorteo->descripcion]=$aux;
+
+      }
+      else
+      {
+        $sorteos_activos[$sorteo->descripcion]=1;
+        $sorteos_jugadas[$sorteo->descripcion]=$aux;
+      }
+
+   }
+    
   
-    return view('administracion.jugada_dia',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos]);
+    return view('administracion.jugada_dia',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos,'jugada'=>$sorteos_jugadas,'activos'=>$sorteos_activos]);
   }
 }

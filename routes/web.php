@@ -11,21 +11,25 @@
 |
 */
 
+////////////////////////////cargar///////////////////////////////////////////////////////
 Route::get('/cargar','Cargar@index');
 Route::get('/login','Cargar@login');
-Route::get('/home','Cargar@apuesta');
-
-////////Verificar Credenciales del login ///////////////////////////
 Route::post('/loginVerificar','Cargar@loginVerificar');
 Route::get('/verificarApuesta','Cargar@verificarApuesta');
+Route::get('/cerrarSession','Cargar@cerrarSession');
+
+
+///////////////////////////inicio///////////////////////////////////////////////////////
+Route::get('/home','Inicio@vista_apuesta');
+Route::get('/limitesJugada','Inicio@verificar_apuesta');
+Route::get('/imprimirTicket/{ticket_id}','Inicio@imprimir_ticket');
+Route::get('/anularJugada','Inicio@anular_jugadas');
+Route::get('/generarTicket/','Inicio@generar_ticket');
+Route::get('/abrirSistema','Inicio@abrir_sistema');
+
+///////////////////////////administracion ///////////////////////////
+
 Route::post('/insertarUsuarios','Administracion@insertarUsuarios');
-Route::get('/generarTicket','Cargar@generarTicket');
-Route::get('/anularJugada','Cargar@anularJugada');
-Route::get('/imprimirTicket/{ticket_id}','Cargar@imprimirTicket');
-Route::get('/obtenerNumero','Cargar@NroTicket');
-Route::get('/CerrarSession','Cargar@cerrarSession');
-//Route::get('/pruebaIm/{ticket_id}','Cargar@imprimirTicket');	
-//////////////////////////////////////////////////////////////////////
 Route::get('/administracion/usuarios','Administracion@listar_usuarios');
 Route::get('/administracion/loterias','Administracion@listar_loterias');
 Route::get('/administracion/set_premios','Administracion@config_premio');
@@ -39,8 +43,24 @@ Route::get('/administracion/loterias/borrar', 'Administracion@borrar_loteria');
 Route::any('/administracion/loterias/setgen', 'Administracion@actualizar_configuracion_general');
 Route::any('/administracion/premios/actualizar', 'Administracion@actualizar_premios');
 Route::get('/administracion/jugada_dia','Administracion@insertar_jugada_dia');
+Route::get('/jugadaGanadora','Administracion@insertar_jugada_ganadora');
+
+////////////////////////////////////Reportes////////////////////////////////////////////////
 Route::get('/reportes','Reportes@index');
+Route::get('/prueba','Reportes@hora');
+Route::get('/cierreDiario','Reportes@cierre_diario');
+Route::get('/resumenDiario','Reportes@resumen_diario_ventas');
+
+///////////////////////////////////Buscar ticket///////////////////////////////////////////
 Route::get('/buscar-ticket','Buscar_Ticket@index');
 
 
-Route::get('/prueba','Reportes@hora');
+////////////////////////////////////////Mantenimiento///////////////////////////////////////////
+Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
+
+
+
+
+//////////////////////////////////Pruebas//////////////////////////////////////////////////
+
+Route::get('/test','Administracion@calcular_jugadas_ganadoras');

@@ -28,19 +28,21 @@
 							</div>
 							<div class="col s12 m4 l4">
 								<div class="input-field  col s6 m4 l4">
-		        					<input placeholder="1ro" id="primerPremio" type="number" min="0" max="99" class="validate">
+		        					<input placeholder="1ro" id="primerPremio{{$sorteo->id}}" type="number" min="0" max="99" value="{{$jugada[$sorteo->descripcion][0]}}" class="validate" data-id="{{$sorteo->id}}" {{$sorteo->status}}>
 		        				</div>
 		        				<div class="input-field col s6 m4 l4">
-		        					<input placeholder="2do" id="segundoPremio" type="number" min="0" max="99" class="validate">
+		        					<input placeholder="2do" id="segundoPremio{{$sorteo->id}}" type="number" min="0" max="99" value="{{$jugada[$sorteo->descripcion][1]}}" class="validate" data-id="{{$sorteo->id}}" {{$sorteo->status}}>
 		        				</div>
 		        				<div class="input-field col s6 m4 l4">
-		        					<input placeholder="3ro" id="tercerPremio" type="number" min="0" max="99" class="validate">
+		        					<input placeholder="3ro" id="tercerPremio{{$sorteo->id}}" type="number" min="0" max="99" value="{{$jugada[$sorteo->descripcion][2]}}" class="validate" data-id="{{$sorteo->id}}" {{$sorteo->status}}>
 		        				</div>
 							</div>
 							<div class="col s12 m2 l2 ">
-								<div class="input-field col s6 m4 l4">
-		        					<a class="waves-effect light-blue lighten-3 btn-flat">Guardar</a>
+							@if($activos[$sorteo->descripcion]==1)
+								<div class="input-field col s6 m4 l4" id="contenedor{{$sorteo->id}}">
+		        					<a class="waves-effect light-blue lighten-3 btn-flat guardar_jugada" id="guardar{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}">Guardar</a>
 		        				</div>
+		        			@endif
 							</div>
 						</div>
 					@endforeach

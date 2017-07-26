@@ -21,8 +21,24 @@ class Cargar extends Controller
     public function login()
     {
       
+        
+        Session::forget('modulos');
+        Session::forget('submodulos');
+        Session::forget('usuario');
         return view('login');
+       
     }
+    
+    public function limite_jugadas()
+    {
+      $tipo=Request::get('datos');
+      $tipos=["quiniela","pale","tripleta"];
+      $consulta=DB::table('maximas')->where('id',1)->first();
+
+      return((int)$consulta->$tipos[$tipo]);
+
+    }
+
 
     public function loginVerificar()
     {
@@ -270,8 +286,8 @@ class Cargar extends Controller
       $fecha=$fecha->format('dm');
 
       $numero=DB::table('maximas')->where('id',1)->first();
-      $actualizar=DB::Table('maximas')->where('id',1)->update(['ticket'=>$numero->ticket+1]);
       $numero=$numero->ticket;
+      $actualizar=DB::Table('maximas')->where('id',1)->update(['ticket'=>$numero->ticket+1]);
 
      
       return($preFijo.$fecha.$numero);
@@ -538,7 +554,14 @@ class Cargar extends Controller
 
     public function jGanadoras()
     {
-      # code...
+      
+      $premio1="12";
+      $premio2="34";
+      $premio3="20";
+      $sorteo_id=2;
+
+
+      return $this->jugadasGanadoras($premio1,$premio2,$premio3);//
     }
 
     /**

@@ -1,4 +1,15 @@
 
+function guardarJugada() 
+{
+	$(".guardarJugada").click(function()
+		{
+
+
+			alert('hola');
+		});
+}
+
+
 
 function presionarEnter()
 {
@@ -7,7 +18,9 @@ function presionarEnter()
  		 var tecla = (document.all) ? e.keyCode : e.which;
  		 if(tecla==13)
  		 {
+ 		 	
  		 	 $('#ADD').trigger('click');
+
  		 }
  		
  			
@@ -39,7 +52,7 @@ function CerrarSession()
 			 	if(isConfirm)//pasar peticion
 			 	{
 			 		
-					var url='/CerrarSession';
+					var url='/cerrarSession';
 				
 					var cerrar= $.get(url,function(resultado)
 						{
@@ -302,7 +315,7 @@ function anularJugada()
 					if($(this).prop('checked')==true)
 					{
 						c=c+1;
-						ids.push($(this).attr('data-idj'));
+						ids.push($(this).attr('data-id'));
 
 					}
 				
@@ -375,7 +388,7 @@ $("#chekJugadas").change(function()
 		var tabla=document.getElementById('tablaJugadas');
 		var checks=tabla.getElementsByTagName("input");
 		var estado=$(this).prop('checked');
-		//alert(checks.length);
+		alert(checks.length);
 
 		if (checks.length>0) 
 		{
@@ -805,13 +818,13 @@ function InsertarUsuario ()
 
 			VerificarCredencialesLogin()
 			AgregarJugada()
-			anularJugada()
-			seleccionarJugada()
+			//anularJugada()
+			//seleccionarJugada()
 			InsertarUsuario()
-			generarTicket()
+			//generarTicket()
 			presionarEnter()
 			CerrarSession() 
-			
+			guardarJugada() 
 
 
 // $(document).ready(function()

@@ -1,0 +1,57 @@
+.fila_encabezado
+{
+	border-style:solid;
+	border-color:black;
+	border-spacing: 0.1em;
+	text-align: center;
+	background: #F0F3F2;
+	font-family: arial;
+	font-style: italic;
+	font-size: 13pt;
+	 font-weight: bold;
+}
+
+.fila_cont
+{
+	font-family: arial;
+	font-style: italic;
+	font-size: 12pt;
+	text-align: center;
+}
+
+.fila_cont_encabezado
+{
+	text-align: center;
+	font-family: arial;
+	font-style: italic;
+	background: #FFFFFF;
+	font-size: 12pt;
+	 font-weight: bold;
+
+}
+.fila_principal
+{
+	background: #FFFFFF;
+
+	text-align: center;
+	font-family: arial;
+	font-style: italic;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#tablapricipal
+{
+	border-style:solid;
+	border-color:#CDCECD;
+	width:60em;
+	margin-left:1em;
+	border-spacing: 0.1em;
+
+}
+tr,td
+{
+	   border: 1px solid #CDCECD;
+  
+	}
+/*style="border-style:solid;border-color:black;width:20em;" #DDFDEE*/
