@@ -428,7 +428,7 @@ class Inicio extends Controller
       return(0);
    }
 
-   public function obtener_ventas_s($ticket_id,$sorteo_id)//1 uiniela 2 pale 3 tripleta
+   public function obtener_ventas_s($ticket_id,$sorteo_id)//1 quiniela 2 pale 3 tripleta
    {
       
       $ventas=DB::table('transacciones')->join('sorteos','sorteos.id','=','transacciones.sorteo_id')->join('jugadas','jugadas.id','=','transacciones.jugada_id')->join('apuestas','apuestas.id','=','transacciones.apuesta_id')

@@ -272,6 +272,7 @@ public function convertir_cadena($array)
     }
 
   }
+  
   return $cadena;
 }
 
@@ -290,10 +291,11 @@ public function calcular_jugadas_pales($jugada)
   $pale1=[(int)$jugada[0],(int)$jugada[1]];
   $pale2=[(int)$jugada[0],(int)$jugada[2]];
   $pale3=[(int)$jugada[1],(int)$jugada[2]];
-  asort($pale1);
-  asort($pale2);
-  asort($pale3);
 
+ sort($pale1);
+ sort($pale2);
+ sort($pale3);
+ 
   $pale1=$this->convertir_cadena($pale1);
   $pale2=$this->convertir_cadena($pale2);
   $pale3=$this->convertir_cadena($pale3);
@@ -307,7 +309,7 @@ public function calcular_jugadas_tripletas($jugada)
 {
   $jugada=explode("-",$jugada);
   $tripleta=[(int)$jugada[0],(int)$jugada[1],(int)$jugada[2]];
-  asort($tripleta);
+  sort($tripleta);
   $tripleta=$this->convertir_cadena($tripleta);
   $tripletas=array("1er"=>$tripleta);
   return $tripletas;

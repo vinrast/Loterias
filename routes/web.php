@@ -67,4 +67,4 @@ Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
 
 //////////////////////////////////Pruebas//////////////////////////////////////////////////
 
-Route::get('/test','Inicio@pagar_ticket');
+Route::get('/test','Administracion@calcular_jugadas_pales');
