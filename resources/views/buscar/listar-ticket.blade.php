@@ -16,33 +16,69 @@
 				<div class="col s12 m12 l12 contaddusuario ">
 					<div class="input-field col s12 m4 l4 push-l3">
 						<i class="material-icons prefix">search</i>
-						<input id="buscador" type="text" class="validate">
+						<input id="buscadorT" type="text" class="validate">
           				<label for="buscador">Buscar Ticket</label>
 					</div>
 				</div>	
-				<div class="col s12 m12 l12 contusuarioc">
+				<div class="col s12 m12 l12 contusuarioc" id="listaTicket">
 					<p class="no_ticket">No Se Encuentran Tickets en la Base de datos</p>
-					<div class="col s12 m12 l12 registroloterias jugada">
+					@foreach($tickets as $ticket)
+							<div class="col s12 m12 l12 registroloterias jugada"  name="registro" id="ticket{{$ticket["id"]}}" data-fecha="{{$ticket["fecha"]}}" data-numero="{{$ticket["numero"]}}" >
 
-						<div class="col s12 m5 l5">
-							<div class="input-field">
-	        					LTR-465465
-	        				</div>
-						</div>
-						<div class="col s12 m6 l6 push-l2">
-							<div class="input-field  col s6 m4 l4">
-	        					<a href="#" class="accion-ticket">Imprimir</a>
-	        				</div>
-	        				<div class="input-field col s6 m4 l4">
-	        					<a href="#" class="accion-ticket">Anular</a>
-	        				</div>
-	        				<div class="input-field col s6 m4 l4">
-	        					<a href="#" class="accion-ticket">Pagar</a>
-	        				</div>
-						</div>
-					</div>
+								<div class="col s12 m5 l5">
+									<div class="input-field">
+			        					{{$ticket["numero"]}}&nbsp;
+			        					{{"|".$ticket["fecha"]."&nbsp;|".$ticket["hora"]."|"}}
+			        				</div>
+			        				
+								</div>
+								<div class="col s12 m6 l6 push-l2">
+								@foreach($ticket["botones"] as $botones)
+									<div class="input-field  col s6 m4 l4" >
+			        					<a href="#" class="accion-ticket boton_t" id="{{$botones["texto"].$ticket["id"]}}" data-descripcion="{{$botones["texto"]}}" data-id="{{$ticket["id"]}}" >{{$botones["texto"]}}</a>
+			        				</div>
+			        			@endforeach
+			        				
+
+								</div>
+							</div>
+					@endforeach
+
 				</div>
-			</div>		
+			</div>	
+
+
+			<!-- /////////////////////////////////////////modal pagar sorteo	///////////////////// -->
+			<div id="modal_pagos" class="modal addusuario">
+				
+					<div class="modal-content">
+				     	<h6 id="numeroT"></h6>
+
+				    	<div class="col s12 m12 l12 contusuarioc">
+		            		<table id="tablaPremios" data-ticket="" data-total="0" data-id="">
+		            			
+
+		            		</table>
+		            	</div>
+		            	
+		            	
+					</div>
+	    			<div class="botonera-modal">
+		    			<center>
+		    				<button class="btn  waves-effect red lighten-1" type="button" name="cancelarPago" id="cancelarPago">Cancelar</button>
+		    				<button class="btn  waves-effect waves-light" type="button" name="pagarTicket" id="pagarTicket">Pagar</button>
+		    				
+
+		    			</center>
+	    			</div>
+				
+	    			
+  			</div>
+<!--   			////////////////////////////////////////////////////////////////////////////////////
+ -->
+
+
+
 		</div>
 	</div>
 @endsection

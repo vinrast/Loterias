@@ -134,7 +134,7 @@ $(document).ready(function()
 						completar_0(id_elemento);
 						tripleta=obtener_tripleta(id_elemento);
 						sorteo=$("#"+"guardar"+id_elemento).attr('data-descripcion');
-						var mensajes=["No existen tickets premiados para esta jugada","Nro de tickets premiados: "]
+						
 						var datos=[tripleta,sorteo];
 						var url="/jugadaGanadora";
 						alert(datos);

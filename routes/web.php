@@ -26,6 +26,10 @@ Route::get('/imprimirTicket/{ticket_id}','Inicio@imprimir_ticket');
 Route::get('/anularJugada','Inicio@anular_jugadas');
 Route::get('/generarTicket/','Inicio@generar_ticket');
 Route::get('/abrirSistema','Inicio@abrir_sistema');
+Route::get('/anularTicket/{ticket_id}','Inicio@anular_ticket');
+Route::get('/premiosTicket/{numero}','Inicio@premios_ticket');
+Route::get('/pagarTicket/{numero}','Inicio@pagar_ticket');
+
 
 ///////////////////////////administracion ///////////////////////////
 
@@ -63,4 +67,4 @@ Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
 
 //////////////////////////////////Pruebas//////////////////////////////////////////////////
 
-Route::get('/test','Administracion@calcular_jugadas_ganadoras');
+Route::get('/test','Inicio@pagar_ticket');

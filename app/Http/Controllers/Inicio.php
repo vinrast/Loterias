@@ -120,7 +120,7 @@ class Inicio extends Controller
 
    public function validar_apuesta($limite,$acumulado,$apuesta,$jugada_id,$sorteo_id)//varifica si una apuesta se encuentra dentro de los limites
    {
-   		//codigo : 0 la apuesta es igual a 0, 1 la apuesta excede el limite/disponible , 2 con la apuesta se logra el objetivo ,3 la apuesta es 0
+   		
    		$aprobada=0;//0 negada, 1 aprovada 
    		$diferencia=(int)$limite-(int)$acumulado;//obtiene la cantidad de dinero disponible para la proxima apuesta
    		$consulta_ticket=$this->buscar_jugada_ticket($jugada_id,$sorteo_id);
@@ -505,6 +505,62 @@ class Inicio extends Controller
     return $ticket_id;
     }
 
+
+    public function pagar_ticket($numero="LTR-27071")
+    {
+      $registros=DB::table('p_tickets')->where('nro_ticket',$numero)->get();
+      $fecha=$this->obtener_fecha();
+      $usuario=$this->obtener_usuario();
+      
+
+
+      foreach ($registros as $pago) 
+      {
+        $insertar=DB::table('pago_tickets')->insert//registra las jugadas que fueron pagas para unticket
+          (['nro_ticket'=>$pago->nro_ticket,'sorteo'=>$pago->sorteo,'premio'=>$pago->premio,'jugada'=>$pago->jugada,'tipo'=>$pago->tipo,'apuesta'=>$pago->apuesta,'pago'=>$pago->pago,'usuario'=>$usuario,'fecha'=>$fecha]);
+      }
+
+      $eliminar_ventas=DB::table('p_tickets')->where('nro_ticket',$numero)->delete();
+
+      if($eliminar_ventas!=0 && $insertar!=0)
+        {$retorno=1;}
+      else
+        {$retorno=0;}
+      
+      return $retorno;
+
+    }
+
+    public function premios_ticket($numero="LTR-27077")
+    {
+      $fecha=DB::table('tickets')->where('numero',$numero)->first();
+      $fecha=$fecha->fecha;
+      $jugadas=DB::table('p_tickets')->join('s_jugadas','s_jugadas.sorteo','=','p_tickets.sorteo')->select('p_tickets.nro_ticket as nro_ticket','p_tickets.sorteo as sorteo',
+                                                                                                           'p_tickets.jugada as jugada','p_tickets.premio as premio','p_tickets.apuesta as apuesta',
+                                                                                                           'p_tickets.pago as pago','s_jugadas.jugada as ganadora')
+                                                                                                  ->where(['p_tickets.nro_ticket'=>$numero,'s_jugadas.fecha'=>$fecha])->get();
+     
+      return $jugadas;
+
+    }
+
+    public function anular_ticket($ticket_id)
+    {
+      $ticket=DB::table('tickets')->where('id',$ticket_id)->first();
+      $numero=$ticket->numero;
+      $usuario=$this->obtener_usuario();
+
+      $insertar=DB::table('anulaciones')->insert//registrar los tickets anulados
+          (['nro_ticket'=>$ticket->numero,'valor'=>$ticket->valor,'fecha'=>$ticket->fecha,'usuario'=>$usuario]);
+
+      $transacciones=DB::table('transacciones')->where('ticket_id',$ticket_id)->delete();
+      $premiados=DB::table('p_tickets')->where('nro_ticket',$numero)->delete();
+      
+      $retorno=DB::table('tickets')->where('id',$ticket_id)->delete();
+      return $retorno;
+    }
+
+///////////////abrir sistema//////////////////////////////////////////////////////////////////////////////
    public function abrir_sistema()
    {
      $fecha=$this->obtener_fecha();
@@ -524,4 +580,6 @@ class Inicio extends Controller
      return 1;
      
    }
+
+
 }
