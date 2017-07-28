@@ -27,8 +27,8 @@
 
 								<div class="col s12 m5 l5">
 									<div class="input-field">
-			        					{{$ticket["numero"]}}&nbsp;
-			        					{{"|".$ticket["fecha"]."&nbsp;|".$ticket["hora"]."|"}}
+			        					{{$ticket["numero"]}}<br>
+			        					{{"Fecha: ".$ticket["fecha"]."&nbsp;|&nbsp;".$ticket["hora"]}}
 			        				</div>
 			        				
 								</div>

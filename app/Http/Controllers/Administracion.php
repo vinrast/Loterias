@@ -260,16 +260,23 @@ public function convertir_cadena($array)
   $longitud=count($array);
   $cadena="";
 
+
   for ($i=0; $i <$longitud ; $i++) 
   { 
-    if($i==1||$i==2)
-    {
-      $cadena=$cadena."-".$array[$i];
-    }
-    else
-    {
-      $cadena=$cadena.$array[$i];
-    }
+        if($array[$i]>=0 && $array[$i]<=9)
+        {
+          $aux="0".(string)$array[$i];
+
+        } else{$aux=(string)$array[$i];}
+
+        if($i==1||$i==2)
+        {
+          $cadena=$cadena."-".$aux;
+        }
+        else
+        {
+          $cadena=$cadena.$aux;
+        }
 
   }
   
@@ -285,13 +292,13 @@ public function calcular_jugadas_quinielas($jugada)
   return $quinielas;
 }
 
-public function calcular_jugadas_pales($jugada)
+public function calcular_jugadas_pales($jugada="10-09-01")
 {
   $jugada=explode("-",$jugada);
   $pale1=[(int)$jugada[0],(int)$jugada[1]];
   $pale2=[(int)$jugada[0],(int)$jugada[2]];
   $pale3=[(int)$jugada[1],(int)$jugada[2]];
-
+  
  sort($pale1);
  sort($pale2);
  sort($pale3);

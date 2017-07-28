@@ -112,10 +112,15 @@ $(document).ready(function()
 				var consulta= $.get(url,function(resultado)
 								{
 
-									var jugadas=JSON.stringify(resultado);
+									var jugadas=JSON.stringify(resultado[0]);
 									jugadas=JSON.parse(jugadas);
+
+									var sorteos_pendientes=JSON.stringify(resultado[1]);
+									sorteos_pendientes=JSON.parse(sorteos_pendientes)
+
 									var total=0;
 									var cantidad=jugadas.length;
+									var cantidad_sorteos=sorteos_pendientes.length;
 
 									
 									
@@ -128,6 +133,23 @@ $(document).ready(function()
 									}
 
 									$("#tablaPremios").append('<tr style="background:#C8EEE4"><td colspan="'+4+'">Total en premios: '+total+' €'+'</td></tr>')
+									if (cantidad_sorteos==0) //sorteos pendientes no existen
+										{
+											$("#tablaPremios").append('<tr style="background:#FFF5F5"><td colspan="'+4+'">No posee sorteos pendientes.</td></tr>')
+										}
+									else
+									{
+										var aux="";
+										for (var i = 0; i < cantidad_sorteos; i++) 
+										{
+											
+											aux=aux+sorteos_pendientes[i].sorteo+"<br>";
+
+										}
+										$("#tablaPremios").append('<tr style="background:#FFF5F5;"><td colspan="'+4+'" style="text-align:center;"> Sorteos pendietes: <br>'+aux+'</td></tr>');
+
+									
+									}
 									$("#tablaPremios").attr('data-total',total);
 									$('#modal_pagos').modal('open');//abrir el modal
 

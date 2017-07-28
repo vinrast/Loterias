@@ -539,8 +539,10 @@ class Inicio extends Controller
                                                                                                            'p_tickets.jugada as jugada','p_tickets.premio as premio','p_tickets.apuesta as apuesta',
                                                                                                            'p_tickets.pago as pago','s_jugadas.jugada as ganadora')
                                                                                                   ->where(['p_tickets.nro_ticket'=>$numero,'s_jugadas.fecha'=>$fecha])->get();
+
+      $sorteos_pendientes=DB::table('s_jugadas')->where(['fecha'=>$fecha,'jugada'=>'XX-XX-XX'])->get();
      
-      return $jugadas;
+      return [$jugadas,$sorteos_pendientes];
 
     }
 

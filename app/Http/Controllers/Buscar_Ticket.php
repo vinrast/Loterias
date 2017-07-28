@@ -18,10 +18,10 @@ class Buscar_Ticket extends Controller{
       $tickets_v=[];
       $aux=[];
 
-      $tickets=DB::table('tickets')->orderBy('fecha','desc')->get();
+      $tickets=DB::table('tickets')->orderBy('hora','desc')->get();
       foreach ($tickets as $ticket) 
       {
-      	$jugadas_g=DB::table('p_tickets')->where('nro_ticket',$ticket->numero)->orderBy('sorteo','desc')->get();
+      	$jugadas_g=DB::table('p_tickets')->where('nro_ticket',$ticket->numero)->orderBy('fecha','desc')->get();
       	
       	 $aux=array("id"=>$ticket->id,"numero"=>$ticket->numero,"fecha"=>$ticket->fecha,"hora"=>$ticket->hora,"valor"=>$ticket->valor,"botones"=>[array("enlace"=>$enlaces[0].$ticket->id,"texto"=>"Imprimir"),array("enlace"=>$enlaces[1].$ticket->id,"texto"=>"Anular")],"registros"=>[]);
       	$n=count($jugadas_g);
