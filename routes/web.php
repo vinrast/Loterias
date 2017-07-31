@@ -53,7 +53,7 @@ Route::get('/jugadaGanadora','Administracion@insertar_jugada_ganadora');
 Route::get('/reportes','Reportes@index');
 Route::get('/prueba','Reportes@hora');
 Route::get('/cierreDiario','Reportes@cierre_diario');
-Route::get('/resumenDiario','Reportes@resumen_diario_ventas');
+Route::get('/resumenDiario/{fecha}','Reportes@resumen_diario_ventas');
 
 ///////////////////////////////////Buscar ticket///////////////////////////////////////////
 Route::get('/buscar-ticket','Buscar_Ticket@index');
@@ -67,4 +67,4 @@ Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
 
 //////////////////////////////////Pruebas//////////////////////////////////////////////////
 
-Route::get('/test','Administracion@calcular_jugadas_pales');
+Route::get('/test','Reportes@cierre_diario');

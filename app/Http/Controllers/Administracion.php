@@ -439,50 +439,61 @@ public function calcular_jugadas_tripletas($jugada)
   
 
   public function insertar_jugada_dia(){
-    $fecha=$this->obtener_fecha();
+    
     $modulos=\Session::get('modulos');
     $modulos=$modulos[0];
     $submodulos=\Session::get('submodulos');
     $submodulos=$submodulos[0];
-    $sorteos=DB::table('sorteos')->join('s_jugadas','sorteos.descripcion','=','s_jugadas.sorteo')->select('sorteos.descripcion as descripcion','sorteos.id as id','s_jugadas.jugada as jugada','s_jugadas.fecha as fecha','s_jugadas.status as status')
-                                ->where(['s_jugadas.fecha'=>$fecha])->get();
+    $cierre=DB::table('cierres')->where('echo',0)->first();
+    if(count($cierre)!=0)
+    {
+        $fecha=$cierre->fecha;
 
-   $sorteos_jugadas=[];
-   $sorteos_activos=[];
-   foreach ($sorteos as $sorteo) 
-   {
-      $aux=["","",""];
-      if ($sorteo->jugada!="XX-XX-XX") 
-      {
-        $jugada=explode("-",$sorteo->jugada);
-        $sorteos_activos[$sorteo->descripcion]=0;
-        if (count($jugada)==3) 
-        {
-          $aux[0]=$jugada[0];
-          $aux[1]=$jugada[1];
-          $aux[2]=$jugada[2];
-        }
-        elseif (count($jugada)==2) 
-        {
-          $aux[0]=$jugada[0];
-          $aux[1]=$jugada[1];
-        }
-        elseif (condition) 
-        {
-          $aux[0]=$jugada;
-        }
-        $sorteos_jugadas[$sorteo->descripcion]=$aux;
+        $sorteos=DB::table('sorteos')->join('s_jugadas','sorteos.descripcion','=','s_jugadas.sorteo')->select('sorteos.descripcion as descripcion','sorteos.id as id','s_jugadas.jugada as jugada','s_jugadas.fecha as fecha','s_jugadas.status as status')
+                                    ->where(['s_jugadas.fecha'=>$fecha])->get();
 
-      }
-      else
-      {
-        $sorteos_activos[$sorteo->descripcion]=1;
-        $sorteos_jugadas[$sorteo->descripcion]=$aux;
-      }
+       $sorteos_jugadas=[];
+       $sorteos_activos=[];
+       foreach ($sorteos as $sorteo) 
+       {
+          $aux=["","",""];
+          if ($sorteo->jugada!="XX-XX-XX") 
+          {
+            $jugada=explode("-",$sorteo->jugada);
+            $sorteos_activos[$sorteo->descripcion]=0;
+            if (count($jugada)==3) 
+            {
+              $aux[0]=$jugada[0];
+              $aux[1]=$jugada[1];
+              $aux[2]=$jugada[2];
+            }
+            elseif (count($jugada)==2) 
+            {
+              $aux[0]=$jugada[0];
+              $aux[1]=$jugada[1];
+            }
+            elseif (condition) 
+            {
+              $aux[0]=$jugada;
+            }
+            $sorteos_jugadas[$sorteo->descripcion]=$aux;
 
-   }
+          }
+          else
+          {
+            $sorteos_activos[$sorteo->descripcion]=1;
+            $sorteos_jugadas[$sorteo->descripcion]=$aux;
+          }
+
+       }
     
-  
+    }
+    else
+    {
+      $sorteos_jugadas=[];
+      $sorteos_activos=[];
+      $sorteos=[];
+    }
     return view('administracion.jugada_dia',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos,'jugada'=>$sorteos_jugadas,'activos'=>$sorteos_activos]);
   }
 }

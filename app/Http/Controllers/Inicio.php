@@ -21,7 +21,7 @@ class Inicio extends Controller
       $preFijo="LTR-";
 
       $fecha=Carbon::now();
-      $fecha=$fecha->format('dm');
+      $fecha=$fecha->format('dmy');
 
       $numero=DB::table('maximas')->where('id',1)->first();
       $numero=(int)$numero->ticket;
@@ -546,6 +546,27 @@ class Inicio extends Controller
 
     }
 
+
+    public function restar_acumulados($transacciones)
+    {
+      foreach ($transacciones as $transaccion) 
+      {
+        $acumulado=DB::table('jugada_sorteo')->where(['jugada_id'=>$transaccion->jugada_id,'sorteo_id'=>$transaccion->sorteo_id])->first();
+        
+        $acumulado=$acumulado->acumulado;
+
+        $apuesta=DB::table('apuestas')->where('id',$transaccion->apuesta_id)->first();
+        $apuesta=$apuesta->cantidad;
+
+        $acumulado=$acumulado-$apuesta;
+
+        $actualizar=DB::table('jugada_sorteo')->where(['jugada_id'=>$transaccion->jugada_id,'sorteo_id'=>$transaccion->sorteo_id])->update(['acumulado'=>$acumulado]);
+      }
+      return $acumulado;
+
+    }
+
+
     public function anular_ticket($ticket_id)
     {
       $ticket=DB::table('tickets')->where('id',$ticket_id)->first();
@@ -555,6 +576,11 @@ class Inicio extends Controller
       $insertar=DB::table('anulaciones')->insert//registrar los tickets anulados
           (['nro_ticket'=>$ticket->numero,'valor'=>$ticket->valor,'fecha'=>$ticket->fecha,'usuario'=>$usuario]);
 
+      
+      $transacciones=DB::table('transacciones')->where('ticket_id',$ticket_id)->get();
+      
+      $this->restar_acumulados($transacciones);
+      ////////eliminaciones////////////////////////////
       $transacciones=DB::table('transacciones')->where('ticket_id',$ticket_id)->delete();
       $premiados=DB::table('p_tickets')->where('nro_ticket',$numero)->delete();
       
@@ -565,21 +591,29 @@ class Inicio extends Controller
 ///////////////abrir sistema//////////////////////////////////////////////////////////////////////////////
    public function abrir_sistema()
    {
-     $fecha=$this->obtener_fecha();
-     ///////abrir los sorteos
-     $sorteos=DB::table('sorteos')->where(['disponible'=>1])->update(['abierto'=>1]);
-     ///////habilitar el registro de cierre
-     DB::table('cierres')->insert
-          (['fecha'=>$fecha,'echo'=>0]);
-     //////habilitar registros para jugada del dia 
-     $sorteos=DB::table('sorteos')->where(['disponible'=>1])->get();
-     foreach ($sorteos as $sorteo) 
+     $cierres=DB::table('cierres')->where('echo',0)->get();//busca los turnos abiertos
+     $cantidad=count($cierres);
+     $retorno=0;
+     if($cantidad==0)
      {
-       DB::table('s_jugadas')->insert
-         (['sorteo'=>$sorteo->descripcion,'jugada'=>"XX-XX-XX",'fecha'=>$fecha,'status'=>""]);
-     }
 
-     return 1;
+         $fecha=$this->obtener_fecha();
+         ///////abrir los sorteos
+         $sorteos=DB::table('sorteos')->where(['disponible'=>1])->update(['abierto'=>1]);
+         ///////habilitar el registro de cierre
+         DB::table('cierres')->insert
+              (['fecha'=>$fecha,'echo'=>0]);
+         //////habilitar registros para jugada del dia 
+         $sorteos=DB::table('sorteos')->where(['disponible'=>1])->get();
+         foreach ($sorteos as $sorteo) 
+         {
+           DB::table('s_jugadas')->insert
+             (['sorteo'=>$sorteo->descripcion,'jugada'=>"XX-XX-XX",'fecha'=>$fecha,'status'=>""]);
+         }
+         $retorno=1;
+      }
+
+     return $retorno;
      
    }
 

@@ -80,9 +80,9 @@ class Reportes extends Controller
 }
 
 
-  public function resumen_diario_ventas()
+  public function resumen_diario_ventas($fecha)
   {
-      $fecha=$this->obtener_fecha();
+      
       $hora=$this->obtener_hora();
       $ventas_totales=DB::table('v_acumulados')->where('fecha',$fecha)->first();
       $ventas_sorteos=DB::table('s_acumulados')->where('fecha',$fecha)->orderBy('acumulado','desc')->get();
@@ -254,44 +254,77 @@ public function cerrar_sorteos()
   $sorteos=DB::table('sorteos')->where('disponible',1)->update(['abierto'=>0]);
 }
 
+public function fecha_cierre()//si existe abiertos
+{
+  $cierre=DB::table('cierres')->where('echo',0)->first();
+  if(count($cierre)!=0)
+  {$fecha=$cierre->fecha;}
+  else
+  {$fecha=null;}
+  
+  return $fecha;
 
+}
+
+public function verificar_jugadas($fecha)
+{
+  
+  $jugadas_ganadoras=DB::table('s_jugadas')->where(['fecha'=>$fecha,'jugada'=>'XX-XX-XX'])->get();//busca los sorteos que no poseen jugadas asociadas
+  $pendientes=count($jugadas_ganadoras);
+  if($pendientes==0)
+    {$retorno=1;}//no existen jugadas pendientes
+  else
+    {$retorno=0;}//existen jugadas pendientes
+  return $retorno;
+
+
+}
 
 public function cierre_diario()//realiza el cierre diario 
 {
-  $fecha=$this->obtener_fecha();
-  $tickets=DB::table('tickets')->where('fecha',$fecha)->get();
-  $cierre=DB::table('cierres')->where('fecha',$fecha)->first();
-    if($cierre->echo==0)
-    {
+  $retorno=0;//1 si no se ha realizado la apertura 2 si existen jugadas pendientes
+  $fecha=$this->fecha_cierre();
+  if($fecha!=null)//null si no se identifico la apertura del sistema
+  {
+      $verificar=$this->verificar_jugadas($fecha);
+      if($verificar==1)//si no existen sorteos pendientes por asociar jugadas 
+      {
+                $tickets=DB::table('tickets')->where('fecha',$fecha)->get();
+                $cierre=DB::table('cierres')->where('fecha',$fecha)->first();
+                  
 
-        
-        $ventas_totales=$this->obtener_total_ventas($fecha);//obtiene las ventas del dia 
-        $this->obtener_ventas_usuario($ventas_totales,$fecha);//obtiene las vetas del usuario y guarda los acumulados
-        $this->obtener_ventas_sorteos($ventas_totales,$fecha,$tickets);//obtiene las ventas por sorteo
-        $this->obtener_ventas_tipo_jugada($ventas_totales,$tickets,$fecha);//obtiene las ventas por tipo de jugada
-        $this->obtener_ventas_jugada($ventas_totales,$fecha);//obtiene las ventas por jugada
-        $comisiones=$this->obtener_total_comisiones($fecha);//obtiene el total de comisiones
-        $ventas_descuento=$ventas_totales-$comisiones;//total descuentos
-        $this->reiniciar_acumulados();
-        $this->reiniciar_tickets();
-        $this->cerrar_sorteos();
+                $ventas_totales=$this->obtener_total_ventas($fecha);//obtiene las ventas del dia 
+                $this->obtener_ventas_usuario($ventas_totales,$fecha);//obtiene las vetas del usuario y guarda los acumulados
+                $this->obtener_ventas_sorteos($ventas_totales,$fecha,$tickets);//obtiene las ventas por sorteo
+                $this->obtener_ventas_tipo_jugada($ventas_totales,$tickets,$fecha);//obtiene las ventas por tipo de jugada
+                $this->obtener_ventas_jugada($ventas_totales,$fecha);//obtiene las ventas por jugada
+                $comisiones=$this->obtener_total_comisiones($fecha);//obtiene el total de comisiones
+                $ventas_descuento=$ventas_totales-$comisiones;//total descuentos
+                $this->reiniciar_acumulados();
+                $this->reiniciar_tickets();
+                $this->cerrar_sorteos();
 
-        DB::table('v_acumulados')->insert
-            (['fecha'=>$fecha,'v_acumulado'=>$ventas_totales,'c_acumulado'=>$comisiones,'t_acumulado'=>$ventas_descuento]);
-
-
-        DB::table('cierres')->where('id',$cierre->id)->update(['echo'=>1]);
+                DB::table('v_acumulados')->insert
+                    (['fecha'=>$fecha,'v_acumulado'=>$ventas_totales,'c_acumulado'=>$comisiones,'t_acumulado'=>$ventas_descuento]);
 
 
+                DB::table('cierres')->where('id',$cierre->id)->update(['echo'=>1]);
 
-        $retorno=1;
-    }
-    else if($cierre->echo==1)
-    {
-      $retorno=0;
-    }
 
-  return $retorno; 
+
+            
+        }
+        else
+        {
+          $retorno=2;
+        }
+  }
+  else
+  {
+    $retorno=1;
+  }
+
+  return [$retorno,$fecha]; 
 
 
 }

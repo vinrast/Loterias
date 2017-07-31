@@ -23,7 +23,7 @@
 				<div class="col s12 m12 l12 contusuarioc" id="listaTicket">
 					<p class="no_ticket">No Se Encuentran Tickets en la Base de datos</p>
 					@foreach($tickets as $ticket)
-							<div class="col s12 m12 l12 registroloterias jugada"  name="registro" id="ticket{{$ticket["id"]}}" data-fecha="{{$ticket["fecha"]}}" data-numero="{{$ticket["numero"]}}" >
+							<div class="col s12 m12 l12 registroloterias jugada"  name="_registro_" id="ticket{{$ticket["id"]}}" data-fecha="{{$ticket["fecha"]}}" data-numero="{{$ticket["numero"]}}" >
 
 								<div class="col s12 m5 l5">
 									<div class="input-field">

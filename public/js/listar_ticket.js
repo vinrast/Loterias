@@ -281,10 +281,56 @@ $(document).ready(function()
 
 			});
 
+		function buscar_patron (texto) 
+		{
+			var prefijo='LTR-';
+			var patron=new RegExp('^'+texto);
+			var retorno;
+			if(prefijo.match(patron)!=null)//si el texto contiene letras del prefijo
+			{
+				retorno=true;
+			}
+			else
+			{
+				patron=new RegExp('^'+prefijo);
+				if(texto.match(patron)!=null)
+				{
+					retorno=true
+				}
+				else
+				{retorno=false;}
+			}
+			
+			return retorno;
+		}
 
-		$("#buscadorT").keydown(function()
+		$("#buscadorT").keyup(function()
 			{
 				
+				var valor=$("#buscadorT").val().toUpperCase();
+				
+				var registros=document.getElementsByName('_registro_');
+				var auxiliar;
+				if (buscar_patron(valor)==false) 
+				{
+					valor='LTR-'+valor;
+				}
+
+				var patron=new RegExp('^'+valor);
+				$.each(registros,function(i)//cuenta la cantidad de cheks seleccionados
+						{
+							auxiliar=$(this).attr('data-numero').match(patron);
+							
+							if (auxiliar!=null) //si coincide
+							{
+								$(this).show();//mostrar
+							}
+							else if(auxiliar==null)
+							{
+								$(this).hide();//ocultar
+							}
+							
+						})
 
 				
 			});

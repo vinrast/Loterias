@@ -48,6 +48,11 @@
 					@endforeach
 
 				</div>
+
+				<div class="col l12 botonera center">
+						<a class="waves-effect waves-light btn red" id="cierreDiario">Cerrar Turno</a>
+						<a class="waves-effect waves-light btn" id="abrirDiario">Abrir Turno</a>
+					</div>
 			</div>		
 		</div>
 	</div>

@@ -137,7 +137,7 @@ $(document).ready(function()
 						
 						var datos=[tripleta,sorteo];
 						var url="/jugadaGanadora";
-						alert(datos);
+						
 
 						var consulta= $.get(url,{datos:datos},function(resultado)
 						{
@@ -184,6 +184,122 @@ $(document).ready(function()
 						}
 					}
 				});
+
+
+
+	$("#cierreDiario").click(function() 
+	{
+		var url='/cierreDiario';
+		var cierre= $.get(url,function(resultado)
+						{
+							if (resultado[0]==0) 
+							{
+								var url="/resumenDiario/"+resultado[1];
+								window.open(url, "Resumen Diario", "width=900, height=500");
+								swal({
+										title:'Cierre de turno exitoso!!',//Contenido del modal
+										text: '<p style="font-size: 1.5em;">'+''+'</p>',
+										timer:2000,//Tiempo de retardo en ejecucion del modal
+										type: "success",
+										showConfirmButton:false,//Eliminar boton de confirmacion
+										html: true
+									});
+								
+
+
+							}
+							else if (resultado[0]==1)
+							{
+								swal({
+										title:'No se realizo el cierre!!',//Contenido del modal
+										text: '<p style="font-size: 1.2em;">'+'Debe existir un turno abierto'+'</p>',
+										
+										type: "error",
+										showConfirmButton:true,//Eliminar boton de confirmacion
+										html: true
+									});
+
+
+							}
+							else if(resultado[0]==2)
+							{
+
+								swal({
+										title:'No se realizo el cierre!!',//Contenido del modal
+										text: '<p style="font-size: 1.2em;">'+'Existen sorteos que no poseen jugadas asociadas'+'</p>',
+										
+										type: "error",
+										showConfirmButton:true,//Eliminar boton de confirmacion
+										html: true
+									});
+							}
+
+						});
+			cierre.fail(function()
+						{
+							swal({
+								title:'Error inesperado!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+								timer:2000,//Tiempo de retardo en ejecucion del modal
+								type: "warning",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html: true
+							});
+
+						});
+
+
+	})
+
+
+$("#abrirDiario").click(function()
+	{
+		var url="/abrirSistema";
+		var abrir=$.get(url,function(resultado)
+			{
+				if(resultado==0)//si no se pudo abrir el turno
+				{
+
+					swal({
+							title:'No se realizo la apertura del turno!!',//Contenido del modal
+							text: '<p style="font-size: 1.2em;">'+'Existe un turno abierto'+'</p>',	
+							type: "error",
+							showConfirmButton:true,//Eliminar boton de confirmacion
+							html: true
+						})
+				}
+				else if(resultado==1)//si se pudo realizar el cierre
+				{
+					swal({
+							title:'Apertura de turno exitosa!!',//Contenido del modal
+							text: '<p style="font-size: 1.2em;">'+'Se habilito un nuevo turno'+'</p>',	
+							timer:3000,//Tiempo de retardo en ejecucion del modal
+							type: "success",
+							showConfirmButton:false,//Eliminar boton de confirmacion
+							html: true
+						})
+					location.href="/administracion/jugada_dia";
+				}
+
+			});
+		abrir.fail(function()
+						{
+							swal({
+								title:'Error inesperado!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+								timer:2000,//Tiempo de retardo en ejecucion del modal
+								type: "warning",
+								showConfirmButton:false,//Eliminar boton de confirmacion
+								html: true
+							});
+
+						});
+
+
+
+	})
+
+
 });
 
 
