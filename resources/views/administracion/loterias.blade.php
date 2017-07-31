@@ -18,7 +18,7 @@
 					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">note_add</i></a>
 					<a class="btn-floating btn-small waves-effect  light-green accent-3" href="#modallimit"><i class="material-icons">lock_outline</i></a>
 				</div>
-				<div class="col s12 m12 l12 contloteriac">
+				<div class="col s12 m12 l12 contloteriac" id="contloteriac">
 						@foreach($sorteos as $sorteo)
 							<div class="col s12 m12 l12 registroloterias" id="registroloterias">
 								<div class="col s12 m6 l6 loterianombre">{{$sorteo->descripcion}}</div>

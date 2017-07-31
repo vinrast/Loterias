@@ -3,25 +3,35 @@
 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
-
-
+    $('select').material_select();
 	$('.datepicker').pickadate({
 	    selectMonths: true, // Creates a dropdown to control month
 	    selectYears: 15 // Creates a dropdown of 15 years to control year
 	});
 
+/*//////////////////////////////////////// REGISTRAR NUEVO USUARIO ///////////////////////////////////////////////////////////*/
+
+	$('#agregarUser').on('click',function(e){
+		e.preventDefault();
+		$('#modaladd').modal('open');
+	});
+
  /*///////////////////////////////////// LLENAR MODAL  EDITAR USUARIOS ///////////////////////////////////////////////////////*/
 
-	$(".editarUsuario").click(function(){
+	$('#contusuario').on('click','.editarUsuario',function(e) {
+		$('select').material_select('destroy');
+		$('select').material_select();
+		e.preventDefault();
 		datos=$(this).attr('data-registro');
 		var url= '/administracion/usuarios/traer_registro';
 		$.get(url, {datos:datos}, function(actualizar){
 			if (actualizar[3] == 1){
-
 				 	$('#userEdit').val(actualizar[0]);
 				 	$('#passwordEdit').val(actualizar[1]);
 				 	$('#perfilEdit> option[value="'+actualizar[2]+'"]').attr('selected', 'true');
 				 	$('#iduser').val(datos);
+				 	$('#modaledit').modal('open');
+				 	
 
 				}
 			else{
@@ -192,7 +202,7 @@ $(document).ready(function(){
 					});
 				}
 				else{
-					$('#registroloterias').append('   <div class="col s12 m6 l6 loterianombre">'+resultado[1]+'</div>       <div class="col s12 m2 l2 push-l5 acciones">     <a href="#modaledit"  id="edit'+resultado[2]+'"><i class="small editar material-icons">mode_edit</i></a>    <a href="" id="elim'+resultado[2]+'"><i class="borrar small material-icons">delete</i></a>   </div>');
+					$('#registroloterias').before('  <div class="col s12 m12 l12 registroloterias" id="registroloterias"> <div class="col s12 m6 l6 loterianombre">'+resultado[1]+'</div>       <div class="col s12 m2 l2 push-l5 acciones">     <a href="#modaledit"  id="edit'+resultado[2]+'" class="editarLoteria" data-registro="'+resultado[2]+'"><i class="small editar material-icons">mode_edit</i></a>    <a href="" id="elim'+resultado[2]+'"><i class="borrar small material-icons">delete</i></a>   </div></div>');
 
 					swal({
 						title:'Insercion exitosa!!!.',//Contenido del modal
@@ -221,21 +231,20 @@ $(document).ready(function(){
 		}
 	});
 /////////////////////////////////////////////// LLENAR MODAL DE EDITAR LOTERIA ////////////////////////////////////////////////////////
-
-	$(".editarLoteria").click(function(){
-		datos=$(this).attr('data-registro');
-		var url= '/administracion/loterias/traer_loteria';
-		$.get(url, {datos:datos}, function(actualizar){
-			if (actualizar[2] == 1){
-			 	$('#loteria_e').val(actualizar[0]);
-			 	$('#horatra_e').val(actualizar[1]);
-			 	$('#idlotery').val(datos);
-			}
-			else{
-				swal("Error Inesperado !!", "Comuniquese con el administrador", "error");
-			}
-		});
+$('#contloteriac').on('click','.editarLoteria',function() {
+	datos=$(this).attr('data-registro');
+	var url= '/administracion/loterias/traer_loteria';
+	$.get(url, {datos:datos}, function(actualizar){
+		if (actualizar[2] == 1){
+		 	$('#loteria_e').val(actualizar[0]);
+		 	$('#horatra_e').val(actualizar[1]);
+		 	$('#idlotery').val(datos);
+		}
+		else{
+			swal("Error Inesperado !!", "Comuniquese con el administrador", "error");
+		}
 	});
+});
 
 ////////////////////////////////////////////// MODIFICAR LOTERIA //////////////////////////////////////////////////////////////////////
 

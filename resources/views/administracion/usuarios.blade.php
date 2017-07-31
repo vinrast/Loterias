@@ -14,18 +14,17 @@
 					<span>Usuarios</span>
 				</div>
 				<div class="col s12 m12 l12 contaddusuario ">
-					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">perm_identity</i></a>
+					<a class="btn-floating btn-small waves-effect  indigo lighten-1" id="agregarUser" href="#modaladd"><i class="material-icons">perm_identity</i></a>
 				</div>
-				<div class="col s12 m12 l12 contusuarioc">
-					
+				<div class="col s12 m12 l12 contusuarioc" id="contusuario">
 					@foreach($usuarios as $usuario)
-							<div class=" col s12 m12 l12 usuarios" id="listaUsuarios">
-								<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
-								<div class="col s12 m2 l2 push-l5 acciones">
-									<a href="#modaledit" class="editarUsuario" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="editar small material-icons">mode_edit</i></a>
-									<a href="#" class="borrarUsuario" data-registro="{{$usuario->id}}" data-nombre="{{$usuario->username}}" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
-								</div>
+						<div class=" col s12 m12 l12 usuarios" id="registro">
+							<div class="col s12 m6 l6 usuarionombre" id="usuario{{$usuario->id}}">{{$usuario->username}}</div>
+							<div class="col s12 m2 l2 push-l5 acciones">
+								<a href="#modaledit" class="editarUsuario" data-registro="{{$usuario->id}}" id="edit{{$usuario->id}}"><i class="editar small material-icons">mode_edit</i></a>
+								<a href="#" class="borrarUsuario" data-registro="{{$usuario->id}}" data-nombre="{{$usuario->username}}" id="elim{{$usuario->id}}"><i class="borrar small material-icons">delete</i></a>
 							</div>
+						</div>
 					@endforeach
 
 				</div>
@@ -47,7 +46,7 @@
 	         				<label for="passwordAgr">Contraseña</label>
 		            	</div>
 		            	<div class="input-field col s12">
-    						<select name="perfilAgr_"  class="browser-default" id="perfilAgr">
+    						<select name="perfilAgr_"  id="perfilAgr">
 								<option value="0" disabled selected>Seleccione un perfil</option>
 								<option value="1">Administrador</option>
 								<option value="2">Vendedor</option>
@@ -79,8 +78,8 @@
 		            	<div class="col s12 m12 l12 input-field">
 		            		<input id="passwordEdit" type="password" class="validate" placeholder="Contraseña" name="passwordEdit_">
 		            	</div>
-		            	<div class="col s12 m12 l12">
-    						<select name="perfilEdit_" class="browser-default" id="perfilEdit">
+		            	<div class="input-field col s12 m12 l12">
+    						<select name="perfilEdit_" id="perfilEdit">
 								<option value="" selected>Seleccione un perfil</option>
 								<option value="1">Administrador</option>
 								<option value="2">Vendedor</option>

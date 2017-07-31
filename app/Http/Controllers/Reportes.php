@@ -88,7 +88,7 @@ class Reportes extends Controller
       $ventas_sorteos=DB::table('s_acumulados')->where('fecha',$fecha)->orderBy('acumulado','desc')->get();
       $ventas_tipos=DB::table('t_acumulados')->where('fecha',$fecha)->orderBy('acumulado','desc')->get();
       $ventas_usuarios=DB::table('u_acumulados')->where('fecha',$fecha)->orderBy('acumulado','desc')->get();
-      $ventas_top_jugadas=DB::table('j_acumulados')->take(10)->orderBy('acumulado','desc')->get();
+      $ventas_top_jugadas=DB::table('j_acumulados')->where('fecha',$fecha)->take(10)->orderBy('acumulado','desc')->get();
       $ventas_top_quinielas=$this->obtener_top_jugadas(1,5,$fecha);
       $ventas_top_pales=$this->obtener_top_jugadas(2,5,$fecha);
       $ventas_top_tripletas=$this->obtener_top_jugadas(3,5,$fecha);
