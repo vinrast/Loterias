@@ -205,16 +205,16 @@ $(document).ready(function()
 										html: true
 									});
 								
-
+								location.href="/administracion/jugada_dia";
 
 							}
 							else if (resultado[0]==1)
 							{
 								swal({
-										title:'No se realizo el cierre!!',//Contenido del modal
-										text: '<p style="font-size: 1.2em;">'+'Debe existir un turno abierto'+'</p>',
+										title:'El turno se encuentra cerrado!!',//Contenido del modal
+										text: '<p style="font-size: 1.2em;">'+''+'</p>',
 										
-										type: "error",
+										type: "warning",
 										showConfirmButton:true,//Eliminar boton de confirmacion
 										html: true
 									});
@@ -228,7 +228,7 @@ $(document).ready(function()
 										title:'No se realizo el cierre!!',//Contenido del modal
 										text: '<p style="font-size: 1.2em;">'+'Existen sorteos que no poseen jugadas asociadas'+'</p>',
 										
-										type: "error",
+										type: "warning",
 										showConfirmButton:true,//Eliminar boton de confirmacion
 										html: true
 									});
@@ -261,9 +261,9 @@ $("#abrirDiario").click(function()
 				{
 
 					swal({
-							title:'No se realizo la apertura del turno!!',//Contenido del modal
-							text: '<p style="font-size: 1.2em;">'+'Existe un turno abierto'+'</p>',	
-							type: "error",
+							title:'Existe un turno abierto!!',//Contenido del modal
+							text: '<p style="font-size: 1.2em;">'+''+'</p>',	
+							type: "warning",
 							showConfirmButton:true,//Eliminar boton de confirmacion
 							html: true
 						})

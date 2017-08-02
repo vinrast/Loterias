@@ -48,6 +48,7 @@ $(document).ready(function()
 			var mensajes=["Debe seleccionar un sorteo!!",
 						  "Debe ingresar al menos una quiniela!!",
 						  "Debe ingresar una apuesta!!",
+						  "Las ventas se encuentran cerradas!!"
 						];
 				swal({
 						title:''+mensajes[tipo_mensaje],//Contenido del modal
@@ -638,22 +639,45 @@ $(document).ready(function()
 				var sorteos;
 				var jugada;
 				var apuesta;
-
-				if(buscar_datos_no_seleccionados()!=0)//si no existen datos vacios 
-				{
-					sorteos=obtener_sorteos();
-					jugada=obtener_dupletas();
-					
-					if(jugada.length!=0)//si inserto una jugada correcta
-					{
-						apuesta=obtener_apuesta(jugada,sorteos);
-						
-					}
-
-					
-
-				}
+				var url='/consultarApertura';
+				$.get(url)
 				
+				 .done(function(resultado)
+				 {
+						if(resultado==1)
+ 						{
+							if(buscar_datos_no_seleccionados()!=0)//si no existen datos vacios 
+							{
+								sorteos=obtener_sorteos();
+								jugada=obtener_dupletas();
+								
+								if(jugada.length!=0)//si inserto una jugada correcta
+								{
+									apuesta=obtener_apuesta(jugada,sorteos);
+									
+								}
+
+								
+
+							}
+						}
+						else
+						{
+							mensaje_alerta_vacio(3);
+						}
+				})
+
+				.fail(function()
+					{
+						swal({
+												title:'Error inesperado!!',//Contenido del modal
+												text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+												timer:2000,//Tiempo de retardo en ejecucion del modal
+												type: "warning",
+												showConfirmButton:false,//Eliminar boton de confirmacion
+												html: true
+											});
+					});
 
 
 

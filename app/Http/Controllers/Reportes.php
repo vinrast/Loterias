@@ -79,6 +79,51 @@ class Reportes extends Controller
     return $jugadas;
 }
 
+  public function obtener_jugadas_ganadoras($fecha)
+  {
+    $jugadas_p=[];
+    $jugadas_s=DB::table('s_jugadas')->where('fecha',$fecha)->get();
+    foreach ($jugadas_s as $jugada) 
+    {
+      $premios=DB::table('p_tickets')->where(['sorteo'=>$jugada->sorteo,'fecha'=>$fecha])->sum('pago');
+      $actualizar=DB::table('s_jugadas')->where('id',$jugada->id)->update(['premios'=>$premios]);
+      $jugadas_p[$jugada->sorteo]= array('jugada' => $jugada->jugada,'sorteo'=>$jugada->sorteo,'total'=>$premios);
+
+    }
+    return $jugadas_p;
+  }
+
+  public function obtener_anulaciones($fecha)
+  {
+    $anulaciones=[];
+    $usuarios=DB::table('usuarios')->get();
+
+    foreach ($usuarios as $usuario) 
+    {
+      $acumulado=DB::table('anulaciones')->where(['usuario'=>$usuario->username,'fecha'=>$fecha])->sum('valor');
+      $consulta=DB::table('anulaciones')->where(['usuario'=>$usuario->username,'fecha'=>$fecha])->get();
+      $cantidad=count($consulta);
+      $anulaciones[$usuario->username]=array('usuario' =>$usuario->username,'cantidad'=>$cantidad,'valor'=>$acumulado );
+    }
+    return $anulaciones;
+  }
+
+
+ public function obtener_pagos($fecha)
+ {
+   $pagos=[];
+   $usuarios=DB::table('usuarios')->get();
+
+    foreach ($usuarios as $usuario) 
+    {
+      $acumulado=DB::table('pago_tickets')->where(['usuario'=>$usuario->username,'fecha'=>$fecha])->sum('pago');
+      $consulta=DB::table('pago_tickets')->where(['usuario'=>$usuario->username,'fecha'=>$fecha])->get();
+      $cantidad=count($consulta);
+      $pagos[$usuario->username]=array('usuario' =>$usuario->username,'cantidad'=>$cantidad,'valor'=>$acumulado );
+    }
+    return $pagos;
+ }
+
 
   public function resumen_diario_ventas($fecha)
   {
@@ -92,6 +137,12 @@ class Reportes extends Controller
       $ventas_top_quinielas=$this->obtener_top_jugadas(1,5,$fecha);
       $ventas_top_pales=$this->obtener_top_jugadas(2,5,$fecha);
       $ventas_top_tripletas=$this->obtener_top_jugadas(3,5,$fecha);
+      $jugadas_ganadoras=$this->obtener_jugadas_ganadoras($fecha);
+      $anulaciones=$this->obtener_anulaciones($fecha);
+      $pagos=$this->obtener_pagos($fecha);
+
+      
+
 
 
 
@@ -104,7 +155,10 @@ class Reportes extends Controller
                                      'ventas_top_jugadas'=>$ventas_top_jugadas,
                                      'ventas_top_quinielas'=>$ventas_top_quinielas,
                                      'ventas_top_pales'=>$ventas_top_pales,
-                                     'ventas_top_tripletas'=>$ventas_top_tripletas]);
+                                     'ventas_top_tripletas'=>$ventas_top_tripletas,
+                                     'jugadas_ganadoras'=>$jugadas_ganadoras,
+                                     'anulaciones'=>$anulaciones,
+                                     'pagos'=>$pagos]);
     
 
   }
@@ -328,6 +382,202 @@ public function cierre_diario()//realiza el cierre diario
 
 
 }
+
+
+
+///////////////////////////Reporte individual de ventas por rango/////////////////////////////////
+
+public function ventas_rango($fecha_i="2017-07-31",$fecha_f="2017-08-1")
+{
+  $registros=DB::table('v_acumulados')->where('fecha','>=',$fecha_i)->where('fecha','<=',$fecha_f)->orderBy('fecha','desc')->get();
+  $acumulado_c=DB::table('v_acumulados')->where('fecha','>=',$fecha_i)->where('fecha','<=',$fecha_f)->sum('c_acumulado');
+  $acumulado_v=DB::table('v_acumulados')->where('fecha','>=',$fecha_i)->where('fecha','<=',$fecha_f)->sum('v_acumulado');
+  $acumulado_t=DB::table('v_acumulados')->where('fecha','>=',$fecha_i)->where('fecha','<=',$fecha_f)->sum('t_acumulado');
+  
+  return [$registros,$acumulado_v,$acumulado_c,$acumulado_t];
+}
+
+public function reporte_ventas($fecha_i="2017-07-31",$fecha_f="2017-08-1")
+{
+  $ventas=$this->ventas_rango($fecha_i,$fecha_f);
+  $fecha=$this->obtener_fecha();
+  $hora=$this->obtener_hora();
+  return view('reporte_ventas',['ventas'=>$ventas,'fecha_i'=>$fecha_i,'fecha_f'=>$fecha_f,'fecha'=>$fecha,'hora'=>$hora]);
+
+}
+///////////////////////////////////////Reporte individual de jugadas ganadoras por rango ////////////////////////////////////////////
+
+public function obtener_descripcion_sorteos($sorteos_id)
+{
+   $n=count($sorteos_id);
+   $descripciones=[];
+   for ($i=0; $i <$n ; $i++) 
+   { 
+     $registro=DB::table('sorteos')->where('id',$sorteos_id[$i])->first();
+     array_push($descripciones,$registro->descripcion);
+   }
+
+   return $descripciones;
+}
+
+public function transformar_fecha($fecha)
+{
+ $fecha_f=explode('-', $fecha);
+ $fecha_f=Carbon::create($fecha_f[0],$fecha_f[1],$fecha_f[2]);
+ return $fecha_f;
+}
+
+public function capturar_jugada($n,$fecha_b,$descripciones,$total)
+{
+  $registros=[];
+  $acumulado=$total;
+  for ($i=0; $i <$n ; $i++) 
+      { 
+        
+        $dia=DB::table('s_jugadas')->where(['fecha'=>$fecha_b,'sorteo'=>$descripciones[$i]])->first();
+        
+        $acumulado[$descripciones[$i]]=$acumulado[$descripciones[$i]]+$dia->premios;
+        array_push($registros,$dia);
+        
+      }
+
+    return [$registros,$acumulado];
+}
+
+public function jugadas_sorteadas_rango($fecha_i,$fecha_f)
+{
+ 
+ 
+ $reporte=[];
+
+ $sorteos_id=[1,2,3];
+ $n_id=count($sorteos_id);
+ $descripciones=$this->obtener_descripcion_sorteos($sorteos_id);
+
+ $fecha_i=$this->transformar_fecha($fecha_i);
+ $fecha_f=$this->transformar_fecha($fecha_f);
+ $total=$this->inicializar_total($descripciones,$n_id);
+
+ 
+
+   while ($fecha_i<=$fecha_f) 
+   {
+      $fecha_b=$fecha_i->toDateString();
+      $resultado=$this->capturar_jugada($n_id,$fecha_b,$descripciones,$total);
+      $temp=$resultado[0];//regitros
+      $total=$resultado[1];
+
+      $reporte[$fecha_i->toDateString()]=$temp;
+      
+      
+      $fecha_i=$fecha_i->addDay();//avanza a la siguienete fecha
+
+   }
+
+
+ 
+  return [$reporte,$total];
+
+}
+
+public function reporte_jugadas_sorteadas($fecha_i="2017-07-31",$fecha_f="2017-08-01")
+{
+  $hora=$this->obtener_hora();
+  $fecha=$this->obtener_fecha();
+  $resultado=$this->jugadas_sorteadas_rango($fecha_i,$fecha_f);
+  $sorteos=$resultado[0];
+  $total_p=$resultado[1];
+  $total=array_sum($total_p);
+
+   return view('reporte_jugadas_sorteadas',['sorteos'=>$sorteos,'fecha_i'=>$fecha_i,'fecha_f'=>$fecha_f,'fecha'=>$fecha,'hora'=>$hora,'acumulado'=>$total,'total_p'=>$total_p]);
+
+}
+
+/////////////////////////////////////////////Reporte individual ventas por sorteo////////////////////////////////////////////////////////////////////
+public function capturar_acumulado($n,$fecha_b,$descripciones,$total)
+{
+  $registros=[];
+  $acumulado=$total;
+  for ($i=0; $i <$n ; $i++) 
+      { 
+        
+        $dia=DB::table('s_acumulados')->where(['fecha'=>$fecha_b,'sorteo'=>$descripciones[$i]])->first();
+        $acumulado[$descripciones[$i]]=$acumulado[$descripciones[$i]]+$dia->acumulado;
+        array_push($registros,$dia);
+        
+      }
+
+    return [$registros,$acumulado];
+}
+
+public function inicializar_total($descripciones,$n)
+{
+ 
+  
+  $arreglo=[];
+  for ($i=0; $i <$n ; $i++) 
+  { 
+    $arreglo[$descripciones[$i]]=0;
+    
+  }
+  return $arreglo;
+}
+
+public function ventas_sorteos_rango($fecha_i,$fecha_f)
+{
+  
+
+ $reporte=[];
+
+ $sorteos_id=[1,2];
+ $n_id=count($sorteos_id);
+ $descripciones=$this->obtener_descripcion_sorteos($sorteos_id);
+
+ $fecha_i=$this->transformar_fecha($fecha_i);
+ $fecha_f=$this->transformar_fecha($fecha_f);
+ $total=$this->inicializar_total($descripciones,$n_id);
+
+
+ 
+
+   while ($fecha_i<=$fecha_f) 
+   {
+      $fecha_b=$fecha_i->toDateString();
+      $resultado=$this->capturar_acumulado($n_id,$fecha_b,$descripciones,$total);
+      $temp=$resultado[0];//regitros
+      $total=$resultado[1];//acumulados
+
+      $reporte[$fecha_i->toDateString()]=$temp;
+      
+      
+      $fecha_i=$fecha_i->addDay();//avanza a la siguienete fecha
+
+   }
+
+
+ 
+  return [$reporte,$total];
+}
+
+public function reporte_ventas_sorteo($fecha_i="2017-08-01",$fecha_f="2017-08-01")
+{
+  $hora=$this->obtener_hora();
+  $fecha=$this->obtener_fecha();
+  $resultado=$this->ventas_sorteos_rango($fecha_i,$fecha_f);
+  $sorteos=$resultado[0];
+  $total_p=$resultado[1];
+  $total=array_sum($total_p);
+
+
+   return view('reporte_ventas_sorteo',['sorteos'=>$sorteos,'fecha_i'=>$fecha_i,'fecha_f'=>$fecha_f,'fecha'=>$fecha,'hora'=>$hora,'acumulado'=>$total,'total_p'=>$total_p]);
+}
+
+  
+///////////////////////////////////////Reporte 
+
+
+
+
 
 
 

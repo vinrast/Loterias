@@ -16,7 +16,15 @@ use DB;
 class Inicio extends Controller
 {
    
-	public function generar_nro_tickect()
+	public function consultar_apertura()
+  {
+    $apertura=DB::table('cierres')->where('echo',0)->first();
+    $cantidad=count($apertura);
+
+    return $cantidad;
+  }
+
+  public function generar_nro_tickect()
    {
       $preFijo="LTR-";
 
@@ -547,10 +555,9 @@ class Inicio extends Controller
     }
 
 
-    public function restar_acumulados($transacciones)
+    public function restar_acumulados($transaccion)
     {
-      foreach ($transacciones as $transaccion) 
-      {
+      
         $acumulado=DB::table('jugada_sorteo')->where(['jugada_id'=>$transaccion->jugada_id,'sorteo_id'=>$transaccion->sorteo_id])->first();
         
         $acumulado=$acumulado->acumulado;
@@ -561,7 +568,7 @@ class Inicio extends Controller
         $acumulado=$acumulado-$apuesta;
 
         $actualizar=DB::table('jugada_sorteo')->where(['jugada_id'=>$transaccion->jugada_id,'sorteo_id'=>$transaccion->sorteo_id])->update(['acumulado'=>$acumulado]);
-      }
+      
       return $acumulado;
 
     }
@@ -569,21 +576,34 @@ class Inicio extends Controller
 
     public function anular_ticket($ticket_id)
     {
+      $transacciones=DB::table('transacciones')->where(['ticket_id'=>$ticket_id])->get();
       $ticket=DB::table('tickets')->where('id',$ticket_id)->first();
-      $numero=$ticket->numero;
-      $usuario=$this->obtener_usuario();
 
-      $insertar=DB::table('anulaciones')->insert//registrar los tickets anulados
+
+      foreach ($transacciones as $transaccion) 
+      {
+        $jugada=DB::table('sorteos')->join('s_jugadas','sorteos.descripcion','=','s_jugadas.sorteo')
+                                    ->select('s_jugadas.jugada as jugada','s_jugadas.sorteo as sorteo')
+                                    ->where(['sorteos.id'=>$transaccion->sorteo_id,'s_jugadas.fecha'=>$ticket->fecha])->first();
+
+        if($jugada->jugada=='XX-XX-XX')//si esta abierto
+        {
+          $this->restar_acumulados($transaccion);
+        }
+
+
+      }
+
+       $usuario=$this->obtener_usuario();
+
+       $insertar=DB::table('anulaciones')->insert//registrar los tickets anulados
           (['nro_ticket'=>$ticket->numero,'valor'=>$ticket->valor,'fecha'=>$ticket->fecha,'usuario'=>$usuario]);
 
       
-      $transacciones=DB::table('transacciones')->where('ticket_id',$ticket_id)->get();
-      
-      $this->restar_acumulados($transacciones);
+  
       ////////eliminaciones////////////////////////////
       $transacciones=DB::table('transacciones')->where('ticket_id',$ticket_id)->delete();
-      $premiados=DB::table('p_tickets')->where('nro_ticket',$numero)->delete();
-      
+      $premiados=DB::table('p_tickets')->where('nro_ticket',$ticket->numero)->delete();
       $retorno=DB::table('tickets')->where('id',$ticket_id)->delete();
       return $retorno;
     }

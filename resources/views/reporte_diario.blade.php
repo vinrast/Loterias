@@ -20,6 +20,25 @@
 					<td >Comisiones a vendedores:<br>{{" ".$ventas_totales->c_acumulado." €"}}</td>
 					<td >Total con descuentos:<br>{{$ventas_totales->t_acumulado." €"}}</td>
 				</tr>
+
+				<tr class="fila_encabezado">
+					<td colspan="3" >Jugadas ganadoras por sorteo</td>
+				</tr>
+				<tr class="fila_cont_encabezado">
+					<td >Sorteo</td>
+					<td >Jugada</td>
+					<td >Total en premios a cancelar</td>
+					
+				</tr>
+				@foreach($jugadas_ganadoras as $jugada)
+				<tr class="fila_cont">
+						<td >{{$jugada["sorteo"]}}</td>
+						<td >{{$jugada["jugada"]}}</td>
+						<td >{{$jugada["total"]." €"}}</td>
+				</tr>
+				@endforeach
+
+
 				<tr class="fila_encabezado">
 					<td colspan="3" >Total ventas por sorteo</td>
 				</tr>
@@ -119,6 +138,7 @@
 						<td >{{$top_pale->porcentaje_v}}</td>
 				</tr>
 				@endforeach
+
 				<tr class="fila_encabezado">
 					<td colspan="3" >Top tripletas vendidas</td>
 				</tr>
@@ -136,6 +156,42 @@
 				</tr>
 				@endforeach
 
+				<tr class="fila_encabezado">
+					<td colspan="3" >Anulaciones por usuario</td>
+				</tr>
+				<tr class="fila_cont_encabezado">
+					<td >Usuario</td>
+					<td >Cantidad de tickets anulados</td>
+					<td >Dinero total en anulaciones</td>
+					
+				</tr>
+				@foreach($anulaciones as $anulacion)
+				<tr class="fila_cont">
+						<td >{{$anulacion["usuario"]}}</td>
+						<td >{{$anulacion["cantidad"]}}</td>
+						<td >{{$anulacion["valor"]." €"}}</td>
+				</tr>
+				@endforeach
+
+				<tr class="fila_encabezado">
+					<td colspan="3" >Pagos por usuario</td>
+				</tr>
+				<tr class="fila_cont_encabezado">
+					<td >Usuario</td>
+					<td >Cantidad de tickets pagados</td>
+					<td >Dinero total en pagos</td>
+					
+				</tr>
+				@foreach($pagos as $pago)
+				<tr class="fila_cont">
+						<td >{{$pago["usuario"]}}</td>
+						<td >{{$pago["cantidad"]}}</td>
+						<td >{{$pago["valor"]." €"}}</td>
+				</tr>
+				@endforeach
+
+
+				
 
 			</table>
 	

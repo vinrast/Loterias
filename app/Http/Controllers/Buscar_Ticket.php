@@ -18,7 +18,7 @@ class Buscar_Ticket extends Controller{
       $tickets_v=[];
       $aux=[];
 
-      $tickets=DB::table('tickets')->orderBy('hora','desc')->get();
+      $tickets=DB::table('tickets')->orderBy('fecha','desc')->get();
       foreach ($tickets as $ticket) 
       {
       	$jugadas_g=DB::table('p_tickets')->where('nro_ticket',$ticket->numero)->orderBy('fecha','desc')->get();
