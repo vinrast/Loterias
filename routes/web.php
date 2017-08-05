@@ -68,4 +68,4 @@ Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
 
 //////////////////////////////////Pruebas//////////////////////////////////////////////////
 
-Route::get('/test','Reportes@reporte_jugadas_sorteadas');
+Route::get('/test','Reportes@reporte_ventas_sorteo');
