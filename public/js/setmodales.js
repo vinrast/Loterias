@@ -3,13 +3,13 @@
 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal').modal();
-    //$('select').material_select();
+    $('select').material_select();
 	$('.datepicker').pickadate({
 	    selectMonths: true, // Creates a dropdown to control month
 	    selectYears: 15 // Creates a dropdown of 15 years to control year
 	});
 
-/*//////////////////////////////////////// REGISTRAR NUEVO USUARIO ///////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////// ABRIR MODAL NUEVO USUARIO ///////////////////////////////////////////////////////////*/
 
 	$('#agregarUser').on('click',function(e){
 		e.preventDefault();
@@ -167,7 +167,19 @@ $(document).ready(function(){
 		});
 	});
 
+/*//////////////////////////////////////// ABRIR MODAL NUEVA LOTERIA ///////////////////////////////////////////////////////////*/
 
+	$('#agregarlotery').on('click',function(e){
+		e.preventDefault();
+		$('#modaladdLotery').modal('open');
+	});
+
+/*//////////////////////////////////////// ABRIR MODAL LIMITE DE VENTAS ///////////////////////////////////////////////////////////*/
+
+	$('#limiteVenta').on('click',function(e){
+		e.preventDefault();
+		$('#modallimit').modal('open');
+	});
 //////////////////////////////////////////////  AGREGAR LOTERIA  //////////////////////////////////////////////////////////////////////
 
 	$('#savelotery').click(function(event){
@@ -231,7 +243,8 @@ $(document).ready(function(){
 		}
 	});
 /////////////////////////////////////////////// LLENAR MODAL DE EDITAR LOTERIA ////////////////////////////////////////////////////////
-$('#contloteriac').on('click','.editarLoteria',function() {
+$('#contloteriac').on('click','.editarLoteria',function(e) {
+	e.preventDefault();
 	datos=$(this).attr('data-registro');
 	var url= '/administracion/loterias/traer_loteria';
 	$.get(url, {datos:datos}, function(actualizar){
@@ -239,6 +252,7 @@ $('#contloteriac').on('click','.editarLoteria',function() {
 		 	$('#loteria_e').val(actualizar[0]);
 		 	$('#horatra_e').val(actualizar[1]);
 		 	$('#idlotery').val(datos);
+		 	$('#modaleditlotery').modal('open');
 		}
 		else{
 			swal("Error Inesperado !!", "Comuniquese con el administrador", "error");
@@ -475,4 +489,18 @@ $('#contloteriac').on('click','.editarLoteria',function() {
 		}
 	});
 
+///////////////////////////////////////////// FUNCIONALIDAD VISTA DE REPORTES ///////////////////////////////////////////////
+	$(".tiempo").change(function(){
+            valor=$('input:radio[name=tiempo]:checked').val();
+            if (valor==1) {
+            	$('.opcion').attr('disabled','disabled');
+            	$('.opcion').val('');
+            	$('.rango').removeAttr('disabled');
+            }
+            else if (valor==2) {
+            	$('.rango').attr('disabled','disabled');
+            	$('.rango').val('');
+            	$('.opcion').removeAttr('disabled');
+            }
+        });
 });

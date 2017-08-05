@@ -15,8 +15,8 @@
 					<span>Loterias</span>
 				</div>
 				<div class="col s12 m12 l12  contaddloteria">
-					<a class="btn-floating btn-small waves-effect  indigo lighten-1" href="#modaladd"><i class="material-icons">note_add</i></a>
-					<a class="btn-floating btn-small waves-effect  light-green accent-3" href="#modallimit"><i class="material-icons">lock_outline</i></a>
+					<a class="btn-floating btn-small waves-effect  indigo lighten-1" id="agregarlotery" href="#modaladd"><i class="material-icons">note_add</i></a>
+					<a class="btn-floating btn-small waves-effect  light-green accent-3" id="limiteVenta" href="#modallimit"><i class="material-icons">lock_outline</i></a>
 				</div>
 				<div class="col s12 m12 l12 contloteriac" id="contloteriac">
 						@foreach($sorteos as $sorteo)
@@ -33,7 +33,7 @@
 
 <!--/////////////////////////////////////    MODAL DE AGREGAR LOTERIA  ////////////////////////////////////////-->
 			
-			<div id="modaladd" class="modal addloteria">
+			<div id="modaladdLotery" class="modal addloteria">
 				<form id="addlotery">
 					{{ csrf_field() }}
 					<div class="modal-content">
@@ -57,7 +57,7 @@
 	    			
   			</div>
 <!--///////////////////////////////////////// MODAL EDITAR /////////////////////////////////////////////////////-->			
-			<div id="modaledit" class="modal editloteria">
+			<div id="modaleditlotery" class="modal editloteria">
 				<form id="loteriaE">
 					{{ csrf_field() }}
 					<input type="hidden" name="idlotery" id="idlotery">
