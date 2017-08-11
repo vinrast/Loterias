@@ -14,7 +14,7 @@ $(document).ready(function()
 
 			function anular_ticket(id,nro)
 			{
-				var url='/consultarApertura';
+				var url='/consultarApertura';//consulta si el turno esta abierto para realizar la anulacion
 				$.get(url)
 				.done(function(resultado)
 				{

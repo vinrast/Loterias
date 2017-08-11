@@ -698,6 +698,43 @@ $(document).ready(function()
 	 		});
 
 
+	 		// $(document).keydown(function(e)
+	 		// 	{
+	 		// 		var tecla=(document.all) ? e.keyCode : e.which;
+	 				
+	 		// 		if(tecla==118)
+	 		// 		{
+	 		// 			$('#zonaId').val(1);
+	 		// 		}
+	 		// 		else if(tecla==119)
+	 		// 		{
+	 		// 			$('#zonaId').val(2);
+	 		// 		}
+	 		// 		else if (tecla==120)
+	 		// 		{
+	 		// 			$('#zonaId').val(3);
+	 		// 			$('#Apuesta').focus();
+
+	 		// 		}
+	 		// 		else if(tecla==121)
+	 		// 		{
+	 		// 			$('#zonaId').val('anular');
+	 		// 		}
+	 		// 		else if(tecla==113)
+	 		// 		{
+	 		// 			$('#zonaId').val('jugadas');
+	 		// 		}
+	 		// 		else if(tecla==32)
+	 		// 		{
+	 		// 			$('#imprimirTicket').trigger('click');//genera el ticket
+	 		// 		}
+	 		// 		else if(tecla==115)
+	 		// 		{
+	 		// 			$('#anularJugada').trigger('click');//anula jugadas seleccionadas
+	 		// 		}
+	 		// 	});
+
+
 			$("#imprimirTicket").click(function()
 				{
 					var tabla=document.getElementById('tablaJugadas');

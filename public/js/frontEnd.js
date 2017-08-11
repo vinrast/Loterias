@@ -67,6 +67,9 @@ function CerrarSession()
 			 	}
 			 }
 			 );
+
+
+
 			 	
 
 		});	 
