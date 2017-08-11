@@ -46,10 +46,20 @@
 					<div class="col s12 m12 l12 tiporeporte">
 						<span>Tipo de Reporte</span>
 		            </div>
-					<div class="col s12 m9 l9 ">
-		            	<div class="col s12 m4 l4 input-field ">
-							<select>
-								<option value="" disabled selected>Seleccione una Opcion</option>
+					<div class="col s12 m9 l9 opcionesreporte">
+		            	<div class="col s12 m4 l4">
+							<select class="browser-default">
+								<option disabled selected>Seleccione una Opción</option>
+								<option value="1">Consolidado</option>
+								<option value="2">Ventas</option>
+								<option value="3">Anulaciones</option>
+								<option value="4">XXX</option>
+								<option value="5">YYY</option>
+							</select>
+		            	</div>
+		            	<div class="col s12 m4 l4">
+							<select multiple class="browser-default">
+								<option disabled selected>Seleccione una Opcion</option>
 								<option value="1">Consolidado</option>
 								<option value="2">Ventas</option>
 								<option value="3">Comisiones</option>
@@ -57,19 +67,9 @@
 								<option value="5">YYY</option>
 							</select>
 		            	</div>
-		            	<div class="col s12 m4 l4 input-field ">
-							<select multiple>
-								<option value="" disabled selected>Seleccione una Opcion</option>
-								<option value="1">Consolidado</option>
-								<option value="2">Ventas</option>
-								<option value="3">Comisiones</option>
-								<option value="4">XXX</option>
-								<option value="5">YYY</option>
-							</select>
-		            	</div>
-		            	<div class="col s12 m4 l4 input-field ">
-							<select>
-								<option value="" disabled selected>Seleccione una Opcion</option>
+		            	<div class="col s12 m4 l4">
+							<select class="browser-default">
+								<option disabled selected>Seleccione una Opcion</option>
 								<option value="1">Consolidado</option>
 								<option value="2">Ventas</option>
 								<option value="3">Comisiones</option>
@@ -78,7 +78,7 @@
 							</select>
 		            	</div>
 					</div>
-					<div class="col s12 m12 l12 tiporeporte">
+					<div class="col s12 m12 l12 botoneraReporte">
 						<a class="waves-effect waves-light btn red" >Limpiar</a>
 						<a class="waves-effect waves-light btn" >Generar</a>
 		            </div>

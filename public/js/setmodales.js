@@ -491,16 +491,16 @@ $('#contloteriac').on('click','.editarLoteria',function(e) {
 
 ///////////////////////////////////////////// FUNCIONALIDAD VISTA DE REPORTES ///////////////////////////////////////////////
 	$(".tiempo").change(function(){
-            valor=$('input:radio[name=tiempo]:checked').val();
-            if (valor==1) {
-            	$('.opcion').attr('disabled','disabled');
-            	$('.opcion').val('');
-            	$('.rango').removeAttr('disabled');
-            }
-            else if (valor==2) {
-            	$('.rango').attr('disabled','disabled');
-            	$('.rango').val('');
-            	$('.opcion').removeAttr('disabled');
-            }
-        });
+        valor=$('input:radio[name=tiempo]:checked').val();
+        if (valor==1) {
+        	$('.opcion').attr('disabled','disabled');
+        	$('.opcion').val('');
+        	$('.rango').removeAttr('disabled');
+        }
+        else if (valor==2) {
+        	$('.rango').attr('disabled','disabled');
+        	$('.rango').val('');
+        	$('.opcion').removeAttr('disabled');
+        }
+    });
 });
