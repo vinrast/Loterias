@@ -397,7 +397,78 @@ public function calcular_jugadas_tripletas($jugada)
 
    return(count($tickets));
  }
-  public function calcular_jugadas_ganadoras($jugada="23-24-25",$sorteo="Caracas-12:00 Pm")
+
+public function buscar_tripletas($sorteo,$fecha)
+{
+  $tripletas=DB::table('tickets')->join('transacciones','transacciones.ticket_id','=','tickets.id')
+                                ->join('jugadas','transacciones.jugada_id','=','jugadas.id')
+                                ->join('sorteos','transacciones.sorteo_id','=','sorteos.id')
+                                ->join('apuestas','transacciones.apuesta_id','=','apuestas.id')
+                                ->select('tickets.numero as numero','tickets.fecha as fecha','jugadas.numero as jugada',
+                                        'jugadas.tipo as tipo','sorteos.descripcion as sorteo','apuestas.cantidad as apuesta')
+
+                                ->where(['jugadas.tipo'=>3,'sorteos.descripcion'=>$sorteo,'tickets.fecha'=>$fecha])
+                                ->get();
+
+  return $tripletas;
+}
+
+public function insertar_ganadores($jugadas,$ganadora,$dupletas,$fecha,$premios)
+{
+  
+        foreach ($jugadas as $tripleta) 
+        {
+          if ($tripleta->jugada==$ganadora['1er']) //si coinciden 
+          {
+              DB::table('p_tickets')->insert
+                  (
+
+                    ['nro_ticket'=>$tripleta->numero,'sorteo'=>$tripleta->sorteo,'jugada'=>$tripleta->jugada,'tipo'=>'tripleta','premio'=>'Primer Premio','apuesta'=>$tripleta->apuesta,'pago'=>($premios->primerPremio*$tripleta->apuesta),'fecha'=>$fecha]
+                  );//insertar en tickets premiados
+          }
+          else if($tripleta->jugada!=$ganadora['1er'])//si no coinciden  que las dupletas de uatripleta coincidan con las dupletas de otra 
+          {
+            $dupletas_tripleta=$this->calcular_jugadas_pales($tripleta->jugada);
+            foreach ($dupletas_tripleta as $pale) 
+            {
+              if(in_array($pale,$dupletas)==true)
+              {
+                DB::table('p_tickets')->insert
+                  (
+
+                    ['nro_ticket'=>$tripleta->numero,'sorteo'=>$tripleta->sorteo,'jugada'=>$tripleta->jugada,'tipo'=>'tripleta','premio'=>'Segundo Premio','apuesta'=>$tripleta->apuesta,'pago'=>($premios->segundoPremio*$tripleta->apuesta),'fecha'=>$fecha]
+                  );//insertar en tickets premiados
+              }
+            }
+
+          }
+
+        }
+
+
+
+}
+
+
+ public function tripletas_ganadoras($jugada,$sorteo)
+ {
+   
+  $fecha=$this->obtener_fecha();
+  $jugada_ganadora=$this->calcular_jugadas_tripletas($jugada);//trae la jugada ordenada
+  $dupletas_ganadora=$this->calcular_jugadas_pales($jugada);//dupletas de la jugada ganadora
+  $premios=DB::table('premios')->where('id',3)->first();//trae los premios configurados para tripletas
+  
+  ///obtener las tripletas para este sorteo revisa
+  $consulta=$this->buscar_tripletas($sorteo,$fecha);
+
+  //insertar verificar si existen jugadas premiadas para la tripleta e ingresar en la tabla de tciekts premiados
+  $this->insertar_ganadores($consulta,$jugada_ganadora,$dupletas_ganadora,$fecha,$premios);
+
+
+  return 0;
+  
+ }
+  public function calcular_jugadas_ganadoras($jugada,$sorteo)
   {
     $fecha=$this->obtener_fecha();
     $retorno=[0,0,0];
@@ -405,8 +476,11 @@ public function calcular_jugadas_tripletas($jugada)
     $pales=$this->calcular_jugadas_pales($jugada);
     $tripletas=$this->calcular_jugadas_tripletas($jugada);
     $this->buscar_transacciones($quinielas,$sorteo);
-    $this->buscar_transacciones($tripletas,$sorteo);
+    $this->tripletas_ganadoras($jugada,$sorteo);
+    //$this->buscar_transacciones($tripletas,$sorteo);
     $this->buscar_transacciones($pales,$sorteo);
+
+    ////////////////////////////// obtener cantidad de tickets premiados ///////////////////////////////////////
     $consulta=DB::table('p_tickets')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->orderBy('pago','desc')->get();
     $suma=DB::table('p_tickets')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->sum('pago');
     $n=$this->cantidad_de_tickets($consulta);
@@ -423,7 +497,8 @@ public function calcular_jugadas_tripletas($jugada)
   public function insertar_jugada_ganadora()
 {
   $datos=Request::get('datos');
-  $fecha=$this->obtener_fecha();
+  $cierre=DB::table('cierres')->where('echo',0)->first();//turno abierto
+  $fecha=$cierre->fecha;
   $jugada=$datos[0];
   $sorteo=$datos[1];
   $consulta=DB::table('s_jugadas')->where(['fecha'=>$fecha,'sorteo'=>$sorteo])->first();
@@ -495,5 +570,18 @@ public function calcular_jugadas_tripletas($jugada)
       $sorteos=[];
     }
     return view('administracion.jugada_dia',['modulos'=>$modulos,'submodulos'=>$submodulos,'sorteos'=>$sorteos,'jugada'=>$sorteos_jugadas,'activos'=>$sorteos_activos]);
+  }
+
+
+  public function verificar()
+  {
+    $arreglo=array('1er'=>'33-44','2do'=>'90-09','3er'=>'78-98');
+    
+    foreach ($arreglo as $valores) 
+    {
+      echo $valores;
+      echo "<br>";
+    }
+    return 0;
   }
 }

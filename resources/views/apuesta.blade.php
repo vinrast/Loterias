@@ -20,6 +20,7 @@
 							<li class="loteriai" id="sorteo{{$sorteo->id}}"> <input type="checkbox" id="loteria{{$sorteo->id}}" data-id="{{$sorteo->id}}" data-descripcion="{{$sorteo->descripcion}}" /><label id="la{{$sorteo->id}}" for="loteria{{$sorteo->id}}">{{$sorteo->descripcion}}</label><div id="tag{{$sorteo->id}}" class="tag">Cerrada</div></li>
 						@endforeach
 					</ul>
+				
 				</div>
 			</div>
 
@@ -104,6 +105,7 @@
 					</div>
 					<input  id="jugadaId" type="hidden" value="{{$fila}}">
 					<input  id="valorTotal" type="hidden" value="{{$total}}">
+					
 				</div>
 			</div>
 		</div>

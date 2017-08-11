@@ -189,64 +189,103 @@ $(document).ready(function()
 
 	$("#cierreDiario").click(function() 
 	{
-		var url='/cierreDiario';
-		var cierre= $.get(url,function(resultado)
+						
+			swal({
+					title: "Cierre de turno",
+					text: "¿ Desea cerrar el turno?",
+					type: "warning",
+					showCancelButton: true,
+					confirmButtonColor:"#319A0E",
+					confirmButtonText: "Si",
+					cancelButtonText: "Cancelar",
+					closeOnConfirm: false,
+					closeOnCancel: false
+				},
+
+				function(isConfirm)
+			 	{
+			 		if(isConfirm)//pasar peticion
+			 			{
+								var url='/cierreDiario';
+								var cierre= $.get(url,function(resultado)
+												{
+													if (resultado[0]==0) 
+													{
+														var url="/resumenDiario/"+resultado[1];
+														window.open(url, "Resumen Diario", "width=900, height=500");
+														swal({
+																title:'Cierre de turno exitoso!!',//Contenido del modal
+																text: '<p style="font-size: 1.5em;">'+''+'</p>',
+																timer:2000,//Tiempo de retardo en ejecucion del modal
+																type: "success",
+																showConfirmButton:false,//Eliminar boton de confirmacion
+																html: true
+															});
+														
+														location.href="/administracion/jugada_dia";
+
+													}
+													else if (resultado[0]==1)
+													{
+														swal({
+																title:'El turno se encuentra cerrado!!',//Contenido del modal
+																text: '<p style="font-size: 1.2em;">'+''+'</p>',
+																
+																type: "warning",
+																showConfirmButton:true,//Eliminar boton de confirmacion
+																html: true
+															});
+
+
+													}
+													else if(resultado[0]==2)
+													{
+
+														swal({
+																title:'No se realizo el cierre!!',//Contenido del modal
+																text: '<p style="font-size: 1.2em;">'+'Existen sorteos que no poseen jugadas asociadas'+'</p>',
+																
+																type: "warning",
+																showConfirmButton:true,//Eliminar boton de confirmacion
+																html: true
+															});
+													}
+
+												});
+									cierre.fail(function()
+												{
+													swal({
+														title:'Error inesperado!!',//Contenido del modal
+														text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+														timer:2000,//Tiempo de retardo en ejecucion del modal
+														type: "warning",
+														showConfirmButton:false,//Eliminar boton de confirmacion
+														html: true
+													});
+
+												});
+						}
+						else
 						{
-							if (resultado[0]==0) 
-							{
-								var url="/resumenDiario/"+resultado[1];
-								window.open(url, "Resumen Diario", "width=900, height=500");
-								swal({
-										title:'Cierre de turno exitoso!!',//Contenido del modal
-										text: '<p style="font-size: 1.5em;">'+''+'</p>',
-										timer:2000,//Tiempo de retardo en ejecucion del modal
-										type: "success",
-										showConfirmButton:false,//Eliminar boton de confirmacion
-										html: true
-									});
-								
-								location.href="/administracion/jugada_dia";
-
-							}
-							else if (resultado[0]==1)
-							{
-								swal({
-										title:'El turno se encuentra cerrado!!',//Contenido del modal
-										text: '<p style="font-size: 1.2em;">'+''+'</p>',
-										
-										type: "warning",
-										showConfirmButton:true,//Eliminar boton de confirmacion
-										html: true
-									});
 
 
-							}
-							else if(resultado[0]==2)
-							{
-
-								swal({
-										title:'No se realizo el cierre!!',//Contenido del modal
-										text: '<p style="font-size: 1.2em;">'+'Existen sorteos que no poseen jugadas asociadas'+'</p>',
-										
-										type: "warning",
-										showConfirmButton:true,//Eliminar boton de confirmacion
-										html: true
-									});
-							}
-
-						});
-			cierre.fail(function()
-						{
 							swal({
-								title:'Error inesperado!!',//Contenido del modal
-								text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
-								timer:2000,//Tiempo de retardo en ejecucion del modal
-								type: "warning",
-								showConfirmButton:false,//Eliminar boton de confirmacion
-								html: true
-							});
+									title:'Cierre de turno cancelado!!',//Contenido del modal
+									text: '<p style="font-size: 1.5em;">'+'El turno se mantendra abierto'+'</p>',
+									timer:2000,//Tiempo de retardo en ejecucion del modal
+									type: "warning",
+									showConfirmButton:false,//Eliminar boton de confirmacion
+									html: true
+								});
 
-						});
+						}
+					});
+
+
+
+
+
+
 
 
 	})
@@ -254,46 +293,80 @@ $(document).ready(function()
 
 $("#abrirDiario").click(function()
 	{
-		var url="/abrirSistema";
-		var abrir=$.get(url,function(resultado)
-			{
-				if(resultado==0)//si no se pudo abrir el turno
-				{
+								
 
-					swal({
-							title:'Existe un turno abierto!!',//Contenido del modal
-							text: '<p style="font-size: 1.2em;">'+''+'</p>',	
-							type: "warning",
-							showConfirmButton:true,//Eliminar boton de confirmacion
-							html: true
-						})
-				}
-				else if(resultado==1)//si se pudo realizar el cierre
-				{
-					swal({
-							title:'Apertura de turno exitosa!!',//Contenido del modal
-							text: '<p style="font-size: 1.2em;">'+'Se habilito un nuevo turno'+'</p>',	
-							timer:3000,//Tiempo de retardo en ejecucion del modal
-							type: "success",
-							showConfirmButton:false,//Eliminar boton de confirmacion
-							html: true
-						})
-					location.href="/administracion/jugada_dia";
-				}
+		  swal({
+				title: "Apertura de turno",
+				text: "¿ Desea abrir un turno ?",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor:"#319A0E",
+				confirmButtonText: "Si",
+				cancelButtonText: "Cancelar",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			 },
 
-			});
-		abrir.fail(function()
-						{
-							swal({
-								title:'Error inesperado!!',//Contenido del modal
-								text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+			 function(isConfirm)
+			 {
+			 	if(isConfirm)//pasar peticion
+			 	{
+
+
+								var url="/abrirSistema";
+								var abrir=$.get(url,function(resultado)
+									{
+										if(resultado==0)//si no se pudo abrir el turno
+										{
+
+											swal({
+													title:'Existe un turno abierto!!',//Contenido del modal
+													text: '<p style="font-size: 1.2em;">'+''+'</p>',	
+													type: "warning",
+													showConfirmButton:true,//Eliminar boton de confirmacion
+													html: true
+												})
+										}
+										else if(resultado==1)//si se pudo realizar el cierre
+										{
+											swal({
+													title:'Apertura de turno exitosa!!',//Contenido del modal
+													text: '<p style="font-size: 1.2em;">'+'Se habilito un nuevo turno'+'</p>',	
+													timer:3000,//Tiempo de retardo en ejecucion del modal
+													type: "success",
+													showConfirmButton:false,//Eliminar boton de confirmacion
+													html: true
+												})
+											location.href="/administracion/jugada_dia";
+										}
+
+									});
+								abrir.fail(function()
+												{
+													swal({
+														title:'Error inesperado!!',//Contenido del modal
+														text: '<p style="font-size: 1.5em;">'+'Comuniquese con el administrador'+'</p>',
+														timer:2000,//Tiempo de retardo en ejecucion del modal
+														type: "warning",
+														showConfirmButton:false,//Eliminar boton de confirmacion
+														html: true
+													});
+
+												});
+					}
+					else
+					{
+
+						swal({
+								title:'La apertura del turno fue cancelada!!',//Contenido del modal
+								text: '<p style="font-size: 1.5em;">'+''+'</p>',
 								timer:2000,//Tiempo de retardo en ejecucion del modal
 								type: "warning",
 								showConfirmButton:false,//Eliminar boton de confirmacion
 								html: true
 							});
-
-						});
+					}
+				});
 
 
 
