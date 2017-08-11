@@ -461,7 +461,7 @@ public function jugadas_sorteadas_rango($fecha_i,$fecha_f)
  
  $reporte=[];
 
- $sorteos_id=[1,2,3];
+ $sorteos_id=[1];
  $n_id=count($sorteos_id);
  $descripciones=$this->obtener_descripcion_tabla($sorteos_id,'sorteos','descripcion');
 
@@ -494,7 +494,7 @@ public function jugadas_sorteadas_rango($fecha_i,$fecha_f)
 
 }
 
-public function reporte_jugadas_sorteadas($fecha_i="2017-07-31",$fecha_f="2017-08-01")
+public function reporte_jugadas_sorteadas($fecha_i="2017-07-31",$fecha_f="2017-08-02")
 {
   $hora=$this->obtener_hora();
   $fecha=$this->obtener_fecha();
@@ -546,7 +546,7 @@ public function ventas_sorteos_rango($fecha_i,$fecha_f)
 
  $reporte=[];
 
- $sorteos_id=[1,2];
+ $sorteos_id=[1,3];
  $n_id=count($sorteos_id);
  $descripciones=$this->obtener_descripcion_tabla($sorteos_id,'sorteos','descripcion');
 
@@ -579,7 +579,11 @@ public function ventas_sorteos_rango($fecha_i,$fecha_f)
   return [$reporte,$total];
 }
 
+<<<<<<< HEAD
 public function reporte_ventas_sorteo($fecha_i="2017-07-31",$fecha_f="2017-08-01")
+=======
+public function reporte_ventas_sorteo($fecha_i="2017-08-01",$fecha_f="2017-08-02")
+>>>>>>> a2bfa7c3a99c76391c4e88701460788f84e37142
 {
   $hora=$this->obtener_hora();
   $fecha=$this->obtener_fecha();
