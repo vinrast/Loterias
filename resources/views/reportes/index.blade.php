@@ -46,19 +46,11 @@
 					<div class="col s12 m12 l12 tiporeporte">
 						<span>Tipo de Reporte</span>
 		            </div>
-					<div class="col s12 m9 l9 opcionesreporte">
-		            	<div class="col s12 m4 l4">
+					<div class="col s12 m9 l9 opcionesreporte" id="opcionesreporte">
+		            	<div class="col s12 m6 l6">
 		            		<input type="hidden" value="{{$perfil}}" id="perfil" />
 							<select class="browser-default" id="combo_tipo_reporte">
 								<option disabled selected>Seleccione una Opción</option>
-							@foreach($reportes as $reporte)
-								<option value="{{$reporte->id}}">{{$reporte->nombre_reporte}}</option>
-							@endforeach
-							</select>
-		            	</div>
-		            	<div class="col s12 m4 l4" id="cont_select">
-		            		<select multiple class="browser-default combo_usuario">
-								<option disabled selected></option>
 							@foreach($reportes as $reporte)
 								<option value="{{$reporte->id}}">{{$reporte->nombre_reporte}}</option>
 							@endforeach

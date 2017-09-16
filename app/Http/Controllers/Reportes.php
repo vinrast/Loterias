@@ -905,12 +905,14 @@ public function reporte_anulaciones_usuario($fecha_i="2017-07-31",$fecha_f="2017
 
     public function crear_combo(){
       $datos=\Request::get('datos');
-      if ($datos[0]==3 || $datos[0]==5 || $datos[0]==6) {
+      $usuario=\Session::get('usuario');
+      $usuario=$usuario[0];
+      if ($datos[0]==2 || $datos[0]==3 || $datos[0]==4) {
         if ($datos[1]==1) {
           $consulta=\DB::table('usuarios')->get();
         }
         else{
-          $consulta=\DB::table('usuarios')->where('perfil_id','=',$datos[1])->get();
+          $consulta=\DB::table('usuarios')->where('username','=',$usuario->username)->get();
         }
       }
       return($consulta);
