@@ -55,6 +55,7 @@ Route::get('/reportes','Reportes@index');
 Route::get('/prueba','Reportes@hora');
 Route::get('/cierreDiario','Reportes@cierre_diario');
 Route::get('/resumenDiario/{fecha}','Reportes@resumen_diario_ventas');
+Route::any('/reportes/crearcombo','Reportes@crear_combo');
 
 ///////////////////////////////////Buscar ticket///////////////////////////////////////////
 Route::get('/buscar-ticket','Buscar_Ticket@index');
@@ -68,8 +69,8 @@ Route::get('/reiniciarAcumulados','Mantenimiento@reiniciar_acumulados');
 
 //////////////////////////////////Pruebas//////////////////////////////////////////////////
 
-<<<<<<< HEAD
+
 Route::get('/test','Administracion@tripletas_ganadoras');
-=======
+
 Route::get('/test','Reportes@reporte_ventas_sorteo');
->>>>>>> a2bfa7c3a99c76391c4e88701460788f84e37142
+

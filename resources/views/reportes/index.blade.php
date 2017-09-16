@@ -48,33 +48,20 @@
 		            </div>
 					<div class="col s12 m9 l9 opcionesreporte">
 		            	<div class="col s12 m4 l4">
-							<select class="browser-default">
+		            		<input type="hidden" value="{{$perfil}}" id="perfil" />
+							<select class="browser-default" id="combo_tipo_reporte">
 								<option disabled selected>Seleccione una Opción</option>
-								<option value="1">Consolidado</option>
-								<option value="2">Ventas</option>
-								<option value="3">Anulaciones</option>
-								<option value="4">XXX</option>
-								<option value="5">YYY</option>
+							@foreach($reportes as $reporte)
+								<option value="{{$reporte->id}}">{{$reporte->nombre_reporte}}</option>
+							@endforeach
 							</select>
 		            	</div>
-		            	<div class="col s12 m4 l4">
-							<select multiple class="browser-default">
-								<option disabled selected>Seleccione una Opcion</option>
-								<option value="1">Consolidado</option>
-								<option value="2">Ventas</option>
-								<option value="3">Comisiones</option>
-								<option value="4">XXX</option>
-								<option value="5">YYY</option>
-							</select>
-		            	</div>
-		            	<div class="col s12 m4 l4">
-							<select class="browser-default">
-								<option disabled selected>Seleccione una Opcion</option>
-								<option value="1">Consolidado</option>
-								<option value="2">Ventas</option>
-								<option value="3">Comisiones</option>
-								<option value="4">XXX</option>
-								<option value="5">YYY</option>
+		            	<div class="col s12 m4 l4" id="cont_select">
+		            		<select multiple class="browser-default combo_usuario">
+								<option disabled selected></option>
+							@foreach($reportes as $reporte)
+								<option value="{{$reporte->id}}">{{$reporte->nombre_reporte}}</option>
+							@endforeach
 							</select>
 		            	</div>
 					</div>

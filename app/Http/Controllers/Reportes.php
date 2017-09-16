@@ -579,11 +579,7 @@ public function ventas_sorteos_rango($fecha_i,$fecha_f)
   return [$reporte,$total];
 }
 
-<<<<<<< HEAD
-public function reporte_ventas_sorteo($fecha_i="2017-07-31",$fecha_f="2017-08-01")
-=======
 public function reporte_ventas_sorteo($fecha_i="2017-08-01",$fecha_f="2017-08-02")
->>>>>>> a2bfa7c3a99c76391c4e88701460788f84e37142
 {
   $hora=$this->obtener_hora();
   $fecha=$this->obtener_fecha();
@@ -897,10 +893,28 @@ public function reporte_anulaciones_usuario($fecha_i="2017-07-31",$fecha_f="2017
       $modulos=$modulos[0];
       $submodulos=\Session::get('submodulos');
       $submodulos=$submodulos[0];
-      return view('reportes.index',['modulos'=>$modulos,'submodulos'=>$submodulos]);
+      $usuario=\Session::get('usuario');
+      $usuario=$usuario[0];
+      $perfil=\DB::table('usuarios')->where('username','=',$usuario->username)->first();
+      $reportes_asociados=\DB::table('perfil_reportes')
+                              ->join('reportes','perfil_reportes.id_reportes', '=', 'reportes.id')  
+                              ->where('perfil_reportes.id_perfiles','=',$perfil->perfil_id)
+                              ->get();
+      return view('reportes.index',['modulos'=>$modulos,'submodulos'=>$submodulos,'reportes'=>$reportes_asociados,'perfil'=>$perfil->perfil_id]);
     }
 
-
+    public function crear_combo(){
+      $datos=\Request::get('datos');
+      if ($datos[0]==3 || $datos[0]==5 || $datos[0]==6) {
+        if ($datos[1]==1) {
+          $consulta=\DB::table('usuarios')->get();
+        }
+        else{
+          $consulta=\DB::table('usuarios')->where('perfil_id','=',$datos[1])->get();
+        }
+      }
+      return($consulta);
+    }
 
     public function hora()
     {

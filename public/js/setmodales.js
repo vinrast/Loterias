@@ -490,7 +490,7 @@ $('#contloteriac').on('click','.editarLoteria',function(e) {
 	});
 
 ///////////////////////////////////////////// FUNCIONALIDAD VISTA DE REPORTES ///////////////////////////////////////////////
-	$(".tiempo").change(function(){
+$(".tiempo").change(function(){
         valor=$('input:radio[name=tiempo]:checked').val();
         if (valor==1) {
         	$('.opcion').attr('disabled','disabled');
@@ -502,5 +502,34 @@ $('#contloteriac').on('click','.editarLoteria',function(e) {
         	$('.rango').val('');
         	$('.opcion').removeAttr('disabled');
         }
+    });
+    $('#cont_select').on('mousedown', 'select[multiple]', function(e) {
+	    e.preventDefault();
+	    if (e.target.hasAttribute('selected')) {
+	        e.target.removeAttribute('selected');
+	    } else {
+	        e.target.setAttribute('selected', 'selected');
+    	}
+	});
+
+
+	$("#combo_tipo_reporte").change(function(){
+        valor=$('select[id=combo_tipo_reporte]').val();
+        perfil=$('#perfil').val();
+        datos=[valor,perfil];
+        url="/reportes/crearcombo";
+        $.get(url,{datos:datos},function(resultado){
+        	if (valor==3 || valor==5 || valor==6) {
+        		alert(resultado);
+        	}
+        	else if (valor==4) {
+        	
+        		alert(resultado);
+        	}
+
+        });
+        
+        
+
     });
 });
