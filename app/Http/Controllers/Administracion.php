@@ -139,7 +139,7 @@ class Administracion extends Controller{
       $loteria_id=DB::table('sorteos')->insertGetId
           (
 
-            ['descripcion'=>$sorteo,'horaSorteo'=>$loteria[1]]
+            ['descripcion'=>$sorteo,'horaSorteo'=>$loteria[1],'disponible'=>1]
           );
 
         $resultado[0]=1;
