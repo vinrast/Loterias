@@ -342,7 +342,7 @@ height:100%;
     margin-top: 30px;
 }
 
-/*//////////////////////////////////////// REPORTES //////////////////////////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////// VISTA DE REPORTES //////////////////////////////////////////////////////////////////////////////*/
 
 .tiporeporte{
     padding-top: 30px !important;
@@ -353,6 +353,11 @@ height:100%;
     padding-top: 15px !important;
 }
 .botoneraReporte{
-    padding-top: 115px !important;
+    position: absolute;
+    bottom: 20px;
+    /*padding-top: 115px !important;*/
     text-align: center;
+}
+.combo_usuario{
+    height: 7em;
 }

@@ -907,6 +907,7 @@ public function reporte_anulaciones_usuario($fecha_i="2017-07-31",$fecha_f="2017
       $datos=\Request::get('datos');
       $usuario=\Session::get('usuario');
       $usuario=$usuario[0];
+      $consulta=0;
       if ($datos[0]==2 || $datos[0]==3 || $datos[0]==4) {
         if ($datos[1]==1) {
           $consulta=\DB::table('usuarios')->get();

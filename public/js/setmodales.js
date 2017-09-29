@@ -520,16 +520,20 @@ $(".tiempo").change(function(){
         url="/reportes/crearcombo";
         $.get(url,{datos:datos},function(resultado){
         	if (valor==2 || valor==3 || valor==4) {
+        		$( "#cont_select" ).remove();
         		$( "#combo_usuario" ).remove();
-        			$('#opcionesreporte').append('<div class="col s12 m6 l6" id="cont_select"><select multiple class="browser-default combo_usuario" id="combo_usuario"></select></div>');
+        		$('#opcionesreporte').append('<div class="col s12 m6 l6" id="cont_select"><select multiple class="browser-default combo_usuario" id="combo_usuario"></select></div>');
+        		if (perfil==1) {
+        			$('#combo_usuario').append('<option class="usuarios" value="0">TODOS</option>');
+        		}
         		$.each(resultado,function(key,value){
         			$('#combo_usuario').append('<option class="usuarios" value="'+value.id+'">'+value.username+'</option>');
         		});
         		
         	}
         	else if (valor==1) {
-        	
-        		alert(resultado);
+        		$( "#cont_select" ).remove();
+        		$( "#combo_usuario" ).remove();
         	}
 
         });
