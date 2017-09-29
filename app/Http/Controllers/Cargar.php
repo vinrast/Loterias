@@ -392,7 +392,7 @@ class Cargar extends Controller
 
            
             array_push($aux[1],[$jugada->numero,$apuesta->cantidad]);
-            //array_push($aux[1],$apuesta->cantidad);
+            
        
             $total=$total+$apuesta->cantidad;
 

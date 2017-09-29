@@ -298,11 +298,13 @@ class Inicio extends Controller
    {
    		$eliminar_ventas=DB::table('ventas')->join('sorteos','sorteos.id','=','ventas.sorteo_id')->where(['ventas.usuario'=>$username,'sorteos.abierto'=>0])->delete();
    		
-   		$consultar_ventas=DB::table('ventas')->join('sorteos','sorteos.id','=','ventas.sorteo_id')->join('jugadas','jugadas.id','=','ventas.jugada_id')->join('apuestas','apuestas.id','=','ventas.apuesta_id')
+   		
+      $consultar_ventas=DB::table('ventas')->join('sorteos','sorteos.id','=','ventas.sorteo_id')->join('jugadas','jugadas.id','=','ventas.jugada_id')->join('apuestas','apuestas.id','=','ventas.apuesta_id')
    		->select('ventas.id as id','ventas.jugada_id as jugada_id','ventas.sorteo_id as sorteo_id',
    				 'ventas.apuesta_id as apuesta_id','ventas.usuario as usuario','ventas.fila as fila',
    				 'ventas.fecha as fecha','sorteos.descripcion as sorteo','jugadas.numero as jugada','apuestas.cantidad as apuesta')
    		->where(['ventas.usuario'=>$username,'sorteos.abierto'=>1])->orderBy('fila','asc')->get();
+
 
    		$resultado=count($consultar_ventas);
    		if($resultado!=0)
